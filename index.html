@@ -1,1 +1,24 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+<title>Battleship!</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Battleship!</h1>
+    <label for="number_of_ships">Number of ships:</label>
+    <select name="number_of_ships" id="number_of_ships">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+    </select>
+    <button type="button">Start</button>
+  </header>
+  <br>
+  <canvas width="1280" height="720" id="game"></canvas>
+</body>
+</html>

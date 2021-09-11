@@ -1,0 +1,19 @@
+* { 
+  font-family:sans-serif;
+}
+h1 { 
+  font-size: 2em; 
+}
+header { 
+  text-align: center;
+  margin: auto;
+  max-width: 50em; 
+}
+canvas {
+  padding: 0;
+  margin: auto;
+  display: block;
+  width: 1280px;
+  height: 720px;
+  border: 1px solid #000000;
+}
