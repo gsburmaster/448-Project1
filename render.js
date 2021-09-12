@@ -81,7 +81,7 @@ document.addEventListener("click", click1 => {
 //taken from https://github.com/gsburmaster/Connect4
 //adapted from https://jayhawk-nation.web.app/examples/TicTacToe
 document.addEventListener("DOMContentLoaded", () => {
-    canvas = document.querySelector("#Canvas");
+    canvas = document.querySelector("#canvas");
     context = canvas.getContext('2d');
     render(1,2,9);
     alert("Test23")
