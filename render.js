@@ -1,7 +1,7 @@
 //EXAMPLE STUFF FOR TESTING
 let testData = {
     currentPlayer: 1,
-    win: false,
+    winner: "false",
     shipNumber: 2,
     gameStart: false,
     player1arr: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -38,7 +38,7 @@ function render(arr1,arr2,data)
     
     
     // check to see if we are in the start menu, game over, or gameplay phase
-    startScreen();
+    startScreen(testData);
     //clearScreen();
     //gameplay(1,2,3);
 
@@ -69,7 +69,6 @@ function gameplay(arr1,arr2,data)
 function clearScreen()
 {
     context.clearRect(0,0,canvas.width,canvas.height);
-    mode = "";
 }
 
 
@@ -79,7 +78,12 @@ function startScreen(data)
         context.drawImage(gameLogo,(canvas.width/2)-(1.5*logowidth),0,logowidth*3,logoheight*3);
     }
     mode = "start";
+    
+    
+
+    
     drawGrid("c");
+
     //TODO: impliment dynamic scaling
 }
 
@@ -101,7 +105,23 @@ function gameOver(data)
     gameLogo.onload = function() {
         context.drawImage(gameLogo,(canvas.width/2)-(1.5*logowidth),0,logowidth*3,logoheight*3);
     }
+    if (data.winner == "1")
+    {
+            clearScreen();
+            context.rect(0,0,canvas.width,canvas.height);
+            context.fill;   
 
+            //add p1 wins image here
+    }
+    else if (data.winner == "2")
+    {
+        clearScreen();
+        context.rect(0,0,canvas.width,canvas.height);
+        context.fill;   
+
+        //add p2 wins image here
+        
+    }
     //TODO: Impliment who wins logic
 
 
