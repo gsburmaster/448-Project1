@@ -2,13 +2,16 @@
 let canvas;
 let context;
 
-
+//adapted from https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images
+let gameLogo = new Image();
+gameLogo.src = 'battleship.png';
+let startButton = new Image();
+startButton.src = 'start.png';
 
 function render(arr1,arr2,data)
 {
     // check to see if we are in the start menu, game over, or gameplay phase
     startScreen();
-    alert("YO2");
 
 
 
@@ -23,10 +26,9 @@ function clearScreen()
 
 function startScreen()
 {
-    context.font = "82pt Arial";
-    context.fillStyle = "red";
-context.fillText("TEST",75,75);
-alert("YO");
+    context.drawImage(gameLogo,640, 240);
+    //TODO: use img.onLoad = new function () {} to get images to render
+    //TODO: impliment dynamic scaling
 }
 
 
@@ -83,7 +85,5 @@ document.addEventListener("click", click1 => {
 document.addEventListener("DOMContentLoaded", () => {
     canvas = document.querySelector("#canvas");
     context = canvas.getContext('2d');
-    render(1,2,9);
-    alert("Test23")
-
+    render(1,2,3);
 })
