@@ -13,7 +13,8 @@ function render(arr1,arr2,data)
     // check to see if we are in the start menu, game over, or gameplay phase
     startScreen();
 
-
+    renderOwnBoard(1);
+    renderEnemyBoard(1);
 
 }
 
@@ -34,7 +35,7 @@ function startScreen()
 
 function renderOwnBoard(arr)
 {
-
+        drawGrid("r");
 }
 
 
@@ -46,6 +47,70 @@ function renderEnemyBoard(arr)
 function gameOver(data)
 {
 
+}
+
+
+function drawGrid(side)
+{
+    let rightmost;
+    let leftmost;
+    let heightmost;
+    let heightleast;
+    let totalwidth;
+    let totalheight;
+    if (side == "r")
+    {
+            rightmost = canvas.width/10;
+            leftmost = rightmost * 4;
+            heightmost = canvas.height/4;
+            heightleast = heightmost*3;
+            totalwidth = leftmost - rightmost;
+            totalheight = heightleast - heightmost;
+
+            context.beginPath();
+            context.moveTo(rightmost, heightmost);
+            context.lineTo(rightmost, heightleast);
+            context.stroke();
+
+            context.beginPath();
+            context.moveTo(leftmost, heightmost);
+            context.lineTo(leftmost, heightleast);
+            context.stroke();
+
+            context.beginPath();
+            context.moveTo(rightmost, heightmost);
+            context.lineTo(leftmost, heightmost);
+            context.stroke();
+
+            context.beginPath();
+            context.moveTo(rightmost, heightleast);
+            context.lineTo(leftmost, heightleast);
+            context.stroke();
+
+
+
+            for (let i= 1;i < 7; i++)
+            {
+            context.beginPath();
+            context.moveTo(rightmost+ totalwidth*i/6, heightmost);
+            context.lineTo(rightmost+ totalwidth*i/6, heightleast);
+            context.stroke();
+            }
+
+            for (let i= 1;i < 7; i++)
+            {
+            context.beginPath();
+            context.moveTo(rightmost, heightmost + totalheight*i/6);
+            context.lineTo(leftmost, heightmost + totalheight*i/6);
+            context.stroke();
+            }
+
+
+    }
+    else if (side == "l")
+    {
+       
+    }
 }
 
 //taken from https://github.com/gsburmaster/Connect4
