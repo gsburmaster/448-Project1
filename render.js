@@ -1,6 +1,25 @@
+//EXAMPLE STUFF FOR TESTING
+let testData = {
+    currentPlayer: 1,
+    win: false,
+    shipNumber: 2,
+    gameStart: false,
+    player1arr: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    player2arr: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+
+
+}
+
+
+
+
+
+
+
 //portions adapted from https://github.com/gsburmaster/Connect4
 let canvas;
 let context;
+let mode = "Start";
 
 //adapted from https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images
 let gameLogo = new Image();
@@ -27,7 +46,10 @@ function render(arr1,arr2,data)
 
 function gameplay(arr1,arr2,data)
 {
-
+        if (data.gameStart == false)
+        {
+            startScreen(data);
+        }
 
     //ingame logic (impliment if else later)
     gameLogo.onload = function() {
@@ -47,7 +69,7 @@ function clearScreen()
 }
 
 
-function startScreen()
+function startScreen(data)
 {
     gameLogo.onload = function() {
         context.drawImage(gameLogo,(canvas.width/2)-(1.5*logowidth),0,logowidth*3,logoheight*3);
@@ -71,6 +93,13 @@ function renderEnemyBoard(arr)
 
 function gameOver(data)
 {
+    gameLogo.onload = function() {
+        context.drawImage(gameLogo,(canvas.width/2)-(1.5*logowidth),0,logowidth*3,logoheight*3);
+    }
+
+    //TODO: Impliment who wins logic
+
+
 
 }
 
@@ -139,6 +168,14 @@ function drawGrid(side)
             context.stroke();
             }
            
+            //adapted from https://github.com/gsburmaster/Connect4
+            //adapted from https://jayhawk-nation.web.app/examples/TicTacToe
+            document.addEventListener("click", click1 => {
+    
+                pos = getXY(canvas, click1);
+                const [i,j,k] = [RoundClickX(pos.x,totalwidth,rightmost),RoundClickY(pos.y,totalheight,heightmost),side]
+                console.log(i + " " + j + " " + k + "\nR event Listener");
+            })
 
     }
     else if (side == "l")
@@ -187,7 +224,15 @@ function drawGrid(side)
         context.lineTo(leftmost, heightmost + totalheight*i/10);
         context.stroke();
         }
-        
+        //adapted from https://github.com/gsburmaster/Connect4
+        //adapted from https://jayhawk-nation.web.app/examples/TicTacToe
+        document.addEventListener("click", click1 => {
+    
+            pos = getXY(canvas, click1);
+            const [i,j,k] = [RoundClickX(pos.x,totalwidth,rightmost),RoundClickY(pos.y,totalheight,heightmost),side]
+                console.log(i + " " + j + " " + k + "\nL event Listener");
+        })
+
     }
     else if (side == "c")
     {
@@ -238,8 +283,19 @@ function drawGrid(side)
         context.lineTo(leftmost, heightmost + totalheight*i/10);
         context.stroke();
         }
-        
+        console.log("totalwidth = " + totalwidth);
+        console.log("total height = "  +  totalheight);
+        console.log('rightmost= ' + rightmost);
+        console.log('heightmost= ' + heightmost);
     }
+    //adapted from https://github.com/gsburmaster/Connect4
+    //adapted from https://jayhawk-nation.web.app/examples/TicTacToe
+    document.addEventListener("click", click1 => {
+    
+        pos = getXY(canvas, click1);
+        const [i,j,k] = [RoundClickX(pos.x,totalwidth,rightmost),RoundClickY(pos.y,totalheight,heightmost),side]
+                console.log(i + " " + j + " " + k + "\nC event Listener");
+    })
 }
 
 //taken from https://github.com/gsburmaster/Connect4
@@ -253,26 +309,8 @@ function getXY(canvas, event) {
     }
 }
 
-//adapted from https://github.com/gsburmaster/Connect4
-//adapted from https://jayhawk-nation.web.app/examples/TicTacToe
-document.addEventListener("click", click1 => {
-    
-    pos = getXY(canvas, click1);
-    const [i,j] = [RoundClickX(pos.x),RoundClickY(pos.y)]
-    if (1 == 2)
-    {
-        return;
-    }
-    if (1 == 2)
-    {
-        return;
-    }
 
-    if (1 == 2)
-    {
-    return;
-    }
-})
+
 //taken from https://github.com/gsburmaster/Connect4
 //adapted from https://jayhawk-nation.web.app/examples/TicTacToe
 document.addEventListener("DOMContentLoaded", () => {
@@ -288,3 +326,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     render(1,2,3);
 })
+
+//taken from https://github.com/gsburmaster/Connect4
+function RoundClickX(x,relSize,most) {
+    return (Math.ceil((x-most)/(relSize/9) )-1)
+   }
+function RoundClickY(y,relSize,most) {
+       return (Math.ceil((y-most)/(relSize/10)-1))
+      }
