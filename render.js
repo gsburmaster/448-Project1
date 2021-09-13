@@ -5,23 +5,40 @@ let context;
 //adapted from https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images
 let gameLogo = new Image();
 gameLogo.src = 'battleship.png';
+let logowidth = 107;
+let logoheight = 23;
+
 let startButton = new Image();
 startButton.src = 'start.png';
+let startwidth = 71;
+let startheight = 22;
+
 
 function render(arr1,arr2,data)
 {
+    
+    
     // check to see if we are in the start menu, game over, or gameplay phase
     startScreen();
+    //gameplay(arr1,arr2,data);
+
+}
+
+
+function gameplay(arr1,arr2,data)
+{
 
 
     //ingame logic (impliment if else later)
     gameLogo.onload = function() {
-        context.drawImage(gameLogo,0,0);
+        context.drawImage(gameLogo,(canvas.width/2)-(1.5*logowidth),0,logowidth*3,logoheight*3);
     }
+    
+
     renderOwnBoard(1);
     renderEnemyBoard(1);
-
 }
+
 
 function clearScreen()
 {
@@ -32,8 +49,10 @@ function clearScreen()
 
 function startScreen()
 {
-    context.drawImage(gameLogo,640, 240);
-    //TODO: use img.onLoad = new function () {} to get images to render
+    gameLogo.onload = function() {
+        context.drawImage(gameLogo,(canvas.width/2)-(1.5*logowidth),0,logowidth*3,logoheight*3);
+    }
+    drawGrid("c");
     //TODO: impliment dynamic scaling
 }
 
@@ -41,13 +60,13 @@ function startScreen()
 function renderOwnBoard(arr)
 {
         drawGrid("r");
-        drawGrid("l");
+        
 }
 
 
 function renderEnemyBoard(arr)
 {
-
+        drawGrid("l");
 }
 
 function gameOver(data)
@@ -73,6 +92,15 @@ function drawGrid(side)
             totalwidth = leftmost - rightmost;
             totalheight = heightleast - heightmost;
 
+
+            //DRAWS a line in the middle of the screen
+            //TEST: REMOVE LATER
+            context.beginPath();
+            context.moveTo(canvas.width/2,0);
+            context.lineTo(canvas.width/2,canvas.height);
+            context.stroke();
+
+
             context.beginPath();
             context.moveTo(rightmost, heightmost);
             context.lineTo(rightmost, heightleast);
@@ -95,19 +123,19 @@ function drawGrid(side)
 
 
 
-            for (let i= 1;i < 7; i++)
+            for (let i= 1;i < 10; i++)
             {
             context.beginPath();
-            context.moveTo(rightmost+ totalwidth*i/6, heightmost);
-            context.lineTo(rightmost+ totalwidth*i/6, heightleast);
+            context.moveTo(rightmost+ totalwidth*i/9, heightmost);
+            context.lineTo(rightmost+ totalwidth*i/9, heightleast);
             context.stroke();
             }
 
-            for (let i= 1;i < 7; i++)
+            for (let i= 1;i < 11; i++)
             {
             context.beginPath();
-            context.moveTo(rightmost, heightmost + totalheight*i/6);
-            context.lineTo(leftmost, heightmost + totalheight*i/6);
+            context.moveTo(rightmost, heightmost + totalheight*i/10);
+            context.lineTo(leftmost, heightmost + totalheight*i/10);
             context.stroke();
             }
            
@@ -144,19 +172,70 @@ function drawGrid(side)
 
 
 
-        for (let i= 1;i < 7; i++)
+        for (let i= 1;i < 10; i++)
         {
         context.beginPath();
-        context.moveTo(rightmost+ totalwidth*i/6, heightmost);
-        context.lineTo(rightmost+ totalwidth*i/6, heightleast);
+        context.moveTo(rightmost+ totalwidth*i/9, heightmost);
+        context.lineTo(rightmost+ totalwidth*i/9, heightleast);
         context.stroke();
         }
 
-        for (let i= 1;i < 7; i++)
+        for (let i= 1;i < 11; i++)
         {
         context.beginPath();
-        context.moveTo(rightmost, heightmost + totalheight*i/6);
-        context.lineTo(leftmost, heightmost + totalheight*i/6);
+        context.moveTo(rightmost, heightmost + totalheight*i/10);
+        context.lineTo(leftmost, heightmost + totalheight*i/10);
+        context.stroke();
+        }
+        
+    }
+    else if (side == "c")
+    {
+        rightmost =  (canvas.width/10)*3.5 ;
+        leftmost = rightmost + 3*(canvas.width/10) ;
+        heightmost = canvas.height/4;
+        heightleast = heightmost*3;
+        totalwidth = leftmost - rightmost;
+        totalheight = heightleast - heightmost;
+
+
+
+
+        context.beginPath();
+        context.moveTo(rightmost, heightmost);
+        context.lineTo(rightmost, heightleast);
+        context.stroke();
+
+        context.beginPath();
+        context.moveTo(leftmost, heightmost);
+        context.lineTo(leftmost, heightleast);
+        context.stroke();
+
+        context.beginPath();
+        context.moveTo(rightmost, heightmost);
+        context.lineTo(leftmost, heightmost);
+        context.stroke();
+
+        context.beginPath();
+        context.moveTo(rightmost, heightleast);
+        context.lineTo(leftmost, heightleast);
+        context.stroke();
+
+
+
+        for (let i= 1;i < 10; i++)
+        {
+        context.beginPath();
+        context.moveTo(rightmost+ totalwidth*i/9, heightmost);
+        context.lineTo(rightmost+ totalwidth*i/9, heightleast);
+        context.stroke();
+        }
+
+        for (let i= 1;i < 11; i++)
+        {
+        context.beginPath();
+        context.moveTo(rightmost, heightmost + totalheight*i/10);
+        context.lineTo(leftmost, heightmost + totalheight*i/10);
         context.stroke();
         }
         
@@ -180,7 +259,6 @@ document.addEventListener("click", click1 => {
     
     pos = getXY(canvas, click1);
     const [i,j] = [RoundClickX(pos.x),RoundClickY(pos.y)]
-    let jmod = j;
     if (1 == 2)
     {
         return;
@@ -200,5 +278,13 @@ document.addEventListener("click", click1 => {
 document.addEventListener("DOMContentLoaded", () => {
     canvas = document.querySelector("#canvas");
     context = canvas.getContext('2d');
+
+
+    //from https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images
+    context.mozImageSmoothingEnabled = false;
+    context.webkitImageSmoothingEnabled = false;
+    context.msImageSmoothingEnabled = false;
+    context.imageSmoothingEnabled = false;
+
     render(1,2,3);
 })
