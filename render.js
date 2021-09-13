@@ -13,6 +13,11 @@ function render(arr1,arr2,data)
     // check to see if we are in the start menu, game over, or gameplay phase
     startScreen();
 
+
+    //ingame logic (impliment if else later)
+    gameLogo.onload = function() {
+        context.drawImage(gameLogo,0,0);
+    }
     renderOwnBoard(1);
     renderEnemyBoard(1);
 
@@ -36,6 +41,7 @@ function startScreen()
 function renderOwnBoard(arr)
 {
         drawGrid("r");
+        drawGrid("l");
 }
 
 
@@ -104,12 +110,56 @@ function drawGrid(side)
             context.lineTo(leftmost, heightmost + totalheight*i/6);
             context.stroke();
             }
-
+           
 
     }
     else if (side == "l")
     {
-       
+        rightmost =  (canvas.width/10)*6 ;
+        leftmost = rightmost + 3*(canvas.width/10) ;
+        heightmost = canvas.height/4;
+        heightleast = heightmost*3;
+        totalwidth = leftmost - rightmost;
+        totalheight = heightleast - heightmost;
+
+        context.beginPath();
+        context.moveTo(rightmost, heightmost);
+        context.lineTo(rightmost, heightleast);
+        context.stroke();
+
+        context.beginPath();
+        context.moveTo(leftmost, heightmost);
+        context.lineTo(leftmost, heightleast);
+        context.stroke();
+
+        context.beginPath();
+        context.moveTo(rightmost, heightmost);
+        context.lineTo(leftmost, heightmost);
+        context.stroke();
+
+        context.beginPath();
+        context.moveTo(rightmost, heightleast);
+        context.lineTo(leftmost, heightleast);
+        context.stroke();
+
+
+
+        for (let i= 1;i < 7; i++)
+        {
+        context.beginPath();
+        context.moveTo(rightmost+ totalwidth*i/6, heightmost);
+        context.lineTo(rightmost+ totalwidth*i/6, heightleast);
+        context.stroke();
+        }
+
+        for (let i= 1;i < 7; i++)
+        {
+        context.beginPath();
+        context.moveTo(rightmost, heightmost + totalheight*i/6);
+        context.lineTo(leftmost, heightmost + totalheight*i/6);
+        context.stroke();
+        }
+        
     }
 }
 
