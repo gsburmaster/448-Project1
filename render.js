@@ -109,6 +109,16 @@ function startScreen(data) {
     drawGrid("c");
 
     //TODO: impliment dynamic scaling
+
+    /*
+        Rotate function pseudo code
+
+        function rotate
+        load rotate button image
+        event listener
+
+
+    */
 }
 
 
@@ -147,6 +157,20 @@ function gameOver(data) {
 
     }
     //TODO: Impliment who wins logic
+
+     
+    
+    /*
+        reset button pseudo code
+
+        function reset button
+        load reset image
+        add event listener for when image is clicked
+        set game mode to start
+        re-draw canvas to be start screen
+        
+
+        */
 
 
 
