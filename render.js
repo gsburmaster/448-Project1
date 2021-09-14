@@ -1,11 +1,11 @@
 //EXAMPLE STUFF FOR TESTING
 let testData = {
     currentPlayer: 1,
-    winner: "false",
+    winner: "1",
     shipNumber: 2,
     gameStart: false,
-    player1arr: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    player2arr: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    player1arr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    player2arr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 
 
 }
@@ -23,104 +23,105 @@ let mode;
 
 //adapted from https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images
 let gameLogo = new Image();
-gameLogo.src = 'battleship.png';
+gameLogo.src = 'Images/battleship.png';
 let logowidth = 107;
 let logoheight = 23;
 
 let startButton = new Image();
-startButton.src = 'start.png';
+startButton.src = 'Images/start.png';
 let startwidth = 71;
 let startheight = 22;
 
+let p1Win = new Image();
+p1Win.src = 'Images/player1.png';
+let p1width = 89;
+let p1height = 59;
 
-function render(arr1,arr2,data)
-{
-    
-    
+let p2Win = new Image();
+p2Win.src = 'Images/player2.png';
+let p2width = 89;
+let p2height = 59;
+
+function render(arr1, arr2, data) {
+
+
     // check to see if we are in the start menu, game over, or gameplay phase
     startScreen(testData);
-    //clearScreen();
+    clearScreen();
     //gameplay(1,2,3);
-
+    gameOver(testData);
     //gameplay(arr1,arr2,data);
 
 }
 
 
-function gameplay(arr1,arr2,data)
-{
-        mode = "game";
-        if (data.gameStart == false)
-        {
-            startScreen(data);
-        }
+function gameplay(arr1, arr2, data) {
+    mode = "game";
+    if (data.gameStart == false) {
+        startScreen(data);
+    }
 
     //ingame logic (impliment if else later)
-    gameLogo.onload = function() {
-        context.drawImage(gameLogo,(canvas.width/2)-(1.5*logowidth),0,logowidth*3,logoheight*3);
+    gameLogo.onload = function () {
+        context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
     }
-    
+
 
     renderOwnBoard(1);
     renderEnemyBoard(1);
 }
 
 
-function clearScreen()
-{
-    context.clearRect(0,0,canvas.width,canvas.height);
+function clearScreen() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 
-function startScreen(data)
-{
-    gameLogo.onload = function() {
-        context.drawImage(gameLogo,(canvas.width/2)-(1.5*logowidth),0,logowidth*3,logoheight*3);
+function startScreen(data) {
+    gameLogo.onload = function () {
+        context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
     }
     mode = "start";
-    
-    
 
-    
+
+
+
     drawGrid("c");
 
     //TODO: impliment dynamic scaling
 }
 
 
-function renderOwnBoard(arr)
-{
-        drawGrid("r");
-        
+function renderOwnBoard(arr) {
+    drawGrid("r");
 }
 
 
-function renderEnemyBoard(arr)
-{
-        drawGrid("l");
+function renderEnemyBoard(arr) {
+    drawGrid("l");
 }
 
-function gameOver(data)
-{
-    gameLogo.onload = function() {
-        context.drawImage(gameLogo,(canvas.width/2)-(1.5*logowidth),0,logowidth*3,logoheight*3);
+function gameOver(data) {
+    gameLogo.onload = function () {
+        context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
     }
-    if (data.winner == "1")
-    {
-            clearScreen();
-            context.rect(0,0,canvas.width,canvas.height);
-            context.fill;   
-
-            //add p1 wins image here
-    }
-    else if (data.winner == "2")
-    {
+    if (data.winner == "1") {
         clearScreen();
-        context.rect(0,0,canvas.width,canvas.height);
-        context.fill;   
+        context.rect(0, 0, canvas.width, canvas.height);
+        context.fill;
+
+
+        p1Win.onload = function () {
+            context.drawImage(p1Win, (canvas.width / 2) - (3 * p1width), canvas.height / 4, p1width * 6, p1height * 6);
+        }
+
+    } else if (data.winner == "2") {
+        clearScreen();
+        context.rect(0, 0, canvas.width, canvas.height);
+        context.fill;
 
         //add p2 wins image here
-        
+
     }
     //TODO: Impliment who wins logic
 
@@ -129,94 +130,86 @@ function gameOver(data)
 }
 
 
-function drawGrid(side)
-{
+function drawGrid(side) {
     let rightmost;
     let leftmost;
     let heightmost;
     let heightleast;
     let totalwidth;
     let totalheight;
-    if (side == "r")
-    {
-            rightmost = canvas.width/10;
-            leftmost = rightmost * 4;
-            heightmost = canvas.height/4;
-            heightleast = heightmost*3;
-            totalwidth = leftmost - rightmost;
-            totalheight = heightleast - heightmost;
+    if (side == "r") {
+        rightmost = canvas.width / 10;
+        leftmost = rightmost * 4;
+        heightmost = canvas.height / 4;
+        heightleast = heightmost * 3;
+        totalwidth = leftmost - rightmost;
+        totalheight = heightleast - heightmost;
 
 
-            //DRAWS a line in the middle of the screen
-            //TEST: REMOVE LATER
+        //DRAWS a line in the middle of the screen
+        //TEST: REMOVE LATER
+        context.beginPath();
+        context.moveTo(canvas.width / 2, 0);
+        context.lineTo(canvas.width / 2, canvas.height);
+        context.stroke();
+
+
+        context.beginPath();
+        context.moveTo(rightmost, heightmost);
+        context.lineTo(rightmost, heightleast);
+        context.stroke();
+
+        context.beginPath();
+        context.moveTo(leftmost, heightmost);
+        context.lineTo(leftmost, heightleast);
+        context.stroke();
+
+        context.beginPath();
+        context.moveTo(rightmost, heightmost);
+        context.lineTo(leftmost, heightmost);
+        context.stroke();
+
+        context.beginPath();
+        context.moveTo(rightmost, heightleast);
+        context.lineTo(leftmost, heightleast);
+        context.stroke();
+
+
+
+        for (let i = 1; i < 10; i++) {
             context.beginPath();
-            context.moveTo(canvas.width/2,0);
-            context.lineTo(canvas.width/2,canvas.height);
+            context.moveTo(rightmost + totalwidth * i / 9, heightmost);
+            context.lineTo(rightmost + totalwidth * i / 9, heightleast);
             context.stroke();
-
-
-            context.beginPath();
-            context.moveTo(rightmost, heightmost);
-            context.lineTo(rightmost, heightleast);
-            context.stroke();
-
-            context.beginPath();
-            context.moveTo(leftmost, heightmost);
-            context.lineTo(leftmost, heightleast);
-            context.stroke();
-
-            context.beginPath();
-            context.moveTo(rightmost, heightmost);
-            context.lineTo(leftmost, heightmost);
-            context.stroke();
-
-            context.beginPath();
-            context.moveTo(rightmost, heightleast);
-            context.lineTo(leftmost, heightleast);
-            context.stroke();
-
-
-
-            for (let i= 1;i < 10; i++)
-            {
-            context.beginPath();
-            context.moveTo(rightmost+ totalwidth*i/9, heightmost);
-            context.lineTo(rightmost+ totalwidth*i/9, heightleast);
-            context.stroke();
-            }
-
-            for (let i= 1;i < 11; i++)
-            {
-            context.beginPath();
-            context.moveTo(rightmost, heightmost + totalheight*i/10);
-            context.lineTo(leftmost, heightmost + totalheight*i/10);
-            context.stroke();
-            }
-           
-            //adapted from https://github.com/gsburmaster/Connect4
-            //adapted from https://jayhawk-nation.web.app/examples/TicTacToe
-            document.addEventListener("click", click1 => {
-                if (mode == "start")
-        {
-            return;
         }
-                pos = getXY(canvas, click1);
-                const [i,j,k] = [RoundClickX(pos.x,totalwidth,rightmost),RoundClickY(pos.y,totalheight,heightmost),side]
-                if (i < 0 || i > 8 || j < 0 || j > 9)
-                {
-                    return;
-                }
-                
-                console.log(i + " " + j + " " + k + "\nR event Listener");
-            })
 
-    }
-    else if (side == "l")
-    {
-        rightmost =  (canvas.width/10)*6 ;
-        leftmost = rightmost + 3*(canvas.width/10) ;
-        heightmost = canvas.height/4;
-        heightleast = heightmost*3;
+        for (let i = 1; i < 11; i++) {
+            context.beginPath();
+            context.moveTo(rightmost, heightmost + totalheight * i / 10);
+            context.lineTo(leftmost, heightmost + totalheight * i / 10);
+            context.stroke();
+        }
+
+        //adapted from https://github.com/gsburmaster/Connect4
+        //adapted from https://jayhawk-nation.web.app/examples/TicTacToe
+        document.addEventListener("click", click1 => {
+            if (mode == "start") {
+                return;
+            }
+            pos = getXY(canvas, click1);
+            const [i, j, k] = [RoundClickX(pos.x, totalwidth, rightmost), RoundClickY(pos.y, totalheight, heightmost), side]
+            if (i < 0 || i > 8 || j < 0 || j > 9) {
+                return;
+            }
+
+            console.log(i + " " + j + " " + k + "\nR event Listener");
+        })
+
+    } else if (side == "l") {
+        rightmost = (canvas.width / 10) * 6;
+        leftmost = rightmost + 3 * (canvas.width / 10);
+        heightmost = canvas.height / 4;
+        heightleast = heightmost * 3;
         totalwidth = leftmost - rightmost;
         totalheight = heightleast - heightmost;
 
@@ -242,44 +235,38 @@ function drawGrid(side)
 
 
 
-        for (let i= 1;i < 10; i++)
-        {
-        context.beginPath();
-        context.moveTo(rightmost+ totalwidth*i/9, heightmost);
-        context.lineTo(rightmost+ totalwidth*i/9, heightleast);
-        context.stroke();
+        for (let i = 1; i < 10; i++) {
+            context.beginPath();
+            context.moveTo(rightmost + totalwidth * i / 9, heightmost);
+            context.lineTo(rightmost + totalwidth * i / 9, heightleast);
+            context.stroke();
         }
 
-        for (let i= 1;i < 11; i++)
-        {
-        context.beginPath();
-        context.moveTo(rightmost, heightmost + totalheight*i/10);
-        context.lineTo(leftmost, heightmost + totalheight*i/10);
-        context.stroke();
+        for (let i = 1; i < 11; i++) {
+            context.beginPath();
+            context.moveTo(rightmost, heightmost + totalheight * i / 10);
+            context.lineTo(leftmost, heightmost + totalheight * i / 10);
+            context.stroke();
         }
         //adapted from https://github.com/gsburmaster/Connect4
         //adapted from https://jayhawk-nation.web.app/examples/TicTacToe
         document.addEventListener("click", click1 => {
-            if (mode == "start")
-        {
-            return;
-        }
+            if (mode == "start") {
+                return;
+            }
             pos = getXY(canvas, click1);
-            const [i,j,k] = [RoundClickX(pos.x,totalwidth,rightmost),RoundClickY(pos.y,totalheight,heightmost),side]
-            if (i < 0 || i > 8 || j < 0 || j > 9)
-            {
+            const [i, j, k] = [RoundClickX(pos.x, totalwidth, rightmost), RoundClickY(pos.y, totalheight, heightmost), side]
+            if (i < 0 || i > 8 || j < 0 || j > 9) {
                 return;
             }
             console.log(i + " " + j + " " + k + "\nL event Listener");
         })
 
-    }
-    else if (side == "c")
-    {
-        rightmost =  (canvas.width/10)*3.5 ;
-        leftmost = rightmost + 3*(canvas.width/10) ;
-        heightmost = canvas.height/4;
-        heightleast = heightmost*3;
+    } else if (side == "c") {
+        rightmost = (canvas.width / 10) * 3.5;
+        leftmost = rightmost + 3 * (canvas.width / 10);
+        heightmost = canvas.height / 4;
+        heightleast = heightmost * 3;
         totalwidth = leftmost - rightmost;
         totalheight = heightleast - heightmost;
 
@@ -308,39 +295,35 @@ function drawGrid(side)
 
 
 
-        for (let i= 1;i < 10; i++)
-        {
-        context.beginPath();
-        context.moveTo(rightmost+ totalwidth*i/9, heightmost);
-        context.lineTo(rightmost+ totalwidth*i/9, heightleast);
-        context.stroke();
+        for (let i = 1; i < 10; i++) {
+            context.beginPath();
+            context.moveTo(rightmost + totalwidth * i / 9, heightmost);
+            context.lineTo(rightmost + totalwidth * i / 9, heightleast);
+            context.stroke();
         }
 
-        for (let i= 1;i < 11; i++)
-        {
-        context.beginPath();
-        context.moveTo(rightmost, heightmost + totalheight*i/10);
-        context.lineTo(leftmost, heightmost + totalheight*i/10);
-        context.stroke();
+        for (let i = 1; i < 11; i++) {
+            context.beginPath();
+            context.moveTo(rightmost, heightmost + totalheight * i / 10);
+            context.lineTo(leftmost, heightmost + totalheight * i / 10);
+            context.stroke();
         }
         console.log("totalwidth = " + totalwidth);
-        console.log("total height = "  +  totalheight);
+        console.log("total height = " + totalheight);
         console.log('rightmost= ' + rightmost);
         console.log('heightmost= ' + heightmost);
     }
     //adapted from https://github.com/gsburmaster/Connect4
     //adapted from https://jayhawk-nation.web.app/examples/TicTacToe
     document.addEventListener("click", click1 => {
-        if (mode != "start")
-        {
+        if (mode != "start") {
             return;
         }
         pos = getXY(canvas, click1);
-        const [i,j,k] = [RoundClickX(pos.x,totalwidth,rightmost),RoundClickY(pos.y,totalheight,heightmost),side]
-        if (i < 0 || i > 8 || j < 0 || j > 9)
-                {
-                    return;
-                }
+        const [i, j, k] = [RoundClickX(pos.x, totalwidth, rightmost), RoundClickY(pos.y, totalheight, heightmost), side]
+        if (i < 0 || i > 8 || j < 0 || j > 9) {
+            return;
+        }
         console.log(i + " " + j + " " + k + "\nC event Listener");
     })
 }
@@ -349,7 +332,7 @@ function drawGrid(side)
 //adjusting mouse pointer data because of relative positioning of centered div
 //copied from https://stackoverflow.com/questions/29501447/why-does-css-centering-mess-up-canvas-mouse-coordinates/29501632
 function getXY(canvas, event) {
-    var rect = canvas.getBoundingClientRect();  // absolute position of canvas
+    var rect = canvas.getBoundingClientRect(); // absolute position of canvas
     return {
         x: event.clientX - rect.left,
         y: event.clientY - rect.top
@@ -371,13 +354,14 @@ document.addEventListener("DOMContentLoaded", () => {
     context.msImageSmoothingEnabled = false;
     context.imageSmoothingEnabled = false;
 
-    render(1,2,3);
+    render(1, 2, 3);
 })
 
 //taken from https://github.com/gsburmaster/Connect4
-function RoundClickX(x,relSize,most) {
-    return (Math.ceil((x-most)/(relSize/9) )-1)
-   }
-function RoundClickY(y,relSize,most) {
-       return (Math.ceil((y-most)/(relSize/10)-1))
-      }
+function RoundClickX(x, relSize, most) {
+    return (Math.ceil((x - most) / (relSize / 9)) - 1)
+}
+
+function RoundClickY(y, relSize, most) {
+    return (Math.ceil((y - most) / (relSize / 10) - 1))
+}
