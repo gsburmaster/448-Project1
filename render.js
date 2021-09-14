@@ -42,6 +42,26 @@ p2Win.src = 'Images/player2.png';
 let p2width = 89;
 let p2height = 59;
 
+let submit = new Image();
+submit.src = 'Images/submit.png';
+let submitwidth = 81;
+let submitheight = 21;
+
+let fire = new Image();
+fire.src = 'Images/fire.png';
+let firewidth = 50;
+let fireheight = 20;
+
+let enemysea = new Image();
+enemysea.src = 'Images/enemysea.png';
+let eseawidth = 125;
+let eseaheight = 23;
+
+let mysea = new Image();
+mysea.src = 'Images/mysea.png';
+let mseawidth = 82;
+let mseaheight = 23;
+
 function render(arr1, arr2, data) {
 
 
