@@ -1,79 +1,14 @@
-//EXAMPLE STUFF FOR TESTING
-let testData = {
-    currentPlayer: 1,
-    winner: "0",
-    shipNumber: 2,
-    gameStart: true,
-    player1arr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    player2arr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-
-
-}
-
-
-
-
-
-
-
-//portions adapted from https://github.com/gsburmaster/Connect4
-let canvas;
-let context;
-let mode;
-
-//adapted from https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images
-let gameLogo = new Image();
-gameLogo.src = 'Images/battleship.png';
-let logowidth = 107;
-let logoheight = 23;
-
-let startButton = new Image();
-startButton.src = 'Images/start.png';
-let startwidth = 71;
-let startheight = 22;
-
-let p1Win = new Image();
-p1Win.src = 'Images/player1.png';
-let p1width = 89;
-let p1height = 59;
-
-let p2Win = new Image();
-p2Win.src = 'Images/player2.png';
-let p2width = 89;
-let p2height = 59;
-
-let submit = new Image();
-submit.src = 'Images/submit.png';
-let submitwidth = 81;
-let submitheight = 21;
-
-let fire = new Image();
-fire.src = 'Images/fire.png';
-let firewidth = 50;
-let fireheight = 20;
-
-let enemysea = new Image();
-enemysea.src = 'Images/enemysea.png';
-let eseawidth = 125;
-let eseaheight = 23;
-
-let mysea = new Image();
-mysea.src = 'Images/mysea.png';
-let mseawidth = 82;
-let mseaheight = 23;
-
 function render(arr1, arr2, data) {
 
 
     // check to see if we are in the start menu, game over, or gameplay phase
     startScreen(testData);
     clearScreen();
-    gameplay(1,2,3);
+    //gameplay(1,2,3);
     //gameOver(testData);
     //gameplay(arr1,arr2,data);
 
 }
-
 
 function gameplay(arr1, arr2, data) {
     mode = "game";
@@ -120,38 +55,6 @@ function renderOwnBoard(arr) {
 function renderEnemyBoard(arr) {
     drawGrid("l");
 }
-
-function gameOver(data) {
-    gameLogo.onload = function () {
-        context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
-    }
-    if (data.winner == "1") {
-        clearScreen();
-        context.rect(0, 0, canvas.width, canvas.height);
-        context.fill;
-
-
-        p1Win.onload = function () {
-            context.drawImage(p1Win, (canvas.width / 2) - (3 * p1width), canvas.height / 4, p1width * 6, p1height * 6);
-        }
-
-    } else if (data.winner == "2") {
-        clearScreen();
-        context.rect(0, 0, canvas.width, canvas.height);
-        context.fill;
-
-        //add p2 wins image here
-        p2Win.onload = function () {
-            context.drawImage(p2Win, (canvas.width / 2) - (3 * p2width), canvas.height / 4, p2width * 6, p2height * 6 );
-        }
-
-    }
-    //TODO: Impliment who wins logic
-
-
-
-}
-
 
 function drawGrid(side) {
     let rightmost;
@@ -351,21 +254,6 @@ function drawGrid(side) {
     })
 }
 
-//taken from https://github.com/gsburmaster/Connect4
-//adjusting mouse pointer data because of relative positioning of centered div
-//copied from https://stackoverflow.com/questions/29501447/why-does-css-centering-mess-up-canvas-mouse-coordinates/29501632
-function getXY(canvas, event) {
-    var rect = canvas.getBoundingClientRect(); // absolute position of canvas
-    return {
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top
-    }
-}
-
-
-
-//taken from https://github.com/gsburmaster/Connect4
-//adapted from https://jayhawk-nation.web.app/examples/TicTacToe
 document.addEventListener("DOMContentLoaded", () => {
     canvas = document.querySelector("#canvas");
     context = canvas.getContext('2d');
@@ -379,12 +267,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
     render(1, 2, 3);
 })
-
-//taken from https://github.com/gsburmaster/Connect4
-function RoundClickX(x, relSize, most) {
-    return (Math.ceil((x - most) / (relSize / 9)) - 1)
-}
-
-function RoundClickY(y, relSize, most) {
-    return (Math.ceil((y - most) / (relSize / 10) - 1))
-}
