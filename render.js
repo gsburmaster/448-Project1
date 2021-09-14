@@ -141,6 +141,9 @@ function gameOver(data) {
         context.fill;
 
         //add p2 wins image here
+        p2Win.onload = function () {
+            context.drawImage(p2Win, (canvas.width / 2) - (3 * p2width), canvas.height / 4, p2width * 6, p2height * 6 );
+        }
 
     }
     //TODO: Impliment who wins logic
