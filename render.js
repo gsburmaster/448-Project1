@@ -1,7 +1,7 @@
 //EXAMPLE STUFF FOR TESTING
 let testData = {
-    currentPlayer: 1,
-    winner: "1",
+    currentPlayer: 2,
+    winner: "2",
     shipNumber: 2,
     gameStart: false,
     player1arr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -9,10 +9,18 @@ let testData = {
     player2arr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     player2earr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 
-//winner is a char
+    //winner is a char
 }
 
 
+
+
+/*LIST OF TODOS:
+Finish Start Screen
+Finish ship drawing (silver unhit, red hit)
+Fix 2d Array into 1D array on click
+document functions
+*/
 
 
 
@@ -110,8 +118,6 @@ function startScreen(data) {
 
     drawGrid("c");
 
-    //TODO: impliment dynamic scaling
-
     /*
         Rotate function pseudo code
 
@@ -122,6 +128,113 @@ function startScreen(data) {
 
     */
 }
+
+
+//portions adapted from //https://github.com/gsburmaster/Connect4/blob/main/connect-four.js
+// and https://www.w3schools.com/tags/canvas_measuretext.asp
+function switchTurn(data) {
+    clearScreen();
+    if (data.currentPlayer == 1) {
+        context.fillStyle = "Black";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.font = "40px Impact";
+        context.fillStyle = "#feebeb";
+        context.fillText("Player 2 turn in", (canvas.width / 2) - (context.measureText("Player 2 turn in").width / 2), canvas.height / 3);
+        context.fillText("3", (canvas.width / 2) - (context.measureText("3").width / 2), canvas.height * 2 / 3);
+        var waitTime3 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve()
+            }, 1000)
+        })
+        var waitTime2 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve()
+            }, 2000)
+        })
+        var waitTime1 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve()
+            }, 3000)
+        })
+
+        waitTime3.then(() => {
+            clearScreen();
+            context.fillStyle = "Black";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.font = "40px Impact";
+            context.fillStyle = "#feebeb";
+            context.fillText("Player 2 turn in", (canvas.width / 2) - (context.measureText("Player 2 turn in").width / 2), canvas.height / 3);
+            context.fillText("2", (canvas.width / 2) - (context.measureText("2").width / 2), canvas.height * 2 / 3);
+        })
+
+        waitTime2.then(() => {
+            clearScreen();
+            context.fillStyle = "Black";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.font = "40px Impact";
+            context.fillStyle = "#feebeb";
+            context.fillText("Player 2 turn in", (canvas.width / 2) - (context.measureText("Player 2 turn in").width / 2), canvas.height / 3);
+            context.fillText("1", (canvas.width / 2) - (context.measureText("1").width / 2), canvas.height * 2 / 3);
+        })
+
+        waitTime1.then(() => {
+            clearScreen();
+        })
+    } else {
+        context.fillStyle = "Black";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.font = "40px Impact";
+        context.fillStyle = "#feebeb";
+        context.fillText("Player 1 turn in", (canvas.width / 2) - (context.measureText("Player 1 turn in").width / 2), canvas.height / 3);
+        context.fillText("3", (canvas.width / 2) - (context.measureText("3").width / 2), canvas.height * 2 / 3);
+        var waitTime3 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve()
+            }, 1000)
+        })
+        var waitTime2 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve()
+            }, 2000)
+        })
+        var waitTime1 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve()
+            }, 3000)
+        })
+
+        waitTime3.then(() => {
+            clearScreen();
+            context.fillStyle = "Black";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.font = "40px Impact";
+            context.fillStyle = "#feebeb";
+            context.fillText("Player 1 turn in", (canvas.width / 2) - (context.measureText("Player 1 turn in").width / 2), canvas.height / 3);
+            context.fillText("2", (canvas.width / 2) - (context.measureText("2").width / 2), canvas.height * 2 / 3);
+        })
+
+        waitTime2.then(() => {
+            clearScreen();
+            context.fillStyle = "Black";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.font = "40px Impact";
+            context.fillStyle = "#feebeb";
+            context.fillText("Player 1 turn in", (canvas.width / 2) - (context.measureText("Player 1 turn in").width / 2), canvas.height / 3);
+            context.fillText("1", (canvas.width / 2) - (context.measureText("1").width / 2), canvas.height * 2 / 3);
+        })
+
+        waitTime1.then(() => {
+            clearScreen();
+        })
+    }
+
+
+
+}
+
+
+
+
 
 
 function renderOwnBoard(arr) {
@@ -154,14 +267,14 @@ function gameOver(data) {
 
         //add p2 wins image here
         p2Win.onload = function () {
-            context.drawImage(p2Win, (canvas.width / 2) - (3 * p2width), canvas.height / 4, p2width * 6, p2height * 6 );
+            context.drawImage(p2Win, (canvas.width / 2) - (3 * p2width), canvas.height / 4, p2width * 6, p2height * 6);
         }
 
     }
     //TODO: Impliment who wins logic
 
-     
-    
+
+
     /*
         reset button pseudo code
 
