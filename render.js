@@ -118,15 +118,7 @@ function startScreen(data) {
 
     drawGrid("c");
 
-    /*
-        Rotate function pseudo code
-
-        function rotate
-        load rotate button image
-        event listener
-
-
-    */
+   
 }
 
 
@@ -272,20 +264,6 @@ function gameOver(data) {
         context.drawImage(p2Win, (canvas.width / 2) - (3 * p2width), canvas.height / 4, p2width * 6, p2height * 6);
     }
     
-
-
-
-    /*
-        reset button pseudo code
-
-        function reset button
-        load reset image
-        add event listener for when image is clicked
-        set game mode to start
-        re-draw canvas to be start screen
-        
-
-        */
 
 
 

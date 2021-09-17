@@ -73,7 +73,7 @@ function winCheck(gameData) {
     if(gameData.isWon == true)
     {
     
-    //code to be added
+    gameOver(gameData);
     }
 
 }
