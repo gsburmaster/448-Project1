@@ -79,8 +79,8 @@ function fire(gameData, pos) {
 /**
 *This function checks to see if the game has one
 * @param {object} takes gameData object as argument
-*
-*
+* @return none
+* 
 *
 */
 
