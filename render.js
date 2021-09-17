@@ -78,8 +78,8 @@ function render(arr1, arr2, data) {
     // check to see if we are in the start menu, game over, or gameplay phase
     startScreen(testData);
     clearScreen();
-    //gameplay(1,2,3);
-    gameOver(testData);
+    gameplay(1,2,3);
+    //gameOver(testData);
     //gameplay(arr1,arr2,data);
 
 }
@@ -231,7 +231,7 @@ function switchTurn(data) {
 
 
 
-
+//takes in the array to render ships
 function renderOwnBoard(arr) {
     drawGrid("r");
 }
@@ -318,15 +318,20 @@ function drawGrid(side) {
 
         for (let i = 1; i < 10; i++) {
             context.beginPath();
-            context.moveTo(rightmost + totalwidth * i / 9, heightmost);
-            context.lineTo(rightmost + totalwidth * i / 9, heightleast);
+            context.moveTo(rightmost + totalwidth * i / 10, heightmost);
+            context.lineTo(rightmost + totalwidth * i / 10, heightleast);
             context.stroke();
+
+            context.font = "20px Impact";
+            context.fillStyle = "Black";
+            context.fillText(i, rightmost-(totalwidth/18),heightmost  +(totalheight*(i/9) -(totalheight/9*.25))  );
+            
         }
 
-        for (let i = 1; i < 11; i++) {
+        for (let i = 1; i < 10; i++) {
             context.beginPath();
-            context.moveTo(rightmost, heightmost + totalheight * i / 10);
-            context.lineTo(leftmost, heightmost + totalheight * i / 10);
+            context.moveTo(rightmost, heightmost + totalheight * i / 9);
+            context.lineTo(leftmost, heightmost + totalheight * i / 9);
             context.stroke();
         }
 
@@ -338,11 +343,11 @@ function drawGrid(side) {
             }
             pos = getXY(canvas, click1);
             const [i, j, k] = [RoundClickX(pos.x, totalwidth, rightmost), RoundClickY(pos.y, totalheight, heightmost), side]
-            if (i < 0 || i > 8 || j < 0 || j > 9) {
+            if (i < 0 || i > 9 || j < 0 || j > 8) {
                 return;
             }
 
-            console.log(i + " " + j + " " + k + "\nR event Listener");
+            console.log(flatten(i,j) +"\nR event Listener");
         })
 
     } else if (side == "l") {
@@ -377,15 +382,20 @@ function drawGrid(side) {
 
         for (let i = 1; i < 10; i++) {
             context.beginPath();
-            context.moveTo(rightmost + totalwidth * i / 9, heightmost);
-            context.lineTo(rightmost + totalwidth * i / 9, heightleast);
+            context.moveTo(rightmost + totalwidth * i / 10, heightmost);
+            context.lineTo(rightmost + totalwidth * i / 10, heightleast);
             context.stroke();
+
+            context.font = "20px Impact";
+            context.fillStyle = "Black";
+            context.fillText(i, rightmost-(totalwidth/18),heightmost  +(totalheight*(i/9) -(totalheight/9*.25))  );
+            
         }
 
-        for (let i = 1; i < 11; i++) {
+        for (let i = 1; i < 10; i++) {
             context.beginPath();
-            context.moveTo(rightmost, heightmost + totalheight * i / 10);
-            context.lineTo(leftmost, heightmost + totalheight * i / 10);
+            context.moveTo(rightmost, heightmost + totalheight * i / 9);
+            context.lineTo(leftmost, heightmost + totalheight * i / 9);
             context.stroke();
         }
         //adapted from https://github.com/gsburmaster/Connect4
@@ -396,10 +406,10 @@ function drawGrid(side) {
             }
             pos = getXY(canvas, click1);
             const [i, j, k] = [RoundClickX(pos.x, totalwidth, rightmost), RoundClickY(pos.y, totalheight, heightmost), side]
-            if (i < 0 || i > 8 || j < 0 || j > 9) {
+            if (i < 0 || i > 9 || j < 0 || j > 8) {
                 return;
             }
-            console.log(i + " " + j + " " + k + "\nL event Listener");
+            console.log(flatten(i,j)+ "\nL event Listener");
         })
 
     } else if (side == "c") {
@@ -437,15 +447,20 @@ function drawGrid(side) {
 
         for (let i = 1; i < 10; i++) {
             context.beginPath();
-            context.moveTo(rightmost + totalwidth * i / 9, heightmost);
-            context.lineTo(rightmost + totalwidth * i / 9, heightleast);
+            context.moveTo(rightmost + totalwidth * i / 10, heightmost);
+            context.lineTo(rightmost + totalwidth * i / 10, heightleast);
             context.stroke();
+
+            context.font = "20px Impact";
+            context.fillStyle = "Black";
+            context.fillText(i, rightmost-(totalwidth/18),heightmost  +(totalheight*(i/9) -(totalheight/9*.25))  );
+            
         }
 
-        for (let i = 1; i < 11; i++) {
+        for (let i = 1; i < 10; i++) {
             context.beginPath();
-            context.moveTo(rightmost, heightmost + totalheight * i / 10);
-            context.lineTo(leftmost, heightmost + totalheight * i / 10);
+            context.moveTo(rightmost, heightmost + totalheight * i / 9);
+            context.lineTo(leftmost, heightmost + totalheight * i / 9);
             context.stroke();
         }
         
@@ -458,10 +473,10 @@ function drawGrid(side) {
         }
         pos = getXY(canvas, click1);
         const [i, j, k] = [RoundClickX(pos.x, totalwidth, rightmost), RoundClickY(pos.y, totalheight, heightmost), side]
-        if (i < 0 || i > 8 || j < 0 || j > 9) {
+        if (i < 0 || i > 9 || j < 0 || j > 8) {
             return;
         }
-        console.log(i + " " + j + " " + k + "\nC event Listener");
+        console.log(flatten(i,j) + "\nC event Listener");
     })
 }
 
@@ -496,9 +511,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //taken from https://github.com/gsburmaster/Connect4
 function RoundClickX(x, relSize, most) {
-    return (Math.ceil((x - most) / (relSize / 9)) - 1)
+    return (Math.ceil((x - most) / (relSize / 10)) - 1)
 }
 
 function RoundClickY(y, relSize, most) {
-    return (Math.ceil((y - most) / (relSize / 10) - 1))
+    return (Math.ceil((y - most) / (relSize / 9) )-1)
+}
+
+//copied from https://stackoverflow.com/questions/1730961/convert-a-2d-array-index-into-a-1d-index
+//takes a 9x10 2d and returns 1d index
+function flatten(i,j)
+{
+        return (j*10 + i);
 }
