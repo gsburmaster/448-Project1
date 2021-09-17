@@ -18,7 +18,6 @@ let testData = {
 /*LIST OF TODOS:
 Finish Start Screen
 Finish ship drawing (silver unhit, red hit)
-Fix 2d Array into 1D array on click
 document functions
 */
 
@@ -72,13 +71,18 @@ mysea.src = 'Images/mysea.png';
 let mseawidth = 82;
 let mseaheight = 23;
 
+let rotate = new Image();
+rotate.src = 'Images/rotate.png';
+let rotatewidth = 83;
+let rotateheight = 19;
+
 function render(arr1, arr2, data) {
 
 
     // check to see if we are in the start menu, game over, or gameplay phase
     startScreen(testData);
-    clearScreen();
-    gameplay(1,2,3);
+   //clearScreen();
+    //gameplay(1,2,3);
     //gameOver(testData);
     //gameplay(arr1,arr2,data);
 
@@ -111,6 +115,13 @@ function startScreen(data) {
     gameLogo.onload = function () {
         context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
     }
+    context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
+
+    rotate.onload = function () {
+        context.drawImage(rotate, canvas.width - (canvas.width / 4) - (.5 * rotatewidth), canvas.height/2 - rotateheight/2, rotatewidth , rotateheight * 3);
+    }
+    context.drawImage(rotate, canvas.width - (canvas.width / 4) - (.5 * rotatewidth), canvas.height/2 - rotateheight/2, rotatewidth , rotateheight * 3);
+    
     mode = "start";
 
 
