@@ -29,6 +29,7 @@ document functions
 let canvas;
 let context;
 let mode;
+let rotateFace;
 
 //adapted from https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images
 let gameLogo = new Image();
@@ -118,16 +119,22 @@ function startScreen(data) {
     context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
 
     rotate.onload = function () {
-        context.drawImage(rotate, canvas.width - (canvas.width / 4) - (.5 * rotatewidth), canvas.height/2 - rotateheight/2, rotatewidth , rotateheight * 3);
+        context.drawImage(rotate, canvas.width - (canvas.width / 5) - (.5 * rotatewidth), canvas.height/2 - rotateheight, rotatewidth *2, rotateheight *2);
     }
-    context.drawImage(rotate, canvas.width - (canvas.width / 4) - (.5 * rotatewidth), canvas.height/2 - rotateheight/2, rotatewidth , rotateheight * 3);
+    context.drawImage(rotate, canvas.width - (canvas.width / 4) - (.5 * rotatewidth), canvas.height/2 - rotateheight/2, rotatewidth , rotateheight );
     
+    submit.onload = function () {
+        context.drawImage(submit, canvas.width/2  -submitwidth, canvas.height - canvas.height/8 - submitheight/2, submitwidth *2, submitheight *2);
+    }
+    context.drawImage(submit, canvas.width/2  -submitwidth, canvas.height - canvas.height/8 - submitheight/2, submitwidth *2, submitheight *2);
+
+        
+
+
     mode = "start";
-
-
-
-
     drawGrid("c");
+
+
 
    
 }
