@@ -328,11 +328,16 @@ function drawGrid(side) {
             
         }
 
-        for (let i = 1; i < 10; i++) {
+        for (let i = 0; i < 10; i++) {
             context.beginPath();
             context.moveTo(rightmost, heightmost + totalheight * i / 9);
             context.lineTo(leftmost, heightmost + totalheight * i / 9);
             context.stroke();
+
+            //adapted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode
+            context.font = "20px Impact";
+            context.fillStyle = "Black";
+            context.fillText(String.fromCharCode(65+i),rightmost + totalwidth*(i/10) + totalwidth/27,heightmost - (totalheight/45));
         }
 
         //adapted from https://github.com/gsburmaster/Connect4
@@ -392,11 +397,16 @@ function drawGrid(side) {
             
         }
 
-        for (let i = 1; i < 10; i++) {
+        for (let i = 0; i < 10; i++) {
             context.beginPath();
             context.moveTo(rightmost, heightmost + totalheight * i / 9);
             context.lineTo(leftmost, heightmost + totalheight * i / 9);
             context.stroke();
+
+            //adapted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode
+            context.font = "20px Impact";
+            context.fillStyle = "Black";
+            context.fillText(String.fromCharCode(65+i),rightmost + totalwidth*(i/10) + totalwidth/27,heightmost - (totalheight/45));
         }
         //adapted from https://github.com/gsburmaster/Connect4
         //adapted from https://jayhawk-nation.web.app/examples/TicTacToe
@@ -457,11 +467,16 @@ function drawGrid(side) {
             
         }
 
-        for (let i = 1; i < 10; i++) {
+        for (let i = 0; i < 10; i++) {
             context.beginPath();
             context.moveTo(rightmost, heightmost + totalheight * i / 9);
             context.lineTo(leftmost, heightmost + totalheight * i / 9);
             context.stroke();
+
+            //adapted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode
+            context.font = "20px Impact";
+            context.fillStyle = "Black";
+            context.fillText(String.fromCharCode(65+i),rightmost + totalwidth*(i/10) + totalwidth/27,heightmost - (totalheight/45));
         }
         
     }
