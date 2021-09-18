@@ -50,7 +50,6 @@ window.addEventListener("load", () => {
     });
     
     rightsideClickEventRegister();
-    leftsideClickEventRegister();
     centerClickEventRegister();
 })
 
@@ -208,22 +207,6 @@ function rightsideClickEventRegister() {
 
     console.log(flatten(i,j) +"\nR event Listener");
     })
-}
-
-function leftsideClickEventRegister() {
-	//adapted from https://github.com/gsburmaster/Connect4
-	//adapted from https://jayhawk-nation.web.app/examples/TicTacToe
-	document.addEventListener("click", click1 => {
-		if (mode == "start") {
-			return;
-		}
-		pos = getXY(canvas, click1);
-		const [i, j, k] = [RoundClickX(pos.x, leftGrid.totalwidth, leftGrid.rightmost), RoundClickY(pos.y, leftGrid.totalheight, leftGrid.heightmost), "l"]
-		if (i < 0 || i > 9 || j < 0 || j > 8) {
-			return;
-		}
-		console.log(flatten(i,j)+ "\nL event Listener");
-	})
 }
 
 function centerClickEventRegister() {
