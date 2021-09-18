@@ -152,7 +152,7 @@ function startScreen(player1,player2,data) {
 
 
     mode = "start";
-    drawGrid("c");
+    drawGrid(centerGrid);
 
 
 
@@ -272,13 +272,13 @@ function switchTurn(data) {
 
 //renders your ships in right grid
 function renderOwnBoard(arr) {
-    drawGrid("r");
+    drawGrid(rightGrid);
     renderShips(arr,rightGrid);
 }
 
 //renders enemy ships (and misses and such) in left grid
 function renderEnemyBoard(arr) {
-    drawGrid("l");
+    drawGrid(leftGrid);
     renderShips(arr,leftGrid);
 }
 
@@ -304,155 +304,52 @@ function gameOver(data) {
 }
 
 //just draws a grid and labels, does not carry any data
-//side is either r l or c
-function drawGrid(side) {
-    
-    if (side == "r") {
+//takes in a grid object (so it knows the dimensions)
+function drawGrid(grid) {
+    context.beginPath();
+    context.moveTo(grid.rightmost, grid.heightmost);
+    context.lineTo(grid.rightmost, grid.heightleast);
+    context.stroke();
+
+    context.beginPath();
+    context.moveTo(grid.leftmost, grid.heightmost);
+    context.lineTo(grid.leftmost, grid.heightleast);
+    context.stroke();
+
+    context.beginPath();
+    context.moveTo(grid.rightmost, grid.heightmost);
+    context.lineTo(grid.leftmost, grid.heightmost);
+    context.stroke();
+
+    context.beginPath();
+    context.moveTo(grid.rightmost, grid.heightleast);
+    context.lineTo(grid.leftmost, grid.heightleast);
+    context.stroke();
+
+
+
+    for (let i = 1; i < 10; i++) {
+        context.beginPath();
+        context.moveTo(grid.rightmost + grid.totalwidth * i / 10, grid.heightmost);
+        context.lineTo(grid.rightmost + grid.totalwidth * i / 10, grid.heightleast);
+        context.stroke();
+
+        context.font = "20px Impact";
+        context.fillStyle = "Black";
+        context.fillText(i, grid.rightmost-(grid.totalwidth/18), grid.heightmost  +(grid.totalheight*(i/9) -(grid.totalheight/9*.25))  );
         
+    }
+
+    for (let i = 0; i < 10; i++) {
         context.beginPath();
-        context.moveTo(rightGrid.rightmost, rightGrid.heightmost);
-        context.lineTo(rightGrid.rightmost, rightGrid.heightleast);
+        context.moveTo(grid.rightmost, grid.heightmost + grid.totalheight * i / 9);
+        context.lineTo(grid.leftmost, grid.heightmost + grid.totalheight * i / 9);
         context.stroke();
 
-        context.beginPath();
-        context.moveTo(rightGrid.leftmost, rightGrid.heightmost);
-        context.lineTo(rightGrid.leftmost, rightGrid.heightleast);
-        context.stroke();
-
-        context.beginPath();
-        context.moveTo(rightGrid.rightmost, rightGrid.heightmost);
-        context.lineTo(rightGrid.leftmost, rightGrid.heightmost);
-        context.stroke();
-
-        context.beginPath();
-        context.moveTo(rightGrid.rightmost, rightGrid.heightleast);
-        context.lineTo(rightGrid.leftmost, rightGrid.heightleast);
-        context.stroke();
-
-
-
-        for (let i = 1; i < 10; i++) {
-            context.beginPath();
-            context.moveTo(rightGrid.rightmost + rightGrid.totalwidth * i / 10, rightGrid.heightmost);
-            context.lineTo(rightGrid.rightmost + rightGrid.totalwidth * i / 10, rightGrid.heightleast);
-            context.stroke();
-
-            context.font = "20px Impact";
-            context.fillStyle = "Black";
-            context.fillText(i, rightGrid.rightmost-(rightGrid.totalwidth/18),rightGrid.heightmost  +(rightGrid.totalheight*(i/9) -(rightGrid.totalheight/9*.25))  );
-            
-        }
-
-        for (let i = 0; i < 10; i++) {
-            context.beginPath();
-            context.moveTo(rightGrid.rightmost, rightGrid.heightmost + rightGrid.totalheight * i / 9);
-            context.lineTo(rightGrid.leftmost, rightGrid.heightmost + rightGrid.totalheight * i / 9);
-            context.stroke();
-
-            //adapted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode
-            context.font = "20px Impact";
-            context.fillStyle = "Black";
-            context.fillText(String.fromCharCode(65+i),rightGrid.rightmost + rightGrid.totalwidth*(i/10) + rightGrid.totalwidth/27,rightGrid.heightmost - (rightGrid.totalheight/45));
-        }
-    } else if (side == "l") {
-        
-
-        context.beginPath();
-        context.moveTo(leftGrid.rightmost, leftGrid.heightmost);
-        context.lineTo(leftGrid.rightmost, leftGrid.heightleast);
-        context.stroke();
-
-        context.beginPath();
-        context.moveTo(leftGrid.leftmost, leftGrid.heightmost);
-        context.lineTo(leftGrid.leftmost, leftGrid.heightleast);
-        context.stroke();
-
-        context.beginPath();
-        context.moveTo(leftGrid.rightmost, leftGrid.heightmost);
-        context.lineTo(leftGrid.leftmost, leftGrid.heightmost);
-        context.stroke();
-
-        context.beginPath();
-        context.moveTo(leftGrid.rightmost, leftGrid.heightleast);
-        context.lineTo(leftGrid.leftmost, leftGrid.heightleast);
-        context.stroke();
-
-
-
-        for (let i = 1; i < 10; i++) {
-            context.beginPath();
-            context.moveTo(leftGrid.rightmost + leftGrid.totalwidth * i / 10, leftGrid.heightmost);
-            context.lineTo(leftGrid.rightmost + leftGrid.totalwidth * i / 10, leftGrid.heightleast);
-            context.stroke();
-
-            context.font = "20px Impact";
-            context.fillStyle = "Black";
-            context.fillText(i, leftGrid.rightmost-(leftGrid.totalwidth/18),leftGrid.heightmost  +(leftGrid.totalheight*(i/9) -(leftGrid.totalheight/9*.25))  );
-            
-        }
-
-        for (let i = 0; i < 10; i++) {
-            context.beginPath();
-            context.moveTo(leftGrid.rightmost, leftGrid.heightmost + leftGrid.totalheight * i / 9);
-            context.lineTo(leftGrid.leftmost, leftGrid.heightmost + leftGrid.totalheight * i / 9);
-            context.stroke();
-
-            //adapted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode
-            context.font = "20px Impact";
-            context.fillStyle = "Black";
-            context.fillText(String.fromCharCode(65+i),leftGrid.rightmost + leftGrid.totalwidth*(i/10) + leftGrid.totalwidth/27,leftGrid.heightmost - (leftGrid.totalheight/45));
-        }
-    } else if (side == "c") {
-        
-
-
-
-
-        context.beginPath();
-        context.moveTo(centerGrid.rightmost, centerGrid.heightmost);
-        context.lineTo(centerGrid.rightmost, centerGrid.heightleast);
-        context.stroke();
-
-        context.beginPath();
-        context.moveTo(centerGrid.leftmost, centerGrid.heightmost);
-        context.lineTo(centerGrid.leftmost, centerGrid.heightleast);
-        context.stroke();
-
-        context.beginPath();
-        context.moveTo(centerGrid.rightmost, centerGrid.heightmost);
-        context.lineTo(centerGrid.leftmost, centerGrid.heightmost);
-        context.stroke();
-
-        context.beginPath();
-        context.moveTo(centerGrid.rightmost, centerGrid.heightleast);
-        context.lineTo(centerGrid.leftmost, centerGrid.heightleast);
-        context.stroke();
-
-
-
-        for (let i = 1; i < 10; i++) {
-            context.beginPath();
-            context.moveTo(centerGrid.rightmost + centerGrid.totalwidth * i / 10, centerGrid.heightmost);
-            context.lineTo(centerGrid.rightmost + centerGrid.totalwidth * i / 10, centerGrid.heightleast);
-            context.stroke();
-
-            context.font = "20px Impact";
-            context.fillStyle = "Black";
-            context.fillText(i, centerGrid.rightmost-(centerGrid.totalwidth/18),centerGrid.heightmost  +(centerGrid.totalheight*(i/9) -(centerGrid.totalheight/9*.25))  );
-            
-        }
-
-        for (let i = 0; i < 10; i++) {
-            context.beginPath();
-            context.moveTo(centerGrid.rightmost, centerGrid.heightmost + centerGrid.totalheight * i / 9);
-            context.lineTo(centerGrid.leftmost, centerGrid.heightmost + centerGrid.totalheight * i / 9);
-            context.stroke();
-
-            //adapted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode
-            context.font = "20px Impact";
-            context.fillStyle = "Black";
-            context.fillText(String.fromCharCode(65+i),centerGrid.rightmost + centerGrid.totalwidth*(i/10) + centerGrid.totalwidth/27,centerGrid.heightmost - (centerGrid.totalheight/45));
-        }
+        //adapted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode
+        context.font = "20px Impact";
+        context.fillStyle = "Black";
+        context.fillText(String.fromCharCode(65+i), grid.rightmost + grid.totalwidth*(i/10) + grid.totalwidth/27, grid.heightmost - (grid.totalheight/45));
     }
 }
 
