@@ -18,8 +18,12 @@ let testData = {
 /*LIST OF TODOS:
 Finish Start Screen
 Finish ship drawing (silver unhit, red hit)
+refactor how drawGrid works so that I can pass a grid as an object
 document functions
 */
+
+
+
 
 
 
@@ -30,6 +34,93 @@ let canvas;
 let context;
 let mode;
 let rotateFace;
+
+//refactoring grids into objects so that I can pass them around 
+let rightGrid = {
+    rightmost:0,
+    leftmost:0,
+    heightmost:0,
+    heightleast:0,
+    totalwidth:0,
+    totalheight:0,
+}
+let leftGrid = {
+    rightmost:0,
+    leftmost:0,
+    heightmost:0,
+    heightleast:0,
+    totalwidth:0,
+    totalheight:0,
+}
+let centerGrid = {
+    rightmost:0,
+    leftmost:0,
+    heightmost:0,
+    heightleast:0,
+    totalwidth:0,
+    totalheight:0,
+}
+
+//https://stackoverflow.com/questions/4618541/can-i-reference-other-properties-during-object-declaration-in-javascript
+function setRightGrid()
+{
+        var Trightmost =  canvas.width / 10;
+        var Tleftmost =  Trightmost * 4;
+        var Theightmost = canvas.height / 4;
+        var Theightleast = Theightmost * 3;
+        var Ttotalwidth = Tleftmost - Trightmost;
+        var Ttotalheight = Theightleast - Theightmost;
+
+    return {
+        rightmost:Trightmost ,
+        leftmost: Tleftmost,
+        heightmost:Theightmost ,
+        heightleast: Theightleast,
+        totalwidth:Ttotalwidth ,
+        totalheight:Ttotalheight ,
+    };
+}
+
+function setLeftGrid()
+{
+    var Trightmost=  (canvas.width / 10) * 6;
+    var Tleftmost= Trightmost + 3 * (canvas.width / 10);
+    var Theightmost= canvas.height / 4;
+    var Theightleast= Theightmost * 3;
+    var Ttotalwidth= Tleftmost - Trightmost;
+    var Ttotalheight= Theightleast - Theightmost;
+    
+    return {
+        rightmost:Trightmost ,
+        leftmost: Tleftmost,
+        heightmost:Theightmost ,
+        heightleast: Theightleast,
+        totalwidth:Ttotalwidth ,
+        totalheight:Ttotalheight ,
+    };
+}
+
+
+function setCenterGrid()
+{
+    var Trightmost= (canvas.width / 10) * 3.5;
+    var Tleftmost= Trightmost + 3 * (canvas.width / 10);
+    var Theightmost= canvas.height / 4;
+    var Theightleast= Theightmost * 3;
+    var Ttotalwidth= Tleftmost - Trightmost;
+    var Ttotalheight= Theightleast - Theightmost;
+
+    return {
+        rightmost:Trightmost ,
+        leftmost: Tleftmost,
+        heightmost:Theightmost ,
+        heightleast: Theightleast,
+        totalwidth:Ttotalwidth ,
+        totalheight:Ttotalheight ,
+    };
+}
+
+
 
 //adapted from https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images
 let gameLogo = new Image();
@@ -82,7 +173,7 @@ function render(arr1, arr2, data) {
 
     // check to see if we are in the start menu, game over, or gameplay phase
     startScreen(testData);
-   //clearScreen();
+   clearScreen();
     //gameplay(1,2,3);
     //gameOver(testData);
     //gameplay(arr1,arr2,data);
@@ -108,6 +199,8 @@ function gameplay(arr1, arr2, data) {
 
 
 function clearScreen() {
+    context.fillStyle = "White";
+    context.fillRect(0,0,canvas.width,canvas.height);
     context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
@@ -116,18 +209,19 @@ function startScreen(data) {
     gameLogo.onload = function () {
         context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
     }
-    context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
+   // context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
 
     rotate.onload = function () {
         context.drawImage(rotate, canvas.width - (canvas.width / 5) - (.5 * rotatewidth), canvas.height/2 - rotateheight, rotatewidth *2, rotateheight *2);
     }
-    context.drawImage(rotate, canvas.width - (canvas.width / 4) - (.5 * rotatewidth), canvas.height/2 - rotateheight/2, rotatewidth , rotateheight );
+    //context.drawImage(rotate, canvas.width - (canvas.width / 4) - (.5 * rotatewidth), canvas.height/2 - rotateheight/2, rotatewidth , rotateheight );
     
     submit.onload = function () {
         context.drawImage(submit, canvas.width/2  -submitwidth, canvas.height - canvas.height/8 - submitheight/2, submitwidth *2, submitheight *2);
     }
-    context.drawImage(submit, canvas.width/2  -submitwidth, canvas.height - canvas.height/8 - submitheight/2, submitwidth *2, submitheight *2);
+    //context.drawImage(submit, canvas.width/2  -submitwidth, canvas.height - canvas.height/8 - submitheight/2, submitwidth *2, submitheight *2);
 
+    
         
 
 
@@ -289,21 +383,8 @@ function gameOver(data) {
 
 
 function drawGrid(side) {
-    let rightmost;
-    let leftmost;
-    let heightmost;
-    let heightleast;
-    let totalwidth;
-    let totalheight;
+    
     if (side == "r") {
-        rightmost = canvas.width / 10;
-        leftmost = rightmost * 4;
-        heightmost = canvas.height / 4;
-        heightleast = heightmost * 3;
-        totalwidth = leftmost - rightmost;
-        totalheight = heightleast - heightmost;
-
-
         //DRAWS a line in the middle of the screen
         //TEST: REMOVE LATER
         context.beginPath();
@@ -313,49 +394,49 @@ function drawGrid(side) {
 
 
         context.beginPath();
-        context.moveTo(rightmost, heightmost);
-        context.lineTo(rightmost, heightleast);
+        context.moveTo(rightGrid.rightmost, rightGrid.heightmost);
+        context.lineTo(rightGrid.rightmost, rightGrid.heightleast);
         context.stroke();
 
         context.beginPath();
-        context.moveTo(leftmost, heightmost);
-        context.lineTo(leftmost, heightleast);
+        context.moveTo(rightGrid.leftmost, rightGrid.heightmost);
+        context.lineTo(rightGrid.leftmost, rightGrid.heightleast);
         context.stroke();
 
         context.beginPath();
-        context.moveTo(rightmost, heightmost);
-        context.lineTo(leftmost, heightmost);
+        context.moveTo(rightGrid.rightmost, rightGrid.heightmost);
+        context.lineTo(rightGrid.leftmost, rightGrid.heightmost);
         context.stroke();
 
         context.beginPath();
-        context.moveTo(rightmost, heightleast);
-        context.lineTo(leftmost, heightleast);
+        context.moveTo(rightGrid.rightmost, rightGrid.heightleast);
+        context.lineTo(rightGrid.leftmost, rightGrid.heightleast);
         context.stroke();
 
 
 
         for (let i = 1; i < 10; i++) {
             context.beginPath();
-            context.moveTo(rightmost + totalwidth * i / 10, heightmost);
-            context.lineTo(rightmost + totalwidth * i / 10, heightleast);
+            context.moveTo(rightGrid.rightmost + rightGrid.totalwidth * i / 10, rightGrid.heightmost);
+            context.lineTo(rightGrid.rightmost + rightGrid.totalwidth * i / 10, rightGrid.heightleast);
             context.stroke();
 
             context.font = "20px Impact";
             context.fillStyle = "Black";
-            context.fillText(i, rightmost-(totalwidth/18),heightmost  +(totalheight*(i/9) -(totalheight/9*.25))  );
+            context.fillText(i, rightGrid.rightmost-(rightGrid.totalwidth/18),rightGrid.heightmost  +(rightGrid.totalheight*(i/9) -(rightGrid.totalheight/9*.25))  );
             
         }
 
         for (let i = 0; i < 10; i++) {
             context.beginPath();
-            context.moveTo(rightmost, heightmost + totalheight * i / 9);
-            context.lineTo(leftmost, heightmost + totalheight * i / 9);
+            context.moveTo(rightGrid.rightmost, rightGrid.heightmost + rightGrid.totalheight * i / 9);
+            context.lineTo(rightGrid.leftmost, rightGrid.heightmost + rightGrid.totalheight * i / 9);
             context.stroke();
 
             //adapted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode
             context.font = "20px Impact";
             context.fillStyle = "Black";
-            context.fillText(String.fromCharCode(65+i),rightmost + totalwidth*(i/10) + totalwidth/27,heightmost - (totalheight/45));
+            context.fillText(String.fromCharCode(65+i),rightGrid.rightmost + rightGrid.totalwidth*(i/10) + rightGrid.totalwidth/27,rightGrid.heightmost - (rightGrid.totalheight/45));
         }
 
         //adapted from https://github.com/gsburmaster/Connect4
@@ -365,7 +446,7 @@ function drawGrid(side) {
                 return;
             }
             pos = getXY(canvas, click1);
-            const [i, j, k] = [RoundClickX(pos.x, totalwidth, rightmost), RoundClickY(pos.y, totalheight, heightmost), side]
+            const [i, j, k] = [RoundClickX(pos.x, rightGrid.totalwidth, rightGrid.rightmost), RoundClickY(pos.y, rightGrid.totalheight, rightGrid.heightmost), side]
             if (i < 0 || i > 9 || j < 0 || j > 8) {
                 return;
             }
@@ -374,57 +455,52 @@ function drawGrid(side) {
         })
 
     } else if (side == "l") {
-        rightmost = (canvas.width / 10) * 6;
-        leftmost = rightmost + 3 * (canvas.width / 10);
-        heightmost = canvas.height / 4;
-        heightleast = heightmost * 3;
-        totalwidth = leftmost - rightmost;
-        totalheight = heightleast - heightmost;
+        
 
         context.beginPath();
-        context.moveTo(rightmost, heightmost);
-        context.lineTo(rightmost, heightleast);
+        context.moveTo(leftGrid.rightmost, leftGrid.heightmost);
+        context.lineTo(leftGrid.rightmost, leftGrid.heightleast);
         context.stroke();
 
         context.beginPath();
-        context.moveTo(leftmost, heightmost);
-        context.lineTo(leftmost, heightleast);
+        context.moveTo(leftGrid.leftmost, leftGrid.heightmost);
+        context.lineTo(leftGrid.leftmost, leftGrid.heightleast);
         context.stroke();
 
         context.beginPath();
-        context.moveTo(rightmost, heightmost);
-        context.lineTo(leftmost, heightmost);
+        context.moveTo(leftGrid.rightmost, leftGrid.heightmost);
+        context.lineTo(leftGrid.leftmost, leftGrid.heightmost);
         context.stroke();
 
         context.beginPath();
-        context.moveTo(rightmost, heightleast);
-        context.lineTo(leftmost, heightleast);
+        context.moveTo(leftGrid.rightmost, leftGrid.heightleast);
+        context.lineTo(leftGrid.leftmost, leftGrid.heightleast);
         context.stroke();
 
 
 
         for (let i = 1; i < 10; i++) {
             context.beginPath();
-            context.moveTo(rightmost + totalwidth * i / 10, heightmost);
-            context.lineTo(rightmost + totalwidth * i / 10, heightleast);
+            context.moveTo(leftGrid.rightmost + leftGrid.totalwidth * i / 10, leftGrid.heightmost);
+            context.lineTo(leftGrid.rightmost + leftGrid.totalwidth * i / 10, leftGrid.heightleast);
             context.stroke();
 
             context.font = "20px Impact";
             context.fillStyle = "Black";
-            context.fillText(i, rightmost-(totalwidth/18),heightmost  +(totalheight*(i/9) -(totalheight/9*.25))  );
+            context.fillText(i, leftGrid.rightmost-(leftGrid.totalwidth/18),leftGrid.heightmost  +(leftGrid.totalheight*(i/9) -(leftGrid.totalheight/9*.25))  );
             
         }
 
         for (let i = 0; i < 10; i++) {
             context.beginPath();
-            context.moveTo(rightmost, heightmost + totalheight * i / 9);
-            context.lineTo(leftmost, heightmost + totalheight * i / 9);
+            context.moveTo(leftGrid.rightmost, leftGrid.heightmost + leftGrid.totalheight * i / 9);
+            context.lineTo(leftGrid.leftmost, leftGrid.heightmost + leftGrid.totalheight * i / 9);
             context.stroke();
 
             //adapted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode
             context.font = "20px Impact";
             context.fillStyle = "Black";
-            context.fillText(String.fromCharCode(65+i),rightmost + totalwidth*(i/10) + totalwidth/27,heightmost - (totalheight/45));
+            context.fillText(String.fromCharCode(65+i),leftGrid.rightmost + leftGrid.totalwidth*(i/10) + leftGrid.totalwidth/27,leftGrid.heightmost - (leftGrid.totalheight/45));
         }
         //adapted from https://github.com/gsburmaster/Connect4
         //adapted from https://jayhawk-nation.web.app/examples/TicTacToe
@@ -433,7 +509,7 @@ function drawGrid(side) {
                 return;
             }
             pos = getXY(canvas, click1);
-            const [i, j, k] = [RoundClickX(pos.x, totalwidth, rightmost), RoundClickY(pos.y, totalheight, heightmost), side]
+            const [i, j, k] = [RoundClickX(pos.x, leftGrid.totalwidth, leftGrid.rightmost), RoundClickY(pos.y, leftGrid.totalheight, leftGrid.heightmost), side]
             if (i < 0 || i > 9 || j < 0 || j > 8) {
                 return;
             }
@@ -441,60 +517,55 @@ function drawGrid(side) {
         })
 
     } else if (side == "c") {
-        rightmost = (canvas.width / 10) * 3.5;
-        leftmost = rightmost + 3 * (canvas.width / 10);
-        heightmost = canvas.height / 4;
-        heightleast = heightmost * 3;
-        totalwidth = leftmost - rightmost;
-        totalheight = heightleast - heightmost;
+        
 
 
 
 
         context.beginPath();
-        context.moveTo(rightmost, heightmost);
-        context.lineTo(rightmost, heightleast);
+        context.moveTo(centerGrid.rightmost, centerGrid.heightmost);
+        context.lineTo(centerGrid.rightmost, centerGrid.heightleast);
         context.stroke();
 
         context.beginPath();
-        context.moveTo(leftmost, heightmost);
-        context.lineTo(leftmost, heightleast);
+        context.moveTo(centerGrid.leftmost, centerGrid.heightmost);
+        context.lineTo(centerGrid.leftmost, centerGrid.heightleast);
         context.stroke();
 
         context.beginPath();
-        context.moveTo(rightmost, heightmost);
-        context.lineTo(leftmost, heightmost);
+        context.moveTo(centerGrid.rightmost, centerGrid.heightmost);
+        context.lineTo(centerGrid.leftmost, centerGrid.heightmost);
         context.stroke();
 
         context.beginPath();
-        context.moveTo(rightmost, heightleast);
-        context.lineTo(leftmost, heightleast);
+        context.moveTo(centerGrid.rightmost, centerGrid.heightleast);
+        context.lineTo(centerGrid.leftmost, centerGrid.heightleast);
         context.stroke();
 
 
 
         for (let i = 1; i < 10; i++) {
             context.beginPath();
-            context.moveTo(rightmost + totalwidth * i / 10, heightmost);
-            context.lineTo(rightmost + totalwidth * i / 10, heightleast);
+            context.moveTo(centerGrid.rightmost + centerGrid.totalwidth * i / 10, centerGrid.heightmost);
+            context.lineTo(centerGrid.rightmost + centerGrid.totalwidth * i / 10, centerGrid.heightleast);
             context.stroke();
 
             context.font = "20px Impact";
             context.fillStyle = "Black";
-            context.fillText(i, rightmost-(totalwidth/18),heightmost  +(totalheight*(i/9) -(totalheight/9*.25))  );
+            context.fillText(i, centerGrid.rightmost-(centerGrid.totalwidth/18),centerGrid.heightmost  +(centerGrid.totalheight*(i/9) -(centerGrid.totalheight/9*.25))  );
             
         }
 
         for (let i = 0; i < 10; i++) {
             context.beginPath();
-            context.moveTo(rightmost, heightmost + totalheight * i / 9);
-            context.lineTo(leftmost, heightmost + totalheight * i / 9);
+            context.moveTo(centerGrid.rightmost, centerGrid.heightmost + centerGrid.totalheight * i / 9);
+            context.lineTo(centerGrid.leftmost, centerGrid.heightmost + centerGrid.totalheight * i / 9);
             context.stroke();
 
             //adapted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode
             context.font = "20px Impact";
             context.fillStyle = "Black";
-            context.fillText(String.fromCharCode(65+i),rightmost + totalwidth*(i/10) + totalwidth/27,heightmost - (totalheight/45));
+            context.fillText(String.fromCharCode(65+i),centerGrid.rightmost + centerGrid.totalwidth*(i/10) + centerGrid.totalwidth/27,centerGrid.heightmost - (centerGrid.totalheight/45));
         }
         
     }
@@ -505,7 +576,7 @@ function drawGrid(side) {
             return;
         }
         pos = getXY(canvas, click1);
-        const [i, j, k] = [RoundClickX(pos.x, totalwidth, rightmost), RoundClickY(pos.y, totalheight, heightmost), side]
+        const [i, j, k] = [RoundClickX(pos.x, centerGrid.totalwidth, centerGrid.rightmost), RoundClickY(pos.y, centerGrid.totalheight, centerGrid.heightmost), side]
         if (i < 0 || i > 9 || j < 0 || j > 8) {
             return;
         }
@@ -539,6 +610,14 @@ document.addEventListener("DOMContentLoaded", () => {
     context.msImageSmoothingEnabled = false;
     context.imageSmoothingEnabled = false;
 
+
+    rightGrid = setRightGrid();
+    console.log(rightGrid.rightmost);
+    leftGrid = setLeftGrid();
+    console.log(rightGrid.rightmost);
+    centerGrid = setCenterGrid();
+
+
     render(1, 2, 3);
 })
 
@@ -556,4 +635,11 @@ function RoundClickY(y, relSize, most) {
 function flatten(i,j)
 {
         return (j*10 + i);
+}
+
+
+
+function renderShips(arr)
+{
+
 }
