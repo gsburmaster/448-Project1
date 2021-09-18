@@ -1,12 +1,12 @@
 //EXAMPLE STUFF FOR TESTING
 let testData = {
-    currentPlayer: 2,
+    currentPlayer: 1,
     winner: "2",
     shipNumber: 2,
     gameStart: false,
     player1: {
-    player1arr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    player1earr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    player1arr: [1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    player1earr: [2, 2, 3, 2, 2, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     },
     player2: {
     player2arr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -21,7 +21,6 @@ let testData = {
 /*LIST OF TODOS:
 Finish Start Screen
 Finish Gameplay screen
-Finish ship drawing (silver unhit, red hit)
 document functions
 
 
@@ -399,11 +398,13 @@ function switchTurn(data) {
 //takes in the array to render ships
 function renderOwnBoard(arr) {
     drawGrid("r");
+    renderShips(arr,rightGrid);
 }
 
 
 function renderEnemyBoard(arr) {
     drawGrid("l");
+    renderShips(arr,leftGrid);
 }
 
 
@@ -491,7 +492,6 @@ function drawGrid(side) {
             }
 
             console.log(flatten(i,j) +"\nR event Listener");
-            console.log(unflattenToCoords(flatten(i,j)) + "bruh");
         })
 
     } else if (side == "l") {
@@ -683,11 +683,14 @@ function flatten(i,j)
 
 //takes a 1d index and returns 2d coords
 //makes it easier to render ships with an x and a y
-function unflatten(i)
+function unflattenY(i)
 {
-    return(Math.floor(i/10), i%10);
+    return(Math.floor(i/10));
 }
-
+function unflattenX(i)
+{
+    return(i%10);
+}
 
 //takes a 1d index and returns the GRID POS (eg E4, A9) as a string
 //does NOT return index for 2d array 
@@ -699,7 +702,34 @@ function unflattenToCoords(i)
 
 
 
-function renderShips(arr)
+//takes a grid object and an array and renders those ships in that grid
+//red = hit, grey = ship there, blue = miss
+function renderShips(arr, grid)
 {
+    for (let i=0; i < 90; i++)
+    {
+        if (arr[i] == 0)
+        {
+            
+        }
+        else if (arr[i] == 1)
+        {
+            context.fillStyle = "Grey";
+            context.fillRect(grid.rightmost + ((grid.totalwidth/10) /4 ) + (grid.totalwidth/10)*unflattenX(i) , grid.heightmost + ((grid.totalheight/10) /4 ) +  (grid.totalheight/9)*unflattenY(i), (grid.totalheight/10)/2, (grid.totalheight/9)/2 );
+        }
+        else if (arr[i] == 2)
+        {
+            context.fillStyle = "Red";
+            context.fillRect(grid.rightmost + ((grid.totalwidth/10) /4 ) + (grid.totalwidth/10)*unflattenX(i) , grid.heightmost + ((grid.totalheight/10) /4 ) +  (grid.totalheight/9)*unflattenY(i), (grid.totalheight/10)/2, (grid.totalheight/9)/2 );
+        }
+        else if (arr[i] == 3)
+        {
+            context.fillStyle = "Blue";
+            context.fillRect(grid.rightmost + ((grid.totalwidth/10) /4 ) + (grid.totalwidth/10)*unflattenX(i) , grid.heightmost + ((grid.totalheight/10) /4 ) +  (grid.totalheight/9)*unflattenY(i), (grid.totalheight/10)/2, (grid.totalheight/9)/2 );
+        }
+
+    }
+
+
 
 }
