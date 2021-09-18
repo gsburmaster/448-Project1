@@ -100,13 +100,13 @@ function gameplay(data) {
 
         if (data.currentPlayer == 1)
         {
-            renderShips(data.player1arr,rightGrid,true);
-            renderShips(data.player2arr,leftGrid,false);
+            renderShips(data.player1arr,leftGrid,true);
+            renderShips(data.player2arr,rightGrid,false);
         }
         else
         {
-            renderShips(data.player2arr,rightGrid,true);
-            renderShips(data.player1arr,leftGrid,false);
+            renderShips(data.player2arr,leftGrid,true);
+            renderShips(data.player1arr,rightGrid,false);
         }
 
         showPotMove();
