@@ -1,7 +1,10 @@
 //Main executive file for back end game logic
 
-function gameplayLoop(gameData) {
-	let pos = 0;
+function gameplayLoop() {
+    render(testData);
+    window.requestAnimationFrame(gameplayLoop);
+	
+    /*let pos = 0;
 	while (gameData.isWon == false) {
 		if (gameData.currentPlayer == 1) {
 			//get fire information and store it in pos
@@ -39,7 +42,7 @@ function gameplayLoop(gameData) {
 		
 		//Switch current player
 		gameData.currentPlayer = (gameData.currentPlayer + 1)%2;
-	}
+	}*/
 	
 	//Victory screen - can also just leave empty if we want to add that code to whatever section calls the gameplayLoop function
 }
