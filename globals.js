@@ -45,7 +45,7 @@ window.addEventListener("load", () => {
     //https://stackoverflow.com/questions/11071314/javascript-execute-after-all-images-have-loaded
     //from there^
     //starts game after images are loaded.
-    Promise.all(Array.from([rotate,mysea,enemysea,fire,submit,p2Win,p1Win,startButton,gameLogo]).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; }))).then(() => {
+    Promise.all(Array.from([img_rotate,img_mysea,img_enemysea,img_fire,img_submit,img_p2Win,img_p1Win,img_startButton,img_gameLogo]).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; }))).then(() => {
         window.requestAnimationFrame(gameplayLoop);
     });
     
