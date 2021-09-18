@@ -47,23 +47,21 @@ function gameplayLoop() {
 	//Victory screen - can also just leave empty if we want to add that code to whatever section calls the gameplayLoop function
 }
 
-function fire(gameData, pos) {
+function fire(data, pos) {
 	
 	//Get value stored where shot was placed
+    let result = 0;
 	if (gameData.currentPlayer == 1) {
-		let result = gameData.player1arr[pos];
+		result = data.player2arr[pos];
 	} else {
-		let result = gameData.player2arr[pos];
+		result = data.player1arr[pos];
 	}
 	
 	if (result == 1) { //only executes if un-hit ship is detected
-		gameData.player1arr[pos] = 2;
-		return(1);
+		data.player2arr[pos] = 2;
 	} else if (result == 0) { //executes if uninteracted cell is detected
-		gameData.player1arr[pos] = 3;
-	}
-	
-	return(0);		
+		data.player2arr[pos] = 3;
+	}	
 }
 
 
