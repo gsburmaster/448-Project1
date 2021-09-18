@@ -14,48 +14,48 @@ If you have any questions, have dom text me. I won't be looking at discord, but 
 */
 
 //adapted from https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images
-let gameLogo = new Image();
-gameLogo.src = 'Images/battleship.png';
+let img_gameLogo = new Image();
+img_gameLogo.src = 'Images/battleship.png';
 let logowidth = 107;
 let logoheight = 23;
 
-let startButton = new Image();
-startButton.src = 'Images/start.png';
+let img_startButton = new Image();
+img_startButton.src = 'Images/start.png';
 let startwidth = 71;
 let startheight = 22;
 
-let p1Win = new Image();
-p1Win.src = 'Images/player1.png';
+let img_p1Win = new Image();
+img_p1Win.src = 'Images/player1.png';
 let p1width = 89;
 let p1height = 59;
 
-let p2Win = new Image();
-p2Win.src = 'Images/player2.png';
+let img_p2Win = new Image();
+img_p2Win.src = 'Images/player2.png';
 let p2width = 89;
 let p2height = 59;
 
-let submit = new Image();
-submit.src = 'Images/submit.png';
+let img_submit = new Image();
+img_submit.src = 'Images/submit.png';
 let submitwidth = 81;
 let submitheight = 21;
 
-let fire = new Image();
-fire.src = 'Images/fire.png';
+let img_fire = new Image();
+img_fire.src = 'Images/fire.png';
 let firewidth = 50;
 let fireheight = 20;
 
-let enemysea = new Image();
-enemysea.src = 'Images/enemysea.png';
+let img_enemysea = new Image();
+img_enemysea.src = 'Images/enemysea.png';
 let eseawidth = 125;
 let eseaheight = 23;
 
-let mysea = new Image();
-mysea.src = 'Images/mysea.png';
+let img_mysea = new Image();
+img_mysea.src = 'Images/mysea.png';
 let mseawidth = 82;
 let mseaheight = 23;
 
-let rotate = new Image();
-rotate.src = 'Images/rotate.png';
+let img_rotate = new Image();
+img_rotate.src = 'Images/rotate.png';
 let rotatewidth = 83;
 let rotateheight = 19;
 
@@ -93,10 +93,10 @@ function gameplay(data) {
         context.stroke();
 
 
-        context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
-        context.drawImage(mysea,canvas.width/4 - mseawidth*3/2,canvas.height/6 - mseaheight*1.75,mseawidth*3,mseaheight*3);
-        context.drawImage(enemysea,canvas.width -canvas.width/4 - eseawidth*3/2,canvas.height/6 - eseaheight*1.75,eseawidth*3,eseaheight*3);
-        context.drawImage(fire,canvas.width*3/4-firewidth*3/2,canvas.height-canvas.height/6,firewidth*3,fireheight*3);
+        context.drawImage(img_gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
+        context.drawImage(img_mysea,canvas.width/4 - mseawidth*3/2,canvas.height/6 - mseaheight*1.75,mseawidth*3,mseaheight*3);
+        context.drawImage(img_enemysea,canvas.width -canvas.width/4 - eseawidth*3/2,canvas.height/6 - eseaheight*1.75,eseawidth*3,eseaheight*3);
+        context.drawImage(img_fire,canvas.width*3/4-firewidth*3/2,canvas.height-canvas.height/6,firewidth*3,fireheight*3);
 
         if (data.currentPlayer == 1)
         {
@@ -139,13 +139,13 @@ function clearScreen() {
 //based on who's turn it is and how many ships there are, places ships and such. THIS IS UNFINISHED.
 function startScreen(player1,player2,data) {
    
-   context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
+   context.drawImage(img_gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
 
    
-    context.drawImage(rotate, canvas.width - (canvas.width / 4) - (.5 * rotatewidth), canvas.height/2 - rotateheight/2, rotatewidth , rotateheight );
+    context.drawImage(img_rotate, canvas.width - (canvas.width / 4) - (.5 * rotatewidth), canvas.height/2 - rotateheight/2, rotatewidth , rotateheight );
     
     
-    context.drawImage(submit, canvas.width/2  -submitwidth, canvas.height - canvas.height/8 - submitheight/2, submitwidth *2, submitheight *2);
+    context.drawImage(img_submit, canvas.width/2  -submitwidth, canvas.height - canvas.height/8 - submitheight/2, submitwidth *2, submitheight *2);
 
     
     
@@ -271,13 +271,13 @@ function gameOver(data) {
     clearScreen();
     context.fillStyle = "Black";
     context.fillRect(0, 0, canvas.width, canvas.height);
-    context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
+    context.drawImage(img_gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
     if (data.winner == 1) {
         
-        context.drawImage(p1Win, (canvas.width / 2) - (3 * p1width), canvas.height / 4, p1width * 6, p1height * 6);
+        context.drawImage(img_p1Win, (canvas.width / 2) - (3 * p1width), canvas.height / 4, p1width * 6, p1height * 6);
     } else if (data.winner == 2) {
         
-        context.drawImage(p2Win, (canvas.width / 2) - (3 * p2width), canvas.height / 4, p2width * 6, p2height * 6);
+        context.drawImage(img_p2Win, (canvas.width / 2) - (3 * p2width), canvas.height / 4, p2width * 6, p2height * 6);
     }
     
 
