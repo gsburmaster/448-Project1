@@ -73,17 +73,7 @@ function fire(gameData, pos) {
 	}
 	
 	return(0);		
-		result = data.player2arr[pos];
-	} else {
-		result = data.player1arr[pos];
 	}
-	
-	if (result == 1) { //only executes if un-hit ship is detected
-		data.player2arr[pos] = 2;
-	} else if (result == 0) { //executes if uninteracted cell is detected
-		data.player2arr[pos] = 3;
-	}	
->>>>>>> c62d8fd5503fa1209e92e494458fdb0c56ec1a5e
 }
 
 
