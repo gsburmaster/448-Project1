@@ -1,7 +1,7 @@
 //EXAMPLE STUFF FOR TESTING
 let testData = {
     currentPlayer: 1,
-    winner: "2",
+    winner: "",
     shipNumber: 2,
     gameStart: false,
     player1: {
@@ -18,17 +18,18 @@ let testData = {
 
 
 
-/*LIST OF TODOS:
-Finish Start Screen
-Finish Gameplay screen
-document functions
+/*    NOTES FOR WHOEVER ENDS UP WITH MY LOOSE ENDS:
 
-
-Event Listeners for buttons are not coded
-(I think you wanted to do it separately Logan?)
+I am sorry that I didn't get as much done as discussed. I had to do a pretty significant refactor to pass the grids as objects (which makes eventlisteners more mobile and made rendering ships pretty easy.)
+Event Listeners for buttons are not coded (I think you wanted to do it separately Logan?)
+render needs to be handed blank data in the DOMCONTENTLOADED eventlistener. It isn't right now.
 for the potential move, there is a method in here for clearing potential move, rendering potential move , a var called potMove, and a method for turning a 1d array index into the 2d corresponding coordinate (E4 or J9).
 that stuff should have to happen in the event listener
+startScreen is unfinished, as I didn't even get close to rotate. 
+the Fire eventlistener needs to be the thing to call switchTurn and update data and such (imo)
+If you have any questions, have dom text me. I won't be looking at discord, but if its urgent I can try to help
 
+-Gage
 
 */
 
@@ -42,7 +43,7 @@ that stuff should have to happen in the event listener
 //portions adapted from https://github.com/gsburmaster/Connect4
 let canvas;
 let context;
-let mode;
+let mode = "start";
 let rotateFace;
 let potMove = '';
 
@@ -190,14 +191,18 @@ let rotateheight = 19;
 //effectively the executive function of rendering
 function render(player1, player2, data) {
 
-
-    // check to see if we are in the start menu, game over, or gameplay phase
-    startScreen(testData);
-    clearScreen();
-    gameplay(1,2,3);
-    //gameOver(testData);
-    //gameplay(arr1,arr2,data);
-
+    if (mode == "start")
+    {
+        startScreen(player1,player2,data);
+    }
+    else if (mode == "game")
+    {
+        gameplay(player1,player2,data);
+    }
+    else if (mode == "win")
+    {
+        gameOver(data);
+    }
 }
 
 
@@ -206,10 +211,6 @@ function render(player1, player2, data) {
 //it takes in player1, player2, and data 
 //also handles global potMove, which lets me update what move is queued up
 function gameplay(player1, player2, data) {
-    mode = "game";
-    if (data.gameStart == false) {
-        startScreen(data);
-    }
 
         //DRAWS a line in the middle of the screen
         context.beginPath();
@@ -225,13 +226,13 @@ function gameplay(player1, player2, data) {
 
         if (data.currentPlayer == 1)
         {
-            renderOwnBoard(player1);
-            renderEnemyBoard(player1);    
+            renderOwnBoard(player1.player1arr);
+            renderEnemyBoard(player1.player1earr);    
         }
         else
         {
-            renderOwnBoard(player2);
-            renderEnemyBoard(player2);
+            renderOwnBoard(player2.player2arr);
+            renderEnemyBoard(player2.player2earr);
         }
 
         showPotMove();
@@ -263,7 +264,8 @@ function clearScreen() {
 }
 
 
-function startScreen(data) {
+//based on who's turn it is and how many ships there are, places ships and such. THIS IS UNFINISHED.
+function startScreen(player1,player2,data) {
    
    context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
 
@@ -288,7 +290,7 @@ function startScreen(data) {
 
 //portions adapted from //https://github.com/gsburmaster/Connect4/blob/main/connect-four.js
 // and https://www.w3schools.com/tags/canvas_measuretext.asp
-//changes currentPlayer var in data
+//changes currentPlayer var in data and shows splash screen with countdown
 function switchTurn(data) {
     clearScreen();
     if (data.currentPlayer == 1) {
@@ -395,13 +397,14 @@ function switchTurn(data) {
 
 
 
-//takes in the array to render ships
+
+//renders your ships in right grid
 function renderOwnBoard(arr) {
     drawGrid("r");
     renderShips(arr,rightGrid);
 }
 
-
+//renders enemy ships (and misses and such) in left grid
 function renderEnemyBoard(arr) {
     drawGrid("l");
     renderShips(arr,leftGrid);
@@ -428,7 +431,8 @@ function gameOver(data) {
 
 }
 
-
+//just draws a grid and labels, does not carry any data
+//side is either r l or c
 function drawGrid(side) {
     
     if (side == "r") {
@@ -650,21 +654,23 @@ document.addEventListener("DOMContentLoaded", () => {
     context.msImageSmoothingEnabled = false;
     context.imageSmoothingEnabled = false;
 
-
+    //this is how you have to do this don't ask why please
     rightGrid = setRightGrid();
     leftGrid = setLeftGrid();
     centerGrid = setCenterGrid();
 
     //https://stackoverflow.com/questions/11071314/javascript-execute-after-all-images-have-loaded
     //from there^
+    //starts game after images are loaded.
     Promise.all(Array.from([rotate,mysea,enemysea,fire,submit,p2Win,p1Win,startButton,gameLogo]).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; }))).then(() => {
-        console.log(render(1, 2, 3));
+        console.log(render(1,2,3));
     });
 
 
     
 })
 
+//These TWO functions take an eventlistener click and return a rounded 2d array index (x or y respectively)
 //taken from https://github.com/gsburmaster/Connect4
 function RoundClickX(x, relSize, most) {
     return (Math.ceil((x - most) / (relSize / 10)) - 1)
