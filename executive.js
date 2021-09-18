@@ -50,29 +50,22 @@ function gameplayLoop() {
 function fire(gameData, pos) {
 	
 	//Get value stored where shot was placed
-    let result = 0;
 	if (gameData.currentPlayer == 1) {
 		let result = gameData.player2arr[pos];
 		
 		if (result == 1) { //only executes if un-hit ship is detected
-		gameData.player2arr[pos] = 2;
-		return(1);
+            gameData.player2arr[pos] = 2;
 		} else if (result == 0) { //executes if uninteracted cell is detected
-		gameData.player2arr[pos] = 3;
+            gameData.player2arr[pos] = 3;
 		}
-		
-	} else {
+    } else {
 		let result = gameData.player1arr[pos];
 		
 		if (result == 1) { //only executes if un-hit ship is detected
-		gameData.player1arr[pos] = 2;
-		return(1);
+            gameData.player1arr[pos] = 2;
 		} else if (result == 0) { //executes if uninteracted cell is detected
-		gameData.player1arr[pos] = 3;
+            gameData.player1arr[pos] = 3;
 		}
-	}
-	
-	return(0);		
 	}
 }
 
