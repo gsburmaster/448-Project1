@@ -21,7 +21,7 @@ function gameplayLoop(gameData) {
 	while (gameData.isWon == false) {
 		if (gameData.currentPlayer == 1) {
 			//get fire information and store it in pos
-			switch (fire(gameData, pos) {
+			switch (fire(gameData, pos)) {
 				// copy/paste code below
 				case 0: //miss 
 				
@@ -37,7 +37,7 @@ function gameplayLoop(gameData) {
 			}
 		} else {
 			//get fire information and store it in pos
-			switch (fire(gameData, pos) {
+			switch (fire(gameData, pos)) {
 				case 0: //miss 
 				
 				break;
