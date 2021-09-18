@@ -1,21 +1,5 @@
 //Main executive file for back end game logic
 
-//Basic game data
-//Note other 2 arrays for tracking hits and misses havent been added
-//Planned on 0 = empty, 1 = ship placed (un-hit), 2 = hit ship, 3 = miss
-//EX: [0,0,1,1,2,1,0]
-let gameData = {
-
-    currentPlayer: 1,
-    shipNumber,
-  /*char*/  winner: "1",
-    gameStart: false,
-    isWon: false,
-    player1arr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    player2arr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-
-}
-
 function gameplayLoop(gameData) {
 	let pos = 0;
 	while (gameData.isWon == false) {
