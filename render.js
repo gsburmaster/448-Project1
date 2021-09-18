@@ -63,15 +63,15 @@ let rotateheight = 19;
 //this is the main render function. It spins up the whole game when it starts. 
 // it also has access to all the game data in case it needs to be passed to subsequent functions. 
 //effectively the executive function of rendering
-function render(player1, player2, data) {
+function render(data) {
 
     if (mode == "start")
     {
-        startScreen(player1,player2,data);
+        startScreen(data);
     }
     else if (mode == "game")
     {
-        gameplay(player1,player2,data);
+        gameplay(data);
     }
     else if (mode == "win")
     {
@@ -84,7 +84,7 @@ function render(player1, player2, data) {
 //this is the gameplay render function. it is the both grids showing,"fire" screen. 
 //it takes in player1, player2, and data 
 //also handles global potMove, which lets me update what move is queued up
-function gameplay(player1, player2, data) {
+function gameplay(data) {
 
         //DRAWS a line in the middle of the screen
         context.beginPath();
@@ -100,13 +100,13 @@ function gameplay(player1, player2, data) {
 
         if (data.currentPlayer == 1)
         {
-            renderShips(player1.player1arr,rightGrid,true);
-            renderShips(player1.player1earr,leftGrid,false);
+            renderShips(data.player1arr,rightGrid,true);
+            renderShips(data.player2arr,leftGrid,false);
         }
         else
         {
-            renderShips(player2.player2arr,rightGrid,true);
-            renderShips(player2.player2earr,leftGrid,false);
+            renderShips(data.player2arr,rightGrid,true);
+            renderShips(data.player1arr,leftGrid,false);
         }
 
         showPotMove();
