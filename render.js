@@ -272,10 +272,10 @@ function gameOver(data) {
     context.fillStyle = "Black";
     context.fillRect(0, 0, canvas.width, canvas.height);
     context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
-    if (data.winner == "1") {
+    if (data.winner == 1) {
         
         context.drawImage(p1Win, (canvas.width / 2) - (3 * p1width), canvas.height / 4, p1width * 6, p1height * 6);
-    } else if (data.winner == "2") {
+    } else if (data.winner == 2) {
         
         context.drawImage(p2Win, (canvas.width / 2) - (3 * p2width), canvas.height / 4, p2width * 6, p2height * 6);
     }
