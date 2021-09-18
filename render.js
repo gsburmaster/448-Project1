@@ -4,11 +4,14 @@ let testData = {
     winner: "2",
     shipNumber: 2,
     gameStart: false,
+    player1: {
     player1arr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     player1earr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    },
+    player2: {
     player2arr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     player2earr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-
+    },
     //winner is a char
 }
 
@@ -17,9 +20,17 @@ let testData = {
 
 /*LIST OF TODOS:
 Finish Start Screen
+Finish Gameplay screen
 Finish ship drawing (silver unhit, red hit)
-refactor how drawGrid works so that I can pass a grid as an object
 document functions
+
+
+Event Listeners for buttons are not coded
+(I think you wanted to do it separately Logan?)
+for the potential move, there is a method in here for clearing potential move, rendering potential move , a var called potMove, and a method for turning a 1d array index into the 2d corresponding coordinate (E4 or J9).
+that stuff should have to happen in the event listener
+
+
 */
 
 
@@ -34,6 +45,7 @@ let canvas;
 let context;
 let mode;
 let rotateFace;
+let potMove = '';
 
 //refactoring grids into objects so that I can pass them around 
 let rightGrid = {
@@ -174,8 +186,10 @@ let rotateheight = 19;
 
 
 
-
-function render(arr1, arr2, data) {
+//this is the main render function. It spins up the whole game when it starts. 
+// it also has access to all the game data in case it needs to be passed to subsequent functions. 
+//effectively the executive function of rendering
+function render(player1, player2, data) {
 
 
     // check to see if we are in the start menu, game over, or gameplay phase
@@ -188,48 +202,76 @@ function render(arr1, arr2, data) {
 }
 
 
-function gameplay(arr1, arr2, data) {
+
+//this is the gameplay render function. it is the both grids showing,"fire" screen. 
+//it takes in player1, player2, and data 
+//also handles global potMove, which lets me update what move is queued up
+function gameplay(player1, player2, data) {
     mode = "game";
     if (data.gameStart == false) {
         startScreen(data);
     }
 
-    //ingame logic (impliment if else later)
         //DRAWS a line in the middle of the screen
-        //TEST: REMOVE LATER
         context.beginPath();
         context.moveTo(canvas.width / 2, 0);
         context.lineTo(canvas.width / 2, canvas.height);
         context.stroke();
-    context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
 
 
-    renderOwnBoard(1);
-    renderEnemyBoard(1);
+        context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
+        context.drawImage(mysea,canvas.width/4 - mseawidth*3/2,canvas.height/6 - mseaheight*1.75,mseawidth*3,mseaheight*3);
+        context.drawImage(enemysea,canvas.width -canvas.width/4 - eseawidth*3/2,canvas.height/6 - eseaheight*1.75,eseawidth*3,eseaheight*3);
+        context.drawImage(fire,canvas.width*3/4-firewidth*3/2,canvas.height-canvas.height/6,firewidth*3,fireheight*3);
+
+        if (data.currentPlayer == 1)
+        {
+            renderOwnBoard(player1);
+            renderEnemyBoard(player1);    
+        }
+        else
+        {
+            renderOwnBoard(player2);
+            renderEnemyBoard(player2);
+        }
+
+        showPotMove();
+
+
 }
 
 
+//call this everytime you update potMove from the click event listener and mode is game
+function showPotMove()
+{
+        context.font = "40px Impact";
+        context.fillStyle = "#04084b"; //color of navy in mysea.png. could update to fix colors later
+        context.fillText("Potential move: " + potMove,canvas.width/4 - (context.measureText("Potential move: " + potMove).width / 2),canvas.height-canvas.height/8 );
+}
+
+
+//clears the bottom fifth of the left half of the gameplay screen so that the potential move can be reupdated with new potential moves upon a new click. 
+//call this before showPotMove();
+function clearPotMove()
+{
+    context.clearRect(0,canvas.height - canvas.height/5, canvas.width/2 - 1,canvas.height);
+}
+
+
+//self explanatory
 function clearScreen() {
-    context.fillStyle = "White";
-    context.fillRect(0,0,canvas.width,canvas.height);
     context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 
 function startScreen(data) {
-    /*gameLogo.onload = function () {
-        context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
-    }*/
+   
    context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
 
-    /*rotate.onload = function () {
-        context.drawImage(rotate, canvas.width - (canvas.width / 5) - (.5 * rotatewidth), canvas.height/2 - rotateheight, rotatewidth *2, rotateheight *2);
-    }*/
+   
     context.drawImage(rotate, canvas.width - (canvas.width / 4) - (.5 * rotatewidth), canvas.height/2 - rotateheight/2, rotatewidth , rotateheight );
     
-    /*submit.onload = function () {
-        context.drawImage(submit, canvas.width/2  -submitwidth, canvas.height - canvas.height/8 - submitheight/2, submitwidth *2, submitheight *2);
-    }*/
+    
     context.drawImage(submit, canvas.width/2  -submitwidth, canvas.height - canvas.height/8 - submitheight/2, submitwidth *2, submitheight *2);
 
     
@@ -371,19 +413,12 @@ function gameOver(data) {
     clearScreen();
     context.fillStyle = "Black";
     context.fillRect(0, 0, canvas.width, canvas.height);
-    gameLogo.onload = function () {
-        context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
-    }
-        context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
+    context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
     if (data.winner == "1") {
-        p1Win.onload = function () {
-            context.drawImage(p1Win, (canvas.width / 2) - (3 * p1width), canvas.height / 4, p1width * 6, p1height * 6);
-        }
+        
         context.drawImage(p1Win, (canvas.width / 2) - (3 * p1width), canvas.height / 4, p1width * 6, p1height * 6);
     } else if (data.winner == "2") {
-        p2Win.onload = function () {
-            context.drawImage(p2Win, (canvas.width / 2) - (3 * p2width), canvas.height / 4, p2width * 6, p2height * 6);
-        }
+        
         context.drawImage(p2Win, (canvas.width / 2) - (3 * p2width), canvas.height / 4, p2width * 6, p2height * 6);
     }
     
@@ -456,6 +491,7 @@ function drawGrid(side) {
             }
 
             console.log(flatten(i,j) +"\nR event Listener");
+            console.log(unflattenToCoords(flatten(i,j)) + "bruh");
         })
 
     } else if (side == "l") {
@@ -643,6 +679,22 @@ function RoundClickY(y, relSize, most) {
 function flatten(i,j)
 {
         return (j*10 + i);
+}
+
+//takes a 1d index and returns 2d coords
+//makes it easier to render ships with an x and a y
+function unflatten(i)
+{
+    return(Math.floor(i/10), i%10);
+}
+
+
+//takes a 1d index and returns the GRID POS (eg E4, A9) as a string
+//does NOT return index for 2d array 
+//used to get coord for showPotMove() or whatever the function is called
+function unflattenToCoords(i)
+{
+    return(String.fromCharCode(65+(i%10)) +  (Math.floor(i/10) + 1));
 }
 
 
