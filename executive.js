@@ -47,7 +47,7 @@ function gameplayLoop() {
 	//Victory screen - can also just leave empty if we want to add that code to whatever section calls the gameplayLoop function
 }
 
-function fire(gameData, pos) {
+function fire(data, pos) {
 	
 	//Get value stored where shot was placed
 	if (gameData.currentPlayer == 1) {
@@ -68,13 +68,6 @@ function fire(gameData, pos) {
 		}
 	}
 }
-
-
-
-
-
-
-
 
 /**
 *This function checks to see if the game has a winner

@@ -208,7 +208,7 @@ function rightsideClickEventRegister() {
     if (i < 0 || i > 9 || j < 0 || j > 8) {
         return;
     }
-
+    fire(testData, flatten(i,j));
     console.log(flatten(i,j) +"\nR event Listener");
     })
 }
