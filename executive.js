@@ -2,7 +2,7 @@
 
 //Basic game data
 //Note other 2 arrays for tracking hits and misses havent been added
-//Planned on 0 = empty, 1 = ship placed (un-hit), 2 = missed shot, 3 = hit ship, 4 = sunk ship
+//Planned on 0 = empty, 1 = ship placed (un-hit), 2 = hit ship, 3 = miss
 //EX: [0,0,1,1,2,1,0]
 let gameData = {
 
@@ -56,6 +56,8 @@ function gameplayLoop(gameData) {
 		//Switch current player
 		gameData.currentPlayer = (gameData.currentPlayer + 1)%2;
 	}
+	
+	//Victory screen - can also just not add code if we want to add that code to whatever section calls the gameplayLoop function
 }
 
 function fire(gameData, pos) {
@@ -68,10 +70,12 @@ function fire(gameData, pos) {
 	}
 	
 	if (result == 1) { //only executes if un-hit ship is detected
-		gameData.player1arr[pos] = 3
-		//if ship is sunk, set gameData.player1arr[pos] = 4 and return 2
+		gameData.player1arr[pos] = 2;
 		return(1);
+	} else if (result == 0) { //executes if uninteracted cell is detected
+		gameData.player1arr[pos] = 3;
 	}
+	
 	return(0);		
 }
 
@@ -102,7 +106,6 @@ function winCheck(gameData) {
                 gameData.isWon = true;
                 gameData.winner = "1"
             }
-
         }
     }
 
