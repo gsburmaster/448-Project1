@@ -80,14 +80,19 @@ function fire(gameData, pos) {
 }
 
 
+
+
+
+
+
+
 /**
-*This function checks to see if the game has one
+*This function checks to see if the game has a winner
 * @param {object} takes gameData object as argument
 * @return none
 * 
 *
 */
-
 function winCheck(gameData) {
 
     //If player 1's turn, checks if any ships remaining on player 2's board
@@ -129,7 +134,6 @@ function winCheck(gameData) {
     // calls win screen render method based on who won
     if(gameData.isWon == true)
     {
-    
     gameOver(gameData);
     }
 

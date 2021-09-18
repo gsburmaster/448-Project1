@@ -1,25 +1,40 @@
 //EXAMPLE STUFF FOR TESTING
 let testData = {
-    currentPlayer: 2,
-    winner: "2",
+    currentPlayer: 1,
+    winner: "",
     shipNumber: 2,
     gameStart: false,
-    player1arr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    player1earr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    player1: {
+    player1arr: [1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    player1earr: [2, 2, 3, 2, 2, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    },
+    player2: {
     player2arr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     player2earr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-
+    },
     //winner is a char
 }
 
 
 
 
-/*LIST OF TODOS:
-Finish Start Screen
-Finish ship drawing (silver unhit, red hit)
-document functions
+/*    NOTES FOR WHOEVER ENDS UP WITH MY LOOSE ENDS:
+
+I am sorry that I didn't get as much done as discussed. I had to do a pretty significant refactor to pass the grids as objects (which makes eventlisteners more mobile and made rendering ships pretty easy.)
+Event Listeners for buttons are not coded (I think you wanted to do it separately Logan?)
+render needs to be handed blank data in the DOMCONTENTLOADED eventlistener. It isn't right now.
+for the potential move, there is a method in here for clearing potential move, rendering potential move , a var called potMove, and a method for turning a 1d array index into the 2d corresponding coordinate (E4 or J9).
+that stuff should have to happen in the event listener
+startScreen is unfinished, as I didn't even get close to rotate. 
+the Fire eventlistener needs to be the thing to call switchTurn and update data and such (imo)
+If you have any questions, have dom text me. I won't be looking at discord, but if its urgent I can try to help
+
+-Gage
+
 */
+
+
+
 
 
 
@@ -28,8 +43,96 @@ document functions
 //portions adapted from https://github.com/gsburmaster/Connect4
 let canvas;
 let context;
-let mode;
+let mode = "start";
 let rotateFace;
+let potMove = '';
+
+//refactoring grids into objects so that I can pass them around 
+let rightGrid = {
+    rightmost:0,
+    leftmost:0,
+    heightmost:0,
+    heightleast:0,
+    totalwidth:0,
+    totalheight:0,
+}
+let leftGrid = {
+    rightmost:0,
+    leftmost:0,
+    heightmost:0,
+    heightleast:0,
+    totalwidth:0,
+    totalheight:0,
+}
+let centerGrid = {
+    rightmost:0,
+    leftmost:0,
+    heightmost:0,
+    heightleast:0,
+    totalwidth:0,
+    totalheight:0,
+}
+
+//https://stackoverflow.com/questions/4618541/can-i-reference-other-properties-during-object-declaration-in-javascript
+function setRightGrid()
+{
+        var Trightmost =  canvas.width / 10;
+        var Tleftmost =  Trightmost * 4;
+        var Theightmost = canvas.height / 4;
+        var Theightleast = Theightmost * 3;
+        var Ttotalwidth = Tleftmost - Trightmost;
+        var Ttotalheight = Theightleast - Theightmost;
+
+    return {
+        rightmost:Trightmost ,
+        leftmost: Tleftmost,
+        heightmost:Theightmost ,
+        heightleast: Theightleast,
+        totalwidth:Ttotalwidth ,
+        totalheight:Ttotalheight ,
+    };
+}
+
+function setLeftGrid()
+{
+    var Trightmost=  (canvas.width / 10) * 6;
+    var Tleftmost= Trightmost + 3 * (canvas.width / 10);
+    var Theightmost= canvas.height / 4;
+    var Theightleast= Theightmost * 3;
+    var Ttotalwidth= Tleftmost - Trightmost;
+    var Ttotalheight= Theightleast - Theightmost;
+    
+    return {
+        rightmost:Trightmost ,
+        leftmost: Tleftmost,
+        heightmost:Theightmost ,
+        heightleast: Theightleast,
+        totalwidth:Ttotalwidth ,
+        totalheight:Ttotalheight ,
+    };
+}
+
+
+function setCenterGrid()
+{
+    var Trightmost= (canvas.width / 10) * 3.5;
+    var Tleftmost= Trightmost + 3 * (canvas.width / 10);
+    var Theightmost= canvas.height / 4;
+    var Theightleast= Theightmost * 3;
+    var Ttotalwidth= Tleftmost - Trightmost;
+    var Ttotalheight= Theightleast - Theightmost;
+
+    return {
+        rightmost:Trightmost ,
+        leftmost: Tleftmost,
+        heightmost:Theightmost ,
+        heightleast: Theightleast,
+        totalwidth:Ttotalwidth ,
+        totalheight:Ttotalheight ,
+    };
+}
+
+
 
 //adapted from https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images
 let gameLogo = new Image();
@@ -77,57 +180,102 @@ rotate.src = 'Images/rotate.png';
 let rotatewidth = 83;
 let rotateheight = 19;
 
-function render(arr1, arr2, data) {
 
 
-    // check to see if we are in the start menu, game over, or gameplay phase
-    startScreen(testData);
-   //clearScreen();
-    //gameplay(1,2,3);
-    //gameOver(testData);
-    //gameplay(arr1,arr2,data);
 
+
+
+
+//this is the main render function. It spins up the whole game when it starts. 
+// it also has access to all the game data in case it needs to be passed to subsequent functions. 
+//effectively the executive function of rendering
+function render(player1, player2, data) {
+
+    if (mode == "start")
+    {
+        startScreen(player1,player2,data);
+    }
+    else if (mode == "game")
+    {
+        gameplay(player1,player2,data);
+    }
+    else if (mode == "win")
+    {
+        gameOver(data);
+    }
 }
 
 
-function gameplay(arr1, arr2, data) {
-    mode = "game";
-    if (data.gameStart == false) {
-        startScreen(data);
-    }
 
-    //ingame logic (impliment if else later)
-    gameLogo.onload = function () {
+//this is the gameplay render function. it is the both grids showing,"fire" screen. 
+//it takes in player1, player2, and data 
+//also handles global potMove, which lets me update what move is queued up
+function gameplay(player1, player2, data) {
+
+        //DRAWS a line in the middle of the screen
+        context.beginPath();
+        context.moveTo(canvas.width / 2, 0);
+        context.lineTo(canvas.width / 2, canvas.height);
+        context.stroke();
+
+
         context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
-    }
+        context.drawImage(mysea,canvas.width/4 - mseawidth*3/2,canvas.height/6 - mseaheight*1.75,mseawidth*3,mseaheight*3);
+        context.drawImage(enemysea,canvas.width -canvas.width/4 - eseawidth*3/2,canvas.height/6 - eseaheight*1.75,eseawidth*3,eseaheight*3);
+        context.drawImage(fire,canvas.width*3/4-firewidth*3/2,canvas.height-canvas.height/6,firewidth*3,fireheight*3);
+
+        if (data.currentPlayer == 1)
+        {
+            renderOwnBoard(player1.player1arr);
+            renderEnemyBoard(player1.player1earr);    
+        }
+        else
+        {
+            renderOwnBoard(player2.player2arr);
+            renderEnemyBoard(player2.player2earr);
+        }
+
+        showPotMove();
 
 
-    renderOwnBoard(1);
-    renderEnemyBoard(1);
 }
 
 
+//call this everytime you update potMove from the click event listener and mode is game
+function showPotMove()
+{
+        context.font = "40px Impact";
+        context.fillStyle = "#04084b"; //color of navy in mysea.png. could update to fix colors later
+        context.fillText("Potential move: " + potMove,canvas.width/4 - (context.measureText("Potential move: " + potMove).width / 2),canvas.height-canvas.height/8 );
+}
+
+
+//clears the bottom fifth of the left half of the gameplay screen so that the potential move can be reupdated with new potential moves upon a new click. 
+//call this before showPotMove();
+function clearPotMove()
+{
+    context.clearRect(0,canvas.height - canvas.height/5, canvas.width/2 - 1,canvas.height);
+}
+
+
+//self explanatory
 function clearScreen() {
     context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 
-function startScreen(data) {
-    gameLogo.onload = function () {
-        context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
-    }
-    context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
+//based on who's turn it is and how many ships there are, places ships and such. THIS IS UNFINISHED.
+function startScreen(player1,player2,data) {
+   
+   context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
 
-    rotate.onload = function () {
-        context.drawImage(rotate, canvas.width - (canvas.width / 5) - (.5 * rotatewidth), canvas.height/2 - rotateheight, rotatewidth *2, rotateheight *2);
-    }
+   
     context.drawImage(rotate, canvas.width - (canvas.width / 4) - (.5 * rotatewidth), canvas.height/2 - rotateheight/2, rotatewidth , rotateheight );
     
-    submit.onload = function () {
-        context.drawImage(submit, canvas.width/2  -submitwidth, canvas.height - canvas.height/8 - submitheight/2, submitwidth *2, submitheight *2);
-    }
+    
     context.drawImage(submit, canvas.width/2  -submitwidth, canvas.height - canvas.height/8 - submitheight/2, submitwidth *2, submitheight *2);
 
+    
         
 
 
@@ -142,7 +290,7 @@ function startScreen(data) {
 
 //portions adapted from //https://github.com/gsburmaster/Connect4/blob/main/connect-four.js
 // and https://www.w3schools.com/tags/canvas_measuretext.asp
-//changes currentPlayer var in data
+//changes currentPlayer var in data and shows splash screen with countdown
 function switchTurn(data) {
     clearScreen();
     if (data.currentPlayer == 1) {
@@ -249,14 +397,17 @@ function switchTurn(data) {
 
 
 
-//takes in the array to render ships
+
+//renders your ships in right grid
 function renderOwnBoard(arr) {
     drawGrid("r");
+    renderShips(arr,rightGrid);
 }
 
-
+//renders enemy ships (and misses and such) in left grid
 function renderEnemyBoard(arr) {
     drawGrid("l");
+    renderShips(arr,leftGrid);
 }
 
 
@@ -266,19 +417,12 @@ function gameOver(data) {
     clearScreen();
     context.fillStyle = "Black";
     context.fillRect(0, 0, canvas.width, canvas.height);
-    gameLogo.onload = function () {
-        context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
-    }
-        context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
+    context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
     if (data.winner == "1") {
-        p1Win.onload = function () {
-            context.drawImage(p1Win, (canvas.width / 2) - (3 * p1width), canvas.height / 4, p1width * 6, p1height * 6);
-        }
+        
         context.drawImage(p1Win, (canvas.width / 2) - (3 * p1width), canvas.height / 4, p1width * 6, p1height * 6);
     } else if (data.winner == "2") {
-        p2Win.onload = function () {
-            context.drawImage(p2Win, (canvas.width / 2) - (3 * p2width), canvas.height / 4, p2width * 6, p2height * 6);
-        }
+        
         context.drawImage(p2Win, (canvas.width / 2) - (3 * p2width), canvas.height / 4, p2width * 6, p2height * 6);
     }
     
@@ -287,75 +431,56 @@ function gameOver(data) {
 
 }
 
-
+//just draws a grid and labels, does not carry any data
+//side is either r l or c
 function drawGrid(side) {
-    let rightmost;
-    let leftmost;
-    let heightmost;
-    let heightleast;
-    let totalwidth;
-    let totalheight;
+    
     if (side == "r") {
-        rightmost = canvas.width / 10;
-        leftmost = rightmost * 4;
-        heightmost = canvas.height / 4;
-        heightleast = heightmost * 3;
-        totalwidth = leftmost - rightmost;
-        totalheight = heightleast - heightmost;
-
-
-        //DRAWS a line in the middle of the screen
-        //TEST: REMOVE LATER
+        
         context.beginPath();
-        context.moveTo(canvas.width / 2, 0);
-        context.lineTo(canvas.width / 2, canvas.height);
-        context.stroke();
-
-
-        context.beginPath();
-        context.moveTo(rightmost, heightmost);
-        context.lineTo(rightmost, heightleast);
+        context.moveTo(rightGrid.rightmost, rightGrid.heightmost);
+        context.lineTo(rightGrid.rightmost, rightGrid.heightleast);
         context.stroke();
 
         context.beginPath();
-        context.moveTo(leftmost, heightmost);
-        context.lineTo(leftmost, heightleast);
+        context.moveTo(rightGrid.leftmost, rightGrid.heightmost);
+        context.lineTo(rightGrid.leftmost, rightGrid.heightleast);
         context.stroke();
 
         context.beginPath();
-        context.moveTo(rightmost, heightmost);
-        context.lineTo(leftmost, heightmost);
+        context.moveTo(rightGrid.rightmost, rightGrid.heightmost);
+        context.lineTo(rightGrid.leftmost, rightGrid.heightmost);
         context.stroke();
 
         context.beginPath();
-        context.moveTo(rightmost, heightleast);
-        context.lineTo(leftmost, heightleast);
+        context.moveTo(rightGrid.rightmost, rightGrid.heightleast);
+        context.lineTo(rightGrid.leftmost, rightGrid.heightleast);
         context.stroke();
 
 
 
         for (let i = 1; i < 10; i++) {
             context.beginPath();
-            context.moveTo(rightmost + totalwidth * i / 10, heightmost);
-            context.lineTo(rightmost + totalwidth * i / 10, heightleast);
+            context.moveTo(rightGrid.rightmost + rightGrid.totalwidth * i / 10, rightGrid.heightmost);
+            context.lineTo(rightGrid.rightmost + rightGrid.totalwidth * i / 10, rightGrid.heightleast);
             context.stroke();
 
             context.font = "20px Impact";
             context.fillStyle = "Black";
-            context.fillText(i, rightmost-(totalwidth/18),heightmost  +(totalheight*(i/9) -(totalheight/9*.25))  );
+            context.fillText(i, rightGrid.rightmost-(rightGrid.totalwidth/18),rightGrid.heightmost  +(rightGrid.totalheight*(i/9) -(rightGrid.totalheight/9*.25))  );
             
         }
 
         for (let i = 0; i < 10; i++) {
             context.beginPath();
-            context.moveTo(rightmost, heightmost + totalheight * i / 9);
-            context.lineTo(leftmost, heightmost + totalheight * i / 9);
+            context.moveTo(rightGrid.rightmost, rightGrid.heightmost + rightGrid.totalheight * i / 9);
+            context.lineTo(rightGrid.leftmost, rightGrid.heightmost + rightGrid.totalheight * i / 9);
             context.stroke();
 
             //adapted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode
             context.font = "20px Impact";
             context.fillStyle = "Black";
-            context.fillText(String.fromCharCode(65+i),rightmost + totalwidth*(i/10) + totalwidth/27,heightmost - (totalheight/45));
+            context.fillText(String.fromCharCode(65+i),rightGrid.rightmost + rightGrid.totalwidth*(i/10) + rightGrid.totalwidth/27,rightGrid.heightmost - (rightGrid.totalheight/45));
         }
 
         //adapted from https://github.com/gsburmaster/Connect4
@@ -365,7 +490,7 @@ function drawGrid(side) {
                 return;
             }
             pos = getXY(canvas, click1);
-            const [i, j, k] = [RoundClickX(pos.x, totalwidth, rightmost), RoundClickY(pos.y, totalheight, heightmost), side]
+            const [i, j, k] = [RoundClickX(pos.x, rightGrid.totalwidth, rightGrid.rightmost), RoundClickY(pos.y, rightGrid.totalheight, rightGrid.heightmost), side]
             if (i < 0 || i > 9 || j < 0 || j > 8) {
                 return;
             }
@@ -374,57 +499,52 @@ function drawGrid(side) {
         })
 
     } else if (side == "l") {
-        rightmost = (canvas.width / 10) * 6;
-        leftmost = rightmost + 3 * (canvas.width / 10);
-        heightmost = canvas.height / 4;
-        heightleast = heightmost * 3;
-        totalwidth = leftmost - rightmost;
-        totalheight = heightleast - heightmost;
+        
 
         context.beginPath();
-        context.moveTo(rightmost, heightmost);
-        context.lineTo(rightmost, heightleast);
+        context.moveTo(leftGrid.rightmost, leftGrid.heightmost);
+        context.lineTo(leftGrid.rightmost, leftGrid.heightleast);
         context.stroke();
 
         context.beginPath();
-        context.moveTo(leftmost, heightmost);
-        context.lineTo(leftmost, heightleast);
+        context.moveTo(leftGrid.leftmost, leftGrid.heightmost);
+        context.lineTo(leftGrid.leftmost, leftGrid.heightleast);
         context.stroke();
 
         context.beginPath();
-        context.moveTo(rightmost, heightmost);
-        context.lineTo(leftmost, heightmost);
+        context.moveTo(leftGrid.rightmost, leftGrid.heightmost);
+        context.lineTo(leftGrid.leftmost, leftGrid.heightmost);
         context.stroke();
 
         context.beginPath();
-        context.moveTo(rightmost, heightleast);
-        context.lineTo(leftmost, heightleast);
+        context.moveTo(leftGrid.rightmost, leftGrid.heightleast);
+        context.lineTo(leftGrid.leftmost, leftGrid.heightleast);
         context.stroke();
 
 
 
         for (let i = 1; i < 10; i++) {
             context.beginPath();
-            context.moveTo(rightmost + totalwidth * i / 10, heightmost);
-            context.lineTo(rightmost + totalwidth * i / 10, heightleast);
+            context.moveTo(leftGrid.rightmost + leftGrid.totalwidth * i / 10, leftGrid.heightmost);
+            context.lineTo(leftGrid.rightmost + leftGrid.totalwidth * i / 10, leftGrid.heightleast);
             context.stroke();
 
             context.font = "20px Impact";
             context.fillStyle = "Black";
-            context.fillText(i, rightmost-(totalwidth/18),heightmost  +(totalheight*(i/9) -(totalheight/9*.25))  );
+            context.fillText(i, leftGrid.rightmost-(leftGrid.totalwidth/18),leftGrid.heightmost  +(leftGrid.totalheight*(i/9) -(leftGrid.totalheight/9*.25))  );
             
         }
 
         for (let i = 0; i < 10; i++) {
             context.beginPath();
-            context.moveTo(rightmost, heightmost + totalheight * i / 9);
-            context.lineTo(leftmost, heightmost + totalheight * i / 9);
+            context.moveTo(leftGrid.rightmost, leftGrid.heightmost + leftGrid.totalheight * i / 9);
+            context.lineTo(leftGrid.leftmost, leftGrid.heightmost + leftGrid.totalheight * i / 9);
             context.stroke();
 
             //adapted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode
             context.font = "20px Impact";
             context.fillStyle = "Black";
-            context.fillText(String.fromCharCode(65+i),rightmost + totalwidth*(i/10) + totalwidth/27,heightmost - (totalheight/45));
+            context.fillText(String.fromCharCode(65+i),leftGrid.rightmost + leftGrid.totalwidth*(i/10) + leftGrid.totalwidth/27,leftGrid.heightmost - (leftGrid.totalheight/45));
         }
         //adapted from https://github.com/gsburmaster/Connect4
         //adapted from https://jayhawk-nation.web.app/examples/TicTacToe
@@ -433,7 +553,7 @@ function drawGrid(side) {
                 return;
             }
             pos = getXY(canvas, click1);
-            const [i, j, k] = [RoundClickX(pos.x, totalwidth, rightmost), RoundClickY(pos.y, totalheight, heightmost), side]
+            const [i, j, k] = [RoundClickX(pos.x, leftGrid.totalwidth, leftGrid.rightmost), RoundClickY(pos.y, leftGrid.totalheight, leftGrid.heightmost), side]
             if (i < 0 || i > 9 || j < 0 || j > 8) {
                 return;
             }
@@ -441,60 +561,55 @@ function drawGrid(side) {
         })
 
     } else if (side == "c") {
-        rightmost = (canvas.width / 10) * 3.5;
-        leftmost = rightmost + 3 * (canvas.width / 10);
-        heightmost = canvas.height / 4;
-        heightleast = heightmost * 3;
-        totalwidth = leftmost - rightmost;
-        totalheight = heightleast - heightmost;
+        
 
 
 
 
         context.beginPath();
-        context.moveTo(rightmost, heightmost);
-        context.lineTo(rightmost, heightleast);
+        context.moveTo(centerGrid.rightmost, centerGrid.heightmost);
+        context.lineTo(centerGrid.rightmost, centerGrid.heightleast);
         context.stroke();
 
         context.beginPath();
-        context.moveTo(leftmost, heightmost);
-        context.lineTo(leftmost, heightleast);
+        context.moveTo(centerGrid.leftmost, centerGrid.heightmost);
+        context.lineTo(centerGrid.leftmost, centerGrid.heightleast);
         context.stroke();
 
         context.beginPath();
-        context.moveTo(rightmost, heightmost);
-        context.lineTo(leftmost, heightmost);
+        context.moveTo(centerGrid.rightmost, centerGrid.heightmost);
+        context.lineTo(centerGrid.leftmost, centerGrid.heightmost);
         context.stroke();
 
         context.beginPath();
-        context.moveTo(rightmost, heightleast);
-        context.lineTo(leftmost, heightleast);
+        context.moveTo(centerGrid.rightmost, centerGrid.heightleast);
+        context.lineTo(centerGrid.leftmost, centerGrid.heightleast);
         context.stroke();
 
 
 
         for (let i = 1; i < 10; i++) {
             context.beginPath();
-            context.moveTo(rightmost + totalwidth * i / 10, heightmost);
-            context.lineTo(rightmost + totalwidth * i / 10, heightleast);
+            context.moveTo(centerGrid.rightmost + centerGrid.totalwidth * i / 10, centerGrid.heightmost);
+            context.lineTo(centerGrid.rightmost + centerGrid.totalwidth * i / 10, centerGrid.heightleast);
             context.stroke();
 
             context.font = "20px Impact";
             context.fillStyle = "Black";
-            context.fillText(i, rightmost-(totalwidth/18),heightmost  +(totalheight*(i/9) -(totalheight/9*.25))  );
+            context.fillText(i, centerGrid.rightmost-(centerGrid.totalwidth/18),centerGrid.heightmost  +(centerGrid.totalheight*(i/9) -(centerGrid.totalheight/9*.25))  );
             
         }
 
         for (let i = 0; i < 10; i++) {
             context.beginPath();
-            context.moveTo(rightmost, heightmost + totalheight * i / 9);
-            context.lineTo(leftmost, heightmost + totalheight * i / 9);
+            context.moveTo(centerGrid.rightmost, centerGrid.heightmost + centerGrid.totalheight * i / 9);
+            context.lineTo(centerGrid.leftmost, centerGrid.heightmost + centerGrid.totalheight * i / 9);
             context.stroke();
 
             //adapted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode
             context.font = "20px Impact";
             context.fillStyle = "Black";
-            context.fillText(String.fromCharCode(65+i),rightmost + totalwidth*(i/10) + totalwidth/27,heightmost - (totalheight/45));
+            context.fillText(String.fromCharCode(65+i),centerGrid.rightmost + centerGrid.totalwidth*(i/10) + centerGrid.totalwidth/27,centerGrid.heightmost - (centerGrid.totalheight/45));
         }
         
     }
@@ -505,7 +620,7 @@ function drawGrid(side) {
             return;
         }
         pos = getXY(canvas, click1);
-        const [i, j, k] = [RoundClickX(pos.x, totalwidth, rightmost), RoundClickY(pos.y, totalheight, heightmost), side]
+        const [i, j, k] = [RoundClickX(pos.x, centerGrid.totalwidth, centerGrid.rightmost), RoundClickY(pos.y, centerGrid.totalheight, centerGrid.heightmost), side]
         if (i < 0 || i > 9 || j < 0 || j > 8) {
             return;
         }
@@ -539,9 +654,23 @@ document.addEventListener("DOMContentLoaded", () => {
     context.msImageSmoothingEnabled = false;
     context.imageSmoothingEnabled = false;
 
-    render(1, 2, 3);
+    //this is how you have to do this don't ask why please
+    rightGrid = setRightGrid();
+    leftGrid = setLeftGrid();
+    centerGrid = setCenterGrid();
+
+    //https://stackoverflow.com/questions/11071314/javascript-execute-after-all-images-have-loaded
+    //from there^
+    //starts game after images are loaded.
+    Promise.all(Array.from([rotate,mysea,enemysea,fire,submit,p2Win,p1Win,startButton,gameLogo]).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; }))).then(() => {
+        console.log(render(1,2,3));
+    });
+
+
+    
 })
 
+//These TWO functions take an eventlistener click and return a rounded 2d array index (x or y respectively)
 //taken from https://github.com/gsburmaster/Connect4
 function RoundClickX(x, relSize, most) {
     return (Math.ceil((x - most) / (relSize / 10)) - 1)
@@ -556,4 +685,57 @@ function RoundClickY(y, relSize, most) {
 function flatten(i,j)
 {
         return (j*10 + i);
+}
+
+//takes a 1d index and returns 2d coords
+//makes it easier to render ships with an x and a y
+function unflattenY(i)
+{
+    return(Math.floor(i/10));
+}
+function unflattenX(i)
+{
+    return(i%10);
+}
+
+//takes a 1d index and returns the GRID POS (eg E4, A9) as a string
+//does NOT return index for 2d array 
+//used to get coord for showPotMove() or whatever the function is called
+function unflattenToCoords(i)
+{
+    return(String.fromCharCode(65+(i%10)) +  (Math.floor(i/10) + 1));
+}
+
+
+
+//takes a grid object and an array and renders those ships in that grid
+//red = hit, grey = ship there, blue = miss
+function renderShips(arr, grid)
+{
+    for (let i=0; i < 90; i++)
+    {
+        if (arr[i] == 0)
+        {
+            
+        }
+        else if (arr[i] == 1)
+        {
+            context.fillStyle = "Grey";
+            context.fillRect(grid.rightmost + ((grid.totalwidth/10) /4 ) + (grid.totalwidth/10)*unflattenX(i) , grid.heightmost + ((grid.totalheight/10) /4 ) +  (grid.totalheight/9)*unflattenY(i), (grid.totalheight/10)/2, (grid.totalheight/9)/2 );
+        }
+        else if (arr[i] == 2)
+        {
+            context.fillStyle = "Red";
+            context.fillRect(grid.rightmost + ((grid.totalwidth/10) /4 ) + (grid.totalwidth/10)*unflattenX(i) , grid.heightmost + ((grid.totalheight/10) /4 ) +  (grid.totalheight/9)*unflattenY(i), (grid.totalheight/10)/2, (grid.totalheight/9)/2 );
+        }
+        else if (arr[i] == 3)
+        {
+            context.fillStyle = "Blue";
+            context.fillRect(grid.rightmost + ((grid.totalwidth/10) /4 ) + (grid.totalwidth/10)*unflattenX(i) , grid.heightmost + ((grid.totalheight/10) /4 ) +  (grid.totalheight/9)*unflattenY(i), (grid.totalheight/10)/2, (grid.totalheight/9)/2 );
+        }
+
+    }
+
+
+
 }
