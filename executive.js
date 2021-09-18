@@ -120,5 +120,4 @@ function winCheck(gameData) {
     {
     gameOver(gameData);
     }
-
 }
