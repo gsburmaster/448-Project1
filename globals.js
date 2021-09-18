@@ -17,10 +17,14 @@ let gameData = {
 let testData = {
     currentPlayer: 1,
     winner: 0,
-    shipNumber: 2,
+    maxShips: 1,
+    currShipLength: 1,
+    currShipRotation: 0,
     gameStart: false,
     player1arr: [1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    player2arr: [2, 2, 3, 2, 2, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    player2arr: [2, 2, 3, 2, 2, 2, 3, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    mousePos: -1,
+    prevMousePos: -1,
 }
 
 
@@ -222,5 +226,25 @@ function centerClickEventRegister() {
             return;
         }
         console.log(flatten(i,j) + "\nC event Listener");
+    })
+}
+
+function centerMouseMoveEventListener() {
+	//adapted from https://github.com/gsburmaster/Connect4
+    //adapted from https://jayhawk-nation.web.app/examples/TicTacToe
+    document.addEventListener('mousemove', e => {
+        if (mode != "start") {
+            return;
+        }
+        pos = getXY(canvas, e);
+        const [i, j, k] = [RoundClickX(pos.x, centerGrid.totalwidth, centerGrid.rightmost), RoundClickY(pos.y, centerGrid.totalheight, centerGrid.heightmost), "c"]
+        if (i < 0 || i > 9 || j < 0 || j > 8) {
+            return;
+        }
+        testData.prevMousePos = testData.mousePos;
+        testData.mousePos = flatten(i,j);
+        if (testData.mousePos != testData.prevMousePos) {
+            console.log(testData.mousePos);
+        }
     })
 }
