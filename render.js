@@ -100,13 +100,13 @@ function gameplay(player1, player2, data) {
 
         if (data.currentPlayer == 1)
         {
-            renderOwnBoard(player1.player1arr);
-            renderEnemyBoard(player1.player1earr);    
+            renderShips(player1.player1arr,rightGrid,true);
+            renderShips(player1.player1earr,leftGrid,false);
         }
         else
         {
-            renderOwnBoard(player2.player2arr);
-            renderEnemyBoard(player2.player2earr);
+            renderShips(player2.player2arr,rightGrid,true);
+            renderShips(player2.player2earr,leftGrid,false);
         }
 
         showPotMove();
@@ -265,24 +265,6 @@ function switchTurn(data) {
 
 }
 
-
-
-
-
-
-//renders your ships in right grid
-function renderOwnBoard(arr) {
-    drawGrid(rightGrid);
-    renderShips(arr,rightGrid);
-}
-
-//renders enemy ships (and misses and such) in left grid
-function renderEnemyBoard(arr) {
-    drawGrid(leftGrid);
-    renderShips(arr,leftGrid);
-}
-
-
 //checks based on data.winnner (char)
 //no reset
 function gameOver(data) {
@@ -357,15 +339,16 @@ function drawGrid(grid) {
 
 //takes a grid object and an array and renders those ships in that grid
 //red = hit, grey = ship there, blue = miss
-function renderShips(arr, grid)
+function renderShips(arr, grid, ownShips)
 {
+    drawGrid(grid);
     for (let i=0; i < 90; i++)
     {
         if (arr[i] == 0)
         {
             
         }
-        else if (arr[i] == 1)
+        else if (arr[i] == 1 && ownShips)
         {
             context.fillStyle = "Grey";
             context.fillRect(grid.rightmost + ((grid.totalwidth/10) /4 ) + (grid.totalwidth/10)*unflattenX(i) , grid.heightmost + ((grid.totalheight/10) /4 ) +  (grid.totalheight/9)*unflattenY(i), (grid.totalheight/10)/2, (grid.totalheight/9)/2 );
@@ -380,9 +363,5 @@ function renderShips(arr, grid)
             context.fillStyle = "Blue";
             context.fillRect(grid.rightmost + ((grid.totalwidth/10) /4 ) + (grid.totalwidth/10)*unflattenX(i) , grid.heightmost + ((grid.totalheight/10) /4 ) +  (grid.totalheight/9)*unflattenY(i), (grid.totalheight/10)/2, (grid.totalheight/9)/2 );
         }
-
     }
-
-
-
 }
