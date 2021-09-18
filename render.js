@@ -168,13 +168,20 @@ rotate.src = 'Images/rotate.png';
 let rotatewidth = 83;
 let rotateheight = 19;
 
+
+
+
+
+
+
+
 function render(arr1, arr2, data) {
 
 
     // check to see if we are in the start menu, game over, or gameplay phase
     startScreen(testData);
-   clearScreen();
-    //gameplay(1,2,3);
+    clearScreen();
+    gameplay(1,2,3);
     //gameOver(testData);
     //gameplay(arr1,arr2,data);
 
@@ -188,9 +195,13 @@ function gameplay(arr1, arr2, data) {
     }
 
     //ingame logic (impliment if else later)
-    gameLogo.onload = function () {
-        context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
-    }
+        //DRAWS a line in the middle of the screen
+        //TEST: REMOVE LATER
+        context.beginPath();
+        context.moveTo(canvas.width / 2, 0);
+        context.lineTo(canvas.width / 2, canvas.height);
+        context.stroke();
+    context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
 
 
     renderOwnBoard(1);
@@ -206,20 +217,20 @@ function clearScreen() {
 
 
 function startScreen(data) {
-    gameLogo.onload = function () {
+    /*gameLogo.onload = function () {
         context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
-    }
-   // context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
+    }*/
+   context.drawImage(gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
 
-    rotate.onload = function () {
+    /*rotate.onload = function () {
         context.drawImage(rotate, canvas.width - (canvas.width / 5) - (.5 * rotatewidth), canvas.height/2 - rotateheight, rotatewidth *2, rotateheight *2);
-    }
-    //context.drawImage(rotate, canvas.width - (canvas.width / 4) - (.5 * rotatewidth), canvas.height/2 - rotateheight/2, rotatewidth , rotateheight );
+    }*/
+    context.drawImage(rotate, canvas.width - (canvas.width / 4) - (.5 * rotatewidth), canvas.height/2 - rotateheight/2, rotatewidth , rotateheight );
     
-    submit.onload = function () {
+    /*submit.onload = function () {
         context.drawImage(submit, canvas.width/2  -submitwidth, canvas.height - canvas.height/8 - submitheight/2, submitwidth *2, submitheight *2);
-    }
-    //context.drawImage(submit, canvas.width/2  -submitwidth, canvas.height - canvas.height/8 - submitheight/2, submitwidth *2, submitheight *2);
+    }*/
+    context.drawImage(submit, canvas.width/2  -submitwidth, canvas.height - canvas.height/8 - submitheight/2, submitwidth *2, submitheight *2);
 
     
         
@@ -385,14 +396,7 @@ function gameOver(data) {
 function drawGrid(side) {
     
     if (side == "r") {
-        //DRAWS a line in the middle of the screen
-        //TEST: REMOVE LATER
-        context.beginPath();
-        context.moveTo(canvas.width / 2, 0);
-        context.lineTo(canvas.width / 2, canvas.height);
-        context.stroke();
-
-
+        
         context.beginPath();
         context.moveTo(rightGrid.rightmost, rightGrid.heightmost);
         context.lineTo(rightGrid.rightmost, rightGrid.heightleast);
@@ -612,13 +616,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     rightGrid = setRightGrid();
-    console.log(rightGrid.rightmost);
     leftGrid = setLeftGrid();
-    console.log(rightGrid.rightmost);
     centerGrid = setCenterGrid();
 
+    //https://stackoverflow.com/questions/11071314/javascript-execute-after-all-images-have-loaded
+    //from there^
+    Promise.all(Array.from([rotate,mysea,enemysea,fire,submit,p2Win,p1Win,startButton,gameLogo]).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; }))).then(() => {
+        console.log(render(1, 2, 3));
+    });
 
-    render(1, 2, 3);
+
+    
 })
 
 //taken from https://github.com/gsburmaster/Connect4
