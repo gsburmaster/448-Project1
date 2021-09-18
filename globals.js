@@ -88,7 +88,7 @@ let centerGrid = {
 }
 
 //https://stackoverflow.com/questions/4618541/can-i-reference-other-properties-during-object-declaration-in-javascript
-function setRightGrid()
+function setLeftGrid()
 {
         var Trightmost =  canvas.width / 10;
         var Tleftmost =  Trightmost * 4;
@@ -107,7 +107,7 @@ function setRightGrid()
     };
 }
 
-function setLeftGrid()
+function setRightGrid()
 {
     var Trightmost=  (canvas.width / 10) * 6;
     var Tleftmost= Trightmost + 3 * (canvas.width / 10);
