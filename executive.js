@@ -57,7 +57,7 @@ function gameplayLoop(gameData) {
 		gameData.currentPlayer = (gameData.currentPlayer + 1)%2;
 	}
 	
-	//Victory screen - can also just not add code if we want to add that code to whatever section calls the gameplayLoop function
+	//Victory screen - can also just leave empty if we want to add that code to whatever section calls the gameplayLoop function
 }
 
 function fire(gameData, pos) {
