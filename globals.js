@@ -46,7 +46,7 @@ window.addEventListener("load", () => {
     //from there^
     //starts game after images are loaded.
     Promise.all(Array.from([rotate,mysea,enemysea,fire,submit,p2Win,p1Win,startButton,gameLogo]).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; }))).then(() => {
-        console.log(render(testData));
+        window.requestAnimationFrame(gameplayLoop);
     });
     
     rightsideClickEventRegister();

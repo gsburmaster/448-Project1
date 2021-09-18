@@ -64,7 +64,7 @@ let rotateheight = 19;
 // it also has access to all the game data in case it needs to be passed to subsequent functions. 
 //effectively the executive function of rendering
 function render(data) {
-
+    clearScreen();
     if (mode == "start")
     {
         startScreen(data);
