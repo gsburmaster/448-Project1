@@ -269,7 +269,7 @@ function rightsideClickEventRegister() {
                 switchPlayers("game");
             }
         } else if (g_currentPlayer == 2 && fire(g_player1arr, flatten(i,j))){
-            if (winCheck(g_player2arr)) {
+            if (winCheck(g_player1arr)) {
                 g_winner = 2;
                 g_mode = "win";
             } else {
