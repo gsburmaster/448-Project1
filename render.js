@@ -63,19 +63,19 @@ let rotateheight = 19;
 //this is the main render function. It spins up the whole game when it starts. 
 // it also has access to all the game data in case it needs to be passed to subsequent functions. 
 //effectively the executive function of rendering
-function render(data) {
+function render() {
     clearScreen();
     if (mode == "start")
     {
-        startScreen(data);
+        startScreen();
     }
     else if (mode == "game")
     {
-        gameplay(data);
+        gameplay();
     }
     else if (mode == "win")
     {
-        gameOver(data);
+        gameOver();
     }
 }
 
@@ -84,7 +84,7 @@ function render(data) {
 //this is the gameplay render function. it is the both grids showing,"fire" screen. 
 //it takes in player1, player2, and data 
 //also handles global potMove, which lets me update what move is queued up
-function gameplay(data) {
+function gameplay() {
 
         //DRAWS a line in the middle of the screen
         context.beginPath();
@@ -98,15 +98,15 @@ function gameplay(data) {
         context.drawImage(img_enemysea,canvas.width -canvas.width/4 - eseawidth*3/2,canvas.height/6 - eseaheight*1.75,eseawidth*3,eseaheight*3);
         context.drawImage(img_fire,canvas.width*3/4-firewidth*3/2,canvas.height-canvas.height/6,firewidth*3,fireheight*3);
 
-        if (data.currentPlayer == 1)
+        if (currentPlayer == 1)
         {
-            renderShips(data.player1arr,leftGrid,true);
-            renderShips(data.player2arr,rightGrid,false);
+            renderShips(player1arr,leftGrid,true);
+            renderShips(player2arr,rightGrid,false);
         }
         else
         {
-            renderShips(data.player2arr,leftGrid,true);
-            renderShips(data.player1arr,rightGrid,false);
+            renderShips(player2arr,leftGrid,true);
+            renderShips(player1arr,rightGrid,false);
         }
 
         showPotMove();
@@ -137,7 +137,7 @@ function clearScreen() {
 
 
 //based on who's turn it is and how many ships there are, places ships and such. THIS IS UNFINISHED.
-function startScreen(data) {
+function startScreen() {
    
    context.drawImage(img_gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
 
@@ -152,10 +152,10 @@ function startScreen(data) {
 
 
     mode = "start";
-    if (data.currentPlayer == 1) {
-        renderShips(newShipPlacement(data.player1arr, data.mousePos, data.currShipLength, data.currShipRotation), centerGrid, true);
+    if (currentPlayer == 1) {
+        renderShips(newShipPlacement(player1arr, mousePos, currShipLength, currShipRotation), centerGrid, true);
     } else {
-        renderShips(newShipPlacement(data.player2arr, data.mousePos, data.currShipLength, data.currShipRotation), centerGrid, true);
+        renderShips(newShipPlacement(player2arr, mousePos, currShipLength, currShipRotation), centerGrid, true);
     }
 
 
@@ -167,9 +167,9 @@ function startScreen(data) {
 //portions adapted from //https://github.com/gsburmaster/Connect4/blob/main/connect-four.js
 // and https://www.w3schools.com/tags/canvas_measuretext.asp
 //changes currentPlayer var in data and shows splash screen with countdown
-function switchTurn(data) {
+function switchTurn() {
     clearScreen();
-    if (data.currentPlayer == 1) {
+    if (currentPlayer == 1) {
         context.fillStyle = "Black";
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.font = "40px Impact";
@@ -213,7 +213,7 @@ function switchTurn(data) {
         })
 
         waitTime1.then(() => {
-            data.currentPlayer = 2;
+            currentPlayer = 2;
             clearScreen();
         })
     } else {
@@ -260,7 +260,7 @@ function switchTurn(data) {
         })
 
         waitTime1.then(() => {
-            data.currentPlayer = 1;
+            currentPlayer = 1;
             clearScreen();
         })
     }
@@ -269,17 +269,17 @@ function switchTurn(data) {
 
 }
 
-//checks based on data.winnner (char)
+//checks based on winnner
 //no reset
-function gameOver(data) {
+function gameOver() {
     clearScreen();
     context.fillStyle = "Black";
     context.fillRect(0, 0, canvas.width, canvas.height);
     context.drawImage(img_gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
-    if (data.winner == 1) {
+    if (winner == 1) {
         
         context.drawImage(img_p1Win, (canvas.width / 2) - (3 * p1width), canvas.height / 4, p1width * 6, p1height * 6);
-    } else if (data.winner == 2) {
+    } else if (winner == 2) {
         
         context.drawImage(img_p2Win, (canvas.width / 2) - (3 * p2width), canvas.height / 4, p2width * 6, p2height * 6);
     }

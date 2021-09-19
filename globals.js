@@ -1,32 +1,20 @@
 //Basic game data
-//Note other 2 arrays for tracking hits and misses havent been added
-//Planned on 0 = empty, 1 = ship placed (un-hit), 2 = hit ship, 3 = miss
-//EX: [0,0,1,1,2,1,0]
-let gameData = {
-
-    currentPlayer: 1,
-    shipNumber: 1,
-    winner: 0,
-    gameStart: false,
-    isWon: false,
-    player1arr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    player2arr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-}
-
-//EXAMPLE STUFF FOR TESTING
-let testData = {
-    currentPlayer: 1,
-    winner: 0,
-    maxShips: 2,
-    currShipLength: 3,
-    currShipRotation: 1,
-    gameStart: false,
-    player1arr: [1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    player2arr: [2, 2, 3, 2, 2, 2, 3, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    mousePos: 0,
-    prevMousePos: 0,
-}
-
+let currentPlayer = 1;
+let winner = 0;
+let maxShips = 2;
+let currShipLength = 3;
+let currShipRotation = 1;
+let gameStart = false;
+let player1arr = [1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+let player2arr = [2, 2, 3, 2, 2, 2, 3, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+let mousePos = 0;
+let prevMousePos = 0;
+//portions adapted from https://github.com/gsburmaster/Connect4
+let canvas;
+let context;
+let mode = "start";
+let rotateFace;
+let potMove = '';
 
 //taken from https://github.com/gsburmaster/Connect4
 //adapted from https://jayhawk-nation.web.app/examples/TicTacToe
@@ -57,13 +45,6 @@ window.addEventListener("load", () => {
     centerClickEventRegister();
     centerMouseMoveEventListener();
 })
-
-//portions adapted from https://github.com/gsburmaster/Connect4
-let canvas;
-let context;
-let mode = "start";
-let rotateFace;
-let potMove = '';
 
 //refactoring grids into objects so that I can pass them around 
 let rightGrid = {
@@ -209,7 +190,7 @@ function rightsideClickEventRegister() {
     if (i < 0 || i > 9 || j < 0 || j > 8) {
         return;
     }
-    fire(testData, flatten(i,j));
+    fire(flatten(i,j));
     console.log(flatten(i,j) +"\nR event Listener");
     })
 }
@@ -226,7 +207,7 @@ function centerClickEventRegister() {
         if (i < 0 || i > 9 || j < 0 || j > 8) {
             return;
         }
-        placeShip(testData);
+        placeShip();
     })
 }
 
@@ -242,10 +223,10 @@ function centerMouseMoveEventListener() {
         if (i < 0 || i > 9 || j < 0 || j > 8) {
             return;
         }
-        testData.prevMousePos = testData.mousePos;
-        testData.mousePos = flatten(i,j);
-        if (testData.mousePos != testData.prevMousePos) {
-            console.log(testData.mousePos);
+        prevMousePos = mousePos;
+        mousePos = flatten(i,j);
+        if (mousePos != prevMousePos) {
+            console.log(mousePos);
         }
     })
 }
