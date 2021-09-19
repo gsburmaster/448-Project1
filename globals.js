@@ -55,12 +55,13 @@ window.addEventListener("load", () => {
     
     rightsideClickEventRegister();
     centerClickEventRegister();
+    centerMouseMoveEventListener();
 })
 
 //portions adapted from https://github.com/gsburmaster/Connect4
 let canvas;
 let context;
-let mode = "game";
+let mode = "start";
 let rotateFace;
 let potMove = '';
 
