@@ -4,7 +4,7 @@
 function gameplayLoop() {
     if (g_mode == "start") {
         if (g_currentPlayer == 1) {
-            startScreen(g_context, g_canvas, placeShip(g_player1arr, g_mousePos, g_currShipLength, g_currShipRotation));
+            renderPlacementScreen(g_context, g_canvas, placeShip(g_player1arr, g_mousePos, g_currShipLength, g_currShipRotation));
             if (g_currShipLength > g_maxShips) {
                 switchPlayers("start");
                 g_currShipLength = 1;
@@ -13,7 +13,7 @@ function gameplayLoop() {
             }
         }
         else if (g_currentPlayer == 2) {
-            startScreen(g_context, g_canvas, placeShip(g_player2arr, g_mousePos, g_currShipLength, g_currShipRotation));
+            renderPlacementScreen(g_context, g_canvas, placeShip(g_player2arr, g_mousePos, g_currShipLength, g_currShipRotation));
             if (g_currShipLength > g_maxShips) {
                 switchPlayers("game");
             }
@@ -31,7 +31,7 @@ function gameplayLoop() {
         gameOver(g_context, g_canvas, g_winner);
     }
     else if (g_mode == "unstarted") {
-        
+        renderStartScreen(g_context, g_canvas);
     }
     window.requestAnimationFrame(gameplayLoop);
 }

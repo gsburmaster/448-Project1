@@ -63,6 +63,8 @@ img_rotate.src = 'Images/rotate.png';
 let rotatewidth = 83;
 let rotateheight = 19;
 
+let img_startScreen = new Image();
+img_startScreen.src = 'Images/img_startScreen.png';
 
 /**
  * @description Main render function that calls the smaller gameplay render functions, unused
@@ -83,6 +85,15 @@ function render() {
     {
         gameOver();
     }
+}
+
+/**
+ * @description Start screen render function
+ * @param {Object} context - global context variable for drawing
+ * @param {Object} canvas - global canvas variable
+ */
+function renderStartScreen(context, canvas) {
+    context.drawImage(img_startScreen, 0, 0);
 }
 
 /**
@@ -149,7 +160,7 @@ function clearScreen(context) {
 
 
 //based on who's turn it is and how many ships there are, places ships and such. THIS IS UNFINISHED.
-function startScreen(context, canvas, arr) {
+function renderPlacementScreen(context, canvas, arr) {
     clearScreen(context);
     context.drawImage(img_gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
     //context.drawImage(img_rotate, canvas.width - (canvas.width / 4) - (.5 * rotatewidth), canvas.height/2 - rotateheight/2, rotatewidth , rotateheight );
