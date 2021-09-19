@@ -10,6 +10,7 @@ function gameplayLoop() {
             if (g_currShipLength > g_maxShips) {
                 switchPlayers("start");
                 g_currShipLength = 1;
+                g_currShipRotation = 0;
             }
         }
         else if (g_currentPlayer == 2) {
@@ -29,6 +30,9 @@ function gameplayLoop() {
     }
     else if (g_mode == "win") {
         gameOver(g_context, g_canvas, g_winner);
+    }
+    else if (g_mode == "unstarted") {
+        
     }
     window.requestAnimationFrame(gameplayLoop);
 }

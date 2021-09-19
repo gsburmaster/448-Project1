@@ -11,7 +11,7 @@ let g_mousePos = 0;
 //portions adapted from https://github.com/gsburmaster/Connect4
 let g_canvas;
 let g_context;
-let g_mode = "start";
+let g_mode = "unstarted";
 let g_rotateFace;
 let g_potMove = '';
 
@@ -40,6 +40,9 @@ window.addEventListener("load", () => {
     rightsideClickEventRegister();
     centerClickEventRegister();
     centerMouseMoveEventRegister();
+    startButtonRegister();
+    rotateButtonRegister();
+    
     window.requestAnimationFrame(gameplayLoop);
 })
 
@@ -333,4 +336,35 @@ function centerMouseMoveEventRegister() {
         }
         g_mousePos = flatten(i,j);
     })
+}
+
+/**
+ * @name startButtonRegister
+ * @function
+ * @desc This function adds an event listener for the start button
+ * @listens click
+ */
+function startButtonRegister() {
+    document.getElementById("startButton").addEventListener('click', e => {
+        if (g_mode == "unstarted") {
+            g_maxShips = document.getElementById("number_of_ships").value;
+            g_mode = "start";
+        }
+    });
+}
+
+/**
+ * @name rotateButtonRegister
+ * @function
+ * @desc This function adds an event listener for the rotate button
+ * @listens click
+ */
+function rotateButtonRegister() {
+    document.getElementById("rotateButton").addEventListener('click', e => {
+        if (g_currShipRotation == 0) {
+            g_currShipRotation = 1;
+        } else {
+            g_currShipRotation = 0;
+        }
+    });
 }
