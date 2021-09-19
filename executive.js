@@ -61,23 +61,21 @@ function fire(pos) {
 	
 	//Get value stored where shot was placed
 	if (currentPlayer == 1) {
-		let result = player2arr[pos];
-		
-		if (result == 1) { //only executes if un-hit ship is detected
+		if (player2arr[pos] == 1) { //only executes if un-hit ship is detected
             player2arr[pos] = 2;
             winCheck();
-		} else if (result == 0) { //executes if uninteracted cell is detected
+		} else if (player2arr[pos] == 0) { //executes if uninteracted cell is detected
             player2arr[pos] = 3;
 		}
+        currentPlayer = 2;
     } else {
-		let result = player1arr[pos];
-		
-		if (result == 1) { //only executes if un-hit ship is detected
+		if (player1arr[pos] == 1) { //only executes if un-hit ship is detected
             player1arr[pos] = 2;
             winCheck();
-		} else if (result == 0) { //executes if uninteracted cell is detected
+		} else if (player1arr[pos] == 0) { //executes if uninteracted cell is detected
             player1arr[pos] = 3;
 		}
+        currentPlayer = 1;
 	}
 }
 
