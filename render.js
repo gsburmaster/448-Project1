@@ -137,7 +137,7 @@ function clearScreen() {
 
 
 //based on who's turn it is and how many ships there are, places ships and such. THIS IS UNFINISHED.
-function startScreen(player1,player2,data) {
+function startScreen(data) {
    
    context.drawImage(img_gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
 
@@ -152,7 +152,11 @@ function startScreen(player1,player2,data) {
 
 
     mode = "start";
-    drawGrid(centerGrid);
+    if (data.currentPlayer == 1) {
+        renderShips(newShipPlacement(data.player1arr, data.mousePos, data.currShipLength, data.currShipRotation), centerGrid, true);
+    } else {
+        renderShips(newShipPlacement(data.player2arr, data.mousePos, data.currShipLength, data.currShipRotation), centerGrid, true);
+    }
 
 
 

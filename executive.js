@@ -78,34 +78,47 @@ function fire(data, pos) {
  * @param {*} shipRotation 
  * @returns updated arr
  */
+function newShipPlacement(arr, pos, shipLength, shipRotation) {
+    let newArr = [...arr]; //make copy of array instead of using original, needed due to pass by reference
+    if(shipRotation == 0 && unflattenY(pos) == unflattenY(pos + shipLength - 1))
+    {
+        for(let i = pos; i < pos + shipLength; i++)
+        {
+            if (newArr[i] == 1) {
+                return [...arr];
+            }
+            newArr[i] = 1;
+        }
+    }
+    else if (shipRotation == 1 && (pos + (shipLength - 1)*10) <= 89) {
+        for(let i = pos; i < pos + shipLength * 10; i+=10)
+        {
+            if (newArr[i] == 1) {
+                return [...arr];
+            }
+            newArr[i] = 1;
+        }
+    }
 
-function placeShip(arr, pos, shipLength, shipRotation) {
-	if(shipLength > 1)
-	{
-		if(shipRotation == 0)
-		{
-			for(let i = pos; i < i + shipLength; i++)
-			{
-			arr[i] = 1;
-			}
-		}
-		else {
-			for(let i = pos; i < i + shipLength * 10; i+10)
-			{
-				arr[i] = 1;
-			}
-		}
-	}
-	
-	else
-	{
-		arr[pos] = 1;
-	}
-
-	return arr;
+	return newArr;
 }
 
-
+function placeShip(data)
+{
+    if (data.currentPlayer == 1) {
+        newShips = newShipPlacement(data.player1arr, data.mousePos, data.currShipLength, data.currShipRotation);
+        if (newShips != data.player1arr) {
+            data.player1arr = newShipPlacement(data.player1arr, data.mousePos, data.currShipLength, data.currShipRotation);
+            data.currShipLength++;
+        }
+    } else {
+        newShips = newShipPlacement(data.player2arr, data.mousePos, data.currShipLength, data.currShipRotation);
+        if (newShips != data.player2arr) {
+            data.player2arr = newShipPlacement(data.player2arr, data.mousePos, data.currShipLength, data.currShipRotation);
+            data.currShipLength++;
+        }
+    }
+}
 
 
 /**
