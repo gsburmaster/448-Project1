@@ -89,8 +89,8 @@ function render() {
 
 /**
  * @description Start screen render function
- * @param {Object} context - global context variable for drawing
- * @param {Object} canvas - global canvas variable
+ * @param {Object} context - canvas context variable for drawing
+ * @param {Object} canvas - canvas variable
  */
 function renderStartScreen(context, canvas) {
     context.drawImage(img_startScreen, 0, 0);
@@ -98,7 +98,7 @@ function renderStartScreen(context, canvas) {
 
 /**
  * @description Gameplay render function, creates 2 grids, one for your ships, one for tracking hits and misses on enemy ships. Handles global variable potMove, which shows what move is queued up (currently unused functionality)
- * @param {Object} context - global context variable for drawing
+ * @param {Object} context - canvas context variable for drawing
  * @param {Object} canvas - canvas variable
  * @param {number[]} leftShips - variable for ships on left grid
  * @param {number[]} rightShips - varibale for ships on right grid
@@ -151,7 +151,7 @@ function clearPotMove()
 
 /**
  * @description clears screen
- * @param {Object} context - global context variable for drawing
+ * @param {Object} context - canvas context variable for drawing
  */
 function clearScreen(context) {
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -172,7 +172,7 @@ function renderPlacementScreen(context, canvas, arr) {
 
 /**
  * @description Changes current player variable and puts up a splash screen to hide ships and allow players to change turns
- * @param {Object} context - global context variable for drawing
+ * @param {Object} context - canvas context variable for drawing
  * @param {Object} canvas - canvas variable
  * @param {number} nextPlayer - variable to hold which player has the next turn
  */
@@ -231,7 +231,7 @@ function switchTurn(context, canvas, nextPlayer) {
 
 /**
  * @description
- * @param {Object} context - global context variable for drawing
+ * @param {Object} context - canvas context variable for drawing
  * @param {Object} canvas - canvas variable
  * @param {number} winner - Value for the winner, either 1 or 2 depending on which player wins
  * @pa
@@ -256,7 +256,7 @@ function gameOver(context, canvas, winner) {
 
 /**
  * @description Draws grids and labels for the grids
- * @param {Object} context - global context variable for drawing
+ * @param {Object} context - canvas context variable for drawing
  * @param {Object} grid - variable for the grids
  */
 function drawGrid(context, grid) {
@@ -311,7 +311,7 @@ function drawGrid(context, grid) {
 
 /**
  * @description Tracks and updates based on ships that are hit or missed. Red = hit, blue = miss, grey = ships at grid spot
- * @param {Object} context - global context variable for drawing
+ * @param {Object} context - canvas context variable for drawing
  * @param {number[]} arr - variable for the array for tracking ships, hits and misses
  * @param {Object} grid - grid variable
  * @param {boolean} ownShips - variable for tracking your own ships
