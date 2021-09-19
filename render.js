@@ -109,7 +109,7 @@ function renderGameplay(context, canvas, leftShips, rightShips) {
     context.drawImage(img_gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
     context.drawImage(img_mysea,canvas.width/4 - mseawidth*3/2,canvas.height/6 - mseaheight*1.75,mseawidth*3,mseaheight*3);
     context.drawImage(img_enemysea,canvas.width -canvas.width/4 - eseawidth*3/2,canvas.height/6 - eseaheight*1.75,eseawidth*3,eseaheight*3);
-    context.drawImage(img_fire,canvas.width*3/4-firewidth*3/2,canvas.height-canvas.height/6,firewidth*3,fireheight*3);
+    //context.drawImage(img_fire,canvas.width*3/4-firewidth*3/2,canvas.height-canvas.height/6,firewidth*3,fireheight*3);
 
     renderShips(context, leftShips, leftGrid, true);
     renderShips(context, rightShips, rightGrid, false);
@@ -152,8 +152,8 @@ function clearScreen(context) {
 function startScreen(context, canvas, arr) {
     clearScreen(context);
     context.drawImage(img_gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
-    context.drawImage(img_rotate, canvas.width - (canvas.width / 4) - (.5 * rotatewidth), canvas.height/2 - rotateheight/2, rotatewidth , rotateheight );
-    context.drawImage(img_submit, canvas.width/2  -submitwidth, canvas.height - canvas.height/8 - submitheight/2, submitwidth *2, submitheight *2);
+    //context.drawImage(img_rotate, canvas.width - (canvas.width / 4) - (.5 * rotatewidth), canvas.height/2 - rotateheight/2, rotatewidth , rotateheight );
+    //context.drawImage(img_submit, canvas.width/2  -submitwidth, canvas.height - canvas.height/8 - submitheight/2, submitwidth *2, submitheight *2);
     renderShips(context, arr, centerGrid, true);
 }
 
