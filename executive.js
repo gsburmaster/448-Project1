@@ -69,6 +69,45 @@ function fire(data, pos) {
 	}
 }
 
+
+/**
+ * Place Ship method
+ * @param {*} arr 
+ * @param {*} pos 
+ * @param {*} shipLength 
+ * @param {*} shipRotation 
+ * @returns updated arr
+ */
+
+function placeShip(arr, pos, shipLength, shipRotation) {
+	if(shipLength > 1)
+	{
+		if(shipRotation == 0)
+		{
+			for(let i = pos; i < i + shipLength; i++)
+			{
+			arr[i] = 1;
+			}
+		}
+		else {
+			for(let i = pos; i < i + shipLength * 10; i+10)
+			{
+				arr[i] = 1;
+			}
+		}
+	}
+	
+	else
+	{
+		arr[pos] = 1;
+	}
+
+	return arr;
+}
+
+
+
+
 /**
 *This function checks to see if the game has a winner
 * @param {object} takes gameData object as argument
