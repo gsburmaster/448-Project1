@@ -118,13 +118,13 @@ function placeShip()
 {
     if (currentPlayer == 1) {
         newShips = newShipPlacement(player1arr, mousePos, currShipLength, currShipRotation);
-        if (newShips != player1arr) {
+        if (!newShips.every((el, ix) => el === player1arr[ix])) {
             player1arr = newShipPlacement(player1arr, mousePos, currShipLength, currShipRotation);
             currShipLength++;
         }
     } else {
         newShips = newShipPlacement(player2arr, mousePos, currShipLength, currShipRotation);
-        if (newShips != player2arr) {
+        if (!newShips.every((el, ix) => el === player2arr[ix])) {
             player2arr = newShipPlacement(player2arr, mousePos, currShipLength, currShipRotation);
             currShipLength++;
         }
