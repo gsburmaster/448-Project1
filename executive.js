@@ -1,94 +1,72 @@
-//Main executive file for back end game logic
-
+/**
+ * @name gameplayLoop
+ * @function
+ * @desc This function runs the main gameplay loop, we allow it to access and modify global game data
+ */
 function gameplayLoop() {
-    render();
-    if (mode == "start") {
-        if (currentPlayer == 1 && currShipLength > maxShips) {
-            currentPlayer = 2;
-            currShipLength = 1;
+    if (g_mode == "start") {
+        if (g_currentPlayer == 1) {
+            startScreen(g_context, g_canvas, placeShip(g_player1arr, g_mousePos, g_currShipLength, g_currShipRotation));
+            if (g_currShipLength > g_maxShips) {
+                g_currentPlayer = 2;
+                g_currShipLength = 1;
+            }
         }
-        else if (currentPlayer == 2 && currShipLength > maxShips) {
-            currentPlayer = 1;
-            mode = "game";
+        else if (g_currentPlayer == 2) {
+            startScreen(g_context, g_canvas, placeShip(g_player2arr, g_mousePos, g_currShipLength, g_currShipRotation));
+            if (g_currShipLength > g_maxShips) {
+                g_currentPlayer = 1;
+                g_mode = "game";
+            }
         }
     }
+    else if (g_mode == "game") {
+        if (g_currentPlayer == 1) {
+            renderGameplay(g_context, g_canvas, g_player1arr, g_player2arr);
+        }
+        else {
+            renderGameplay(g_context, g_canvas, g_player2arr, g_player1arr);
+        }
+    }
+    else if (g_mode == "win") {
+        gameOver(g_context, g_canvas, g_winner);
+    }
     window.requestAnimationFrame(gameplayLoop);
-	
-    /*let pos = 0;
-	while (gameData.isWon == false) {
-		if (gameData.currentPlayer == 1) {
-			//get fire information and store it in pos
-			switch (fire(gameData, pos)) {
-				// copy/paste code below
-				case 0: //miss 
-				
-				break;
-				case 1: //hit
-				
-				break;
-				case 2: //sunk
-				
-				break;
-				default:
-				console.log("Something went real wrong.\n");
-			}
-		} else {
-			//get fire information and store it in pos
-			switch (fire(gameData, pos)) {
-				case 0: //miss 
-				
-				break;
-				case 1: //hit
-				
-				break;
-				case 2: //sunk
-				
-				break;
-				default:
-				console.log("Something went real wrong.\n");
-			}
-		}
-		winCheck(gameData);
-		
-		//Switch current player
-		gameData.currentPlayer = (gameData.currentPlayer + 1)%2;
-	}*/
-	
-	//Victory screen - can also just leave empty if we want to add that code to whatever section calls the gameplayLoop function
 }
 
-function fire(pos) {
+/**
+ * @name fire
+ * @function
+ * @desc This function checks if a shot is valid
+ * @param {number[]} arr the grid being fired at
+ * @param {number} pos the position being fired at
+ * @returns {boolean} whether the position is valid
+ */
+function fire(arr, pos) {
 	
 	//Get value stored where shot was placed
-	if (currentPlayer == 1) {
-		if (player2arr[pos] == 1) { //only executes if un-hit ship is detected
-            player2arr[pos] = 2;
-            winCheck();
-		} else if (player2arr[pos] == 0) { //executes if uninteracted cell is detected
-            player2arr[pos] = 3;
-		}
-        currentPlayer = 2;
-    } else {
-		if (player1arr[pos] == 1) { //only executes if un-hit ship is detected
-            player1arr[pos] = 2;
-            winCheck();
-		} else if (player1arr[pos] == 0) { //executes if uninteracted cell is detected
-            player1arr[pos] = 3;
-		}
-        currentPlayer = 1;
-	}
+    if (arr[pos] == 1) { //only executes if un-hit ship is detected
+        arr[pos] = 2;
+        return true;
+    } else if (arr[pos] == 0) { //executes if uninteracted cell is detected
+        arr[pos] = 3;
+        return true;
+    }
+    return false;
 }
 
 
 /**
- * Place Ship method
- * @param {*} arr 
- * @param {*} pos 
- * @param {*} shipLength 
- * @param {*} shipRotation 
- * @returns updated arr
+ * @name placeShip
+ * @function
+ * @desc This function places ships
+ * @param {number[]} arr the grid the ship is being placed on
+ * @param {number} pos the position that a ship is being placed
+ * @param {number} shipLength the length of the ship
+ * @param {number} shipRotation the rotation of the ship (0=horz, 1=vert)
+ * @returns {number[]} updated grid
  */
-function newShipPlacement(arr, pos, shipLength, shipRotation) {
+function placeShip(arr, pos, shipLength, shipRotation) {
     let newArr = [...arr]; //make copy of array instead of using original, needed due to pass by reference
     if(shipRotation == 0 && unflattenY(pos) == unflattenY(pos + shipLength - 1))
     {
@@ -113,44 +91,20 @@ function newShipPlacement(arr, pos, shipLength, shipRotation) {
 	return newArr;
 }
 
-function placeShip()
-{
-    if (currentPlayer == 1) {
-        newShips = newShipPlacement(player1arr, mousePos, currShipLength, currShipRotation);
-        if (!newShips.every((el, ix) => el === player1arr[ix])) {
-            player1arr = newShipPlacement(player1arr, mousePos, currShipLength, currShipRotation);
-            currShipLength++;
-        }
-    } else {
-        newShips = newShipPlacement(player2arr, mousePos, currShipLength, currShipRotation);
-        if (!newShips.every((el, ix) => el === player2arr[ix])) {
-            player2arr = newShipPlacement(player2arr, mousePos, currShipLength, currShipRotation);
-            currShipLength++;
-        }
-    }
-}
-
-
 /**
-*This function checks to see if the game has a winner
-* @param {object} takes gameData object as argument
-* @return none
-* 
-*
-*/
-function winCheck() {
+ * @name winCheck
+ * @function
+ * @desc This function checks to see if the game has a winner
+ * @param {number[]} arr grid to check win
+ * @return {boolean} whether the game is won or not
+ *
+ */
+function winCheck(arr) {
 
     //If player 1's turn, checks if any ships remaining on player 2's board
-    if (currentPlayer == 1 && !player2arr.includes(1))
+    if (!arr.includes(1))
     {
-        winner = 1;
-        mode = "win";
+        return true;
     }
-
-    //If player 2's turn, checks if any ships remaining on p1,
-    else if(currentPlayer == 2 && !player1arr.includes(1))
-    {
-        winner = 2;
-        mode = "win";
-    }
+    return false;
 }

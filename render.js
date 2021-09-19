@@ -84,32 +84,25 @@ function render() {
 //this is the gameplay render function. it is the both grids showing,"fire" screen. 
 //it takes in player1, player2, and data 
 //also handles global potMove, which lets me update what move is queued up
-function gameplay() {
+function renderGameplay(context, canvas, leftShips, rightShips) {
+    clearScreen(context);
+   
+   //DRAWS a line in the middle of the screen
+    context.beginPath();
+    context.moveTo(canvas.width / 2, 0);
+    context.lineTo(canvas.width / 2, canvas.height);
+    context.stroke();
 
-        //DRAWS a line in the middle of the screen
-        context.beginPath();
-        context.moveTo(canvas.width / 2, 0);
-        context.lineTo(canvas.width / 2, canvas.height);
-        context.stroke();
 
+    context.drawImage(img_gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
+    context.drawImage(img_mysea,canvas.width/4 - mseawidth*3/2,canvas.height/6 - mseaheight*1.75,mseawidth*3,mseaheight*3);
+    context.drawImage(img_enemysea,canvas.width -canvas.width/4 - eseawidth*3/2,canvas.height/6 - eseaheight*1.75,eseawidth*3,eseaheight*3);
+    context.drawImage(img_fire,canvas.width*3/4-firewidth*3/2,canvas.height-canvas.height/6,firewidth*3,fireheight*3);
 
-        context.drawImage(img_gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
-        context.drawImage(img_mysea,canvas.width/4 - mseawidth*3/2,canvas.height/6 - mseaheight*1.75,mseawidth*3,mseaheight*3);
-        context.drawImage(img_enemysea,canvas.width -canvas.width/4 - eseawidth*3/2,canvas.height/6 - eseaheight*1.75,eseawidth*3,eseaheight*3);
-        context.drawImage(img_fire,canvas.width*3/4-firewidth*3/2,canvas.height-canvas.height/6,firewidth*3,fireheight*3);
+    renderShips(context, leftShips, leftGrid, true);
+    renderShips(context, rightShips, rightGrid, false);
 
-        if (currentPlayer == 1)
-        {
-            renderShips(player1arr,leftGrid,true);
-            renderShips(player2arr,rightGrid,false);
-        }
-        else
-        {
-            renderShips(player2arr,leftGrid,true);
-            renderShips(player1arr,rightGrid,false);
-        }
-
-        showPotMove();
+    //showPotMove();
 }
 
 
@@ -131,36 +124,18 @@ function clearPotMove()
 
 
 //self explanatory
-function clearScreen() {
+function clearScreen(context) {
     context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 
 //based on who's turn it is and how many ships there are, places ships and such. THIS IS UNFINISHED.
-function startScreen() {
-   
-   context.drawImage(img_gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
-
-   
+function startScreen(context, canvas, arr) {
+    clearScreen(context);
+    context.drawImage(img_gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
     context.drawImage(img_rotate, canvas.width - (canvas.width / 4) - (.5 * rotatewidth), canvas.height/2 - rotateheight/2, rotatewidth , rotateheight );
-    
-    
     context.drawImage(img_submit, canvas.width/2  -submitwidth, canvas.height - canvas.height/8 - submitheight/2, submitwidth *2, submitheight *2);
-
-    
-    
-
-
-    mode = "start";
-    if (currentPlayer == 1) {
-        renderShips(newShipPlacement(player1arr, mousePos, currShipLength, currShipRotation), centerGrid, true);
-    } else {
-        renderShips(newShipPlacement(player2arr, mousePos, currShipLength, currShipRotation), centerGrid, true);
-    }
-
-
-
-   
+    renderShips(context, arr, centerGrid, true);
 }
 
 
@@ -271,8 +246,8 @@ function switchTurn() {
 
 //checks based on winnner
 //no reset
-function gameOver() {
-    clearScreen();
+function gameOver(context, canvas, winner) {
+    clearScreen(context);
     context.fillStyle = "Black";
     context.fillRect(0, 0, canvas.width, canvas.height);
     context.drawImage(img_gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
@@ -291,7 +266,7 @@ function gameOver() {
 
 //just draws a grid and labels, does not carry any data
 //takes in a grid object (so it knows the dimensions)
-function drawGrid(grid) {
+function drawGrid(context, grid) {
     context.beginPath();
     context.moveTo(grid.rightmost, grid.heightmost);
     context.lineTo(grid.rightmost, grid.heightleast);
@@ -343,9 +318,9 @@ function drawGrid(grid) {
 
 //takes a grid object and an array and renders those ships in that grid
 //red = hit, grey = ship there, blue = miss
-function renderShips(arr, grid, ownShips)
+function renderShips(context, arr, grid, ownShips)
 {
-    drawGrid(grid);
+    drawGrid(context, grid);
     for (let i=0; i < 90; i++)
     {
         if (arr[i] == 0)
