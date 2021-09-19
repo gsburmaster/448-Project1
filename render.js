@@ -142,106 +142,53 @@ function startScreen(context, canvas, arr) {
 //portions adapted from //https://github.com/gsburmaster/Connect4/blob/main/connect-four.js
 // and https://www.w3schools.com/tags/canvas_measuretext.asp
 //changes currentPlayer var in data and shows splash screen with countdown
-function switchTurn() {
-    clearScreen();
-    if (currentPlayer == 1) {
+function switchTurn(context, canvas, nextPlayer) {
+    clearScreen(context);
+    context.fillStyle = "Black";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.font = "40px Impact";
+    context.fillStyle = "#feebeb";
+    context.fillText("Player " + nextPlayer + " turn in", (canvas.width / 2) - (context.measureText("Player " + nextPlayer + " turn in").width / 2), canvas.height / 3);
+    context.fillText("3", (canvas.width / 2) - (context.measureText("3").width / 2), canvas.height * 2 / 3);
+    let waitTime3 = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve()
+        }, 1000)
+    });
+    let waitTime2 = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve()
+        }, 2000)
+    });
+    let waitTime1 = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve()
+        }, 3000)
+    });
+
+    waitTime3.then(() => {
+        clearScreen(context);
         context.fillStyle = "Black";
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.font = "40px Impact";
         context.fillStyle = "#feebeb";
-        context.fillText("Player 2 turn in", (canvas.width / 2) - (context.measureText("Player 2 turn in").width / 2), canvas.height / 3);
-        context.fillText("3", (canvas.width / 2) - (context.measureText("3").width / 2), canvas.height * 2 / 3);
-        var waitTime3 = new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve()
-            }, 1000)
-        })
-        var waitTime2 = new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve()
-            }, 2000)
-        })
-        var waitTime1 = new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve()
-            }, 3000)
-        })
+        context.fillText("Player " + nextPlayer + " turn in", (canvas.width / 2) - (context.measureText("Player " + nextPlayer + " turn in").width / 2), canvas.height / 3);
+        context.fillText("2", (canvas.width / 2) - (context.measureText("2").width / 2), canvas.height * 2 / 3);
+    })
 
-        waitTime3.then(() => {
-            clearScreen();
-            context.fillStyle = "Black";
-            context.fillRect(0, 0, canvas.width, canvas.height);
-            context.font = "40px Impact";
-            context.fillStyle = "#feebeb";
-            context.fillText("Player 2 turn in", (canvas.width / 2) - (context.measureText("Player 2 turn in").width / 2), canvas.height / 3);
-            context.fillText("2", (canvas.width / 2) - (context.measureText("2").width / 2), canvas.height * 2 / 3);
-        })
-
-        waitTime2.then(() => {
-            clearScreen();
-            context.fillStyle = "Black";
-            context.fillRect(0, 0, canvas.width, canvas.height);
-            context.font = "40px Impact";
-            context.fillStyle = "#feebeb";
-            context.fillText("Player 2 turn in", (canvas.width / 2) - (context.measureText("Player 2 turn in").width / 2), canvas.height / 3);
-            context.fillText("1", (canvas.width / 2) - (context.measureText("1").width / 2), canvas.height * 2 / 3);
-        })
-
-        waitTime1.then(() => {
-            currentPlayer = 2;
-            clearScreen();
-        })
-    } else {
+    waitTime2.then(() => {
+        clearScreen(context);
         context.fillStyle = "Black";
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.font = "40px Impact";
         context.fillStyle = "#feebeb";
-        context.fillText("Player 1 turn in", (canvas.width / 2) - (context.measureText("Player 1 turn in").width / 2), canvas.height / 3);
-        context.fillText("3", (canvas.width / 2) - (context.measureText("3").width / 2), canvas.height * 2 / 3);
-        var waitTime3 = new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve()
-            }, 1000)
-        })
-        var waitTime2 = new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve()
-            }, 2000)
-        })
-        var waitTime1 = new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve()
-            }, 3000)
-        })
+        context.fillText("Player " + nextPlayer + " turn in", (canvas.width / 2) - (context.measureText("Player " + nextPlayer + " turn in").width / 2), canvas.height / 3);
+        context.fillText("1", (canvas.width / 2) - (context.measureText("1").width / 2), canvas.height * 2 / 3);
+    })
 
-        waitTime3.then(() => {
-            clearScreen();
-            context.fillStyle = "Black";
-            context.fillRect(0, 0, canvas.width, canvas.height);
-            context.font = "40px Impact";
-            context.fillStyle = "#feebeb";
-            context.fillText("Player 1 turn in", (canvas.width / 2) - (context.measureText("Player 1 turn in").width / 2), canvas.height / 3);
-            context.fillText("2", (canvas.width / 2) - (context.measureText("2").width / 2), canvas.height * 2 / 3);
-        })
-
-        waitTime2.then(() => {
-            clearScreen();
-            context.fillStyle = "Black";
-            context.fillRect(0, 0, canvas.width, canvas.height);
-            context.font = "40px Impact";
-            context.fillStyle = "#feebeb";
-            context.fillText("Player 1 turn in", (canvas.width / 2) - (context.measureText("Player 1 turn in").width / 2), canvas.height / 3);
-            context.fillText("1", (canvas.width / 2) - (context.measureText("1").width / 2), canvas.height * 2 / 3);
-        })
-
-        waitTime1.then(() => {
-            currentPlayer = 1;
-            clearScreen();
-        })
-    }
-
-
-
+    waitTime1.then(() => {
+        clearScreen(context);
+    })
 }
 
 //checks based on winnner

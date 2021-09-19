@@ -264,14 +264,16 @@ function rightsideClickEventRegister() {
             if (winCheck(g_player2arr)) {
                 g_winner = 1;
                 g_mode = "win";
+            } else {
+                switchPlayers("game");
             }
-            g_currentPlayer = 2;
         } else if (g_currentPlayer == 2 && fire(g_player1arr, flatten(i,j))){
             if (winCheck(g_player2arr)) {
                 g_winner = 2;
                 g_mode = "win";
+            } else {
+                switchPlayers("game");
             }
-            g_currentPlayer = 1;
         }
     })
 }

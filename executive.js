@@ -8,19 +8,18 @@ function gameplayLoop() {
         if (g_currentPlayer == 1) {
             startScreen(g_context, g_canvas, placeShip(g_player1arr, g_mousePos, g_currShipLength, g_currShipRotation));
             if (g_currShipLength > g_maxShips) {
-                g_currentPlayer = 2;
+                switchPlayers("start");
                 g_currShipLength = 1;
             }
         }
         else if (g_currentPlayer == 2) {
             startScreen(g_context, g_canvas, placeShip(g_player2arr, g_mousePos, g_currShipLength, g_currShipRotation));
             if (g_currShipLength > g_maxShips) {
-                g_currentPlayer = 1;
-                g_mode = "game";
+                switchPlayers("game");
             }
         }
     }
-    else if (g_mode == "game") {
+    else if (g_mode == "game" || g_mode == "switch2") {
         if (g_currentPlayer == 1) {
             renderGameplay(g_context, g_canvas, g_player1arr, g_player2arr);
         }
@@ -32,6 +31,43 @@ function gameplayLoop() {
         gameOver(g_context, g_canvas, g_winner);
     }
     window.requestAnimationFrame(gameplayLoop);
+}
+
+/**
+ * @name switchPlayers
+ * @function
+ * @desc This function runs the switching screen, we allow it to access and modify global game data
+ * @param {string} mode tells the function what the next mode is
+ */
+function switchPlayers(mode) {
+    if (g_mode == "game" && mode == "game") {
+        g_mode = "switch2";
+    } else {
+        g_mode = "switch1";
+    }
+    let waitToSwitch = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve();
+        }, 2000);
+    });
+    let finishSwitch = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve();
+        }, 5000);
+    });
+    waitToSwitch.then(() => {
+        g_mode = "switch1";
+        if (g_currentPlayer == 1) {
+            switchTurn(g_context, g_canvas, 2);
+            g_currentPlayer = 2;
+        } else {
+            switchTurn(g_context, g_canvas, 1);
+            g_currentPlayer = 1;
+        }
+    });
+    finishSwitch.then(() => {
+        g_mode = mode;
+    });
 }
 
 /**
