@@ -11,6 +11,7 @@ function gameplayLoop() {
                 switchPlayers("start");
                 g_currShipLength = 1;
                 g_currShipRotation = 0;
+                g_mousePos = 0;
             }
         }
         else if (g_currentPlayer == 2) {
