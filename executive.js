@@ -2,6 +2,17 @@
 
 function gameplayLoop() {
     render();
+    if (mode == "start") {
+        if (currentPlayer == 1 && currShipLength > maxShips) {
+            currentPlayer = 2;
+            currShipLength = 1;
+        }
+        else if (currentPlayer == 2 && currShipLength > maxShips) {
+            currentPlayer = 1;
+            mode = "game";
+        }
+    }
+    
     window.requestAnimationFrame(gameplayLoop);
 	
     /*let pos = 0;
