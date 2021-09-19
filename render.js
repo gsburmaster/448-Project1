@@ -14,6 +14,10 @@ If you have any questions, have dom text me. I won't be looking at discord, but 
 */
 
 //adapted from https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images
+
+
+
+//Images used in gameplay as either buttons or just visuals. All images contained in Image folder in main.
 let img_gameLogo = new Image();
 img_gameLogo.src = 'Images/battleship.png';
 let logowidth = 107;
@@ -60,9 +64,11 @@ let rotatewidth = 83;
 let rotateheight = 19;
 
 
-//this is the main render function. It spins up the whole game when it starts. 
-// it also has access to all the game data in case it needs to be passed to subsequent functions. 
-//effectively the executive function of rendering
+/**
+ * @description Main render function that calls the smaller gameplay render functions
+ * @return None
+ */
+
 function render() {
     clearScreen();
     if (mode == "start")
@@ -79,7 +85,13 @@ function render() {
     }
 }
 
-
+/**
+ * @description Gameplay render function, creates 2 grids, one for your ships, one for tracking hits and misses on enemy ships. Handles global variable potMove, which shows what move is queued up
+ * @param {*} context - context variable
+ * @param {*} canvas - canvas variable
+ * @param {*} leftShips - variable for ships on left grid
+ * @param {*} rightShips - varibale for ships on right grid
+ */
 
 //this is the gameplay render function. it is the both grids showing,"fire" screen. 
 //it takes in player1, player2, and data 
@@ -105,8 +117,9 @@ function renderGameplay(context, canvas, leftShips, rightShips) {
     //showPotMove();
 }
 
-
-//call this everytime you update potMove from the click event listener and mode is game
+/**
+ * @description called everytime potMove variable is updated from event listener
+ */
 function showPotMove()
 {
         context.font = "40px Impact";
@@ -115,18 +128,24 @@ function showPotMove()
 }
 
 
-//clears the bottom fifth of the left half of the gameplay screen so that the potential move can be reupdated with new potential moves upon a new click. 
-//call this before showPotMove();
+/**
+ * @description clears the bottom fifth of the left half of the gameplay screen so that the potential move can be reupdated with new potential moves upon a new click. call this before showPotMove();
+ */
+
 function clearPotMove()
 {
     context.clearRect(0,canvas.height - canvas.height/5, canvas.width/2 - 1,canvas.height);
 }
 
 
-//self explanatory
+/**
+ * @description clears screen
+ * @param {*} context 
+ */
 function clearScreen(context) {
     context.clearRect(0, 0, canvas.width, canvas.height);
 }
+
 
 
 //based on who's turn it is and how many ships there are, places ships and such. THIS IS UNFINISHED.
@@ -139,9 +158,16 @@ function startScreen(context, canvas, arr) {
 }
 
 
+
+/**
+ * @description Changes current player variable and puts up a splash screen to hide ships and allow players to change turns
+ * @param {*} context - global context variable for drawing
+ * @param {*} canvas - canvas variable
+ * @param {*} nextPlayer - variable to hold which player has the next turn
+ */
+
 //portions adapted from //https://github.com/gsburmaster/Connect4/blob/main/connect-four.js
 // and https://www.w3schools.com/tags/canvas_measuretext.asp
-//changes currentPlayer var in data and shows splash screen with countdown
 function switchTurn(context, canvas, nextPlayer) {
     clearScreen(context);
     context.fillStyle = "Black";
@@ -168,6 +194,7 @@ function switchTurn(context, canvas, nextPlayer) {
 
     waitTime3.then(() => {
         clearScreen(context);
+
         context.fillStyle = "Black";
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.font = "40px Impact";
@@ -191,8 +218,13 @@ function switchTurn(context, canvas, nextPlayer) {
     })
 }
 
-//checks based on winnner
-//no reset
+/**
+ * @description
+ * @param {*} context - 
+ * @param {*} canvas - canvas variable
+ * @param {*} winner - Value for the winner, either 1 or 2 depending on which player wins
+ * @pa
+ */
 function gameOver(context, canvas, winner) {
     clearScreen(context);
     context.fillStyle = "Black";
@@ -211,8 +243,11 @@ function gameOver(context, canvas, winner) {
 
 }
 
-//just draws a grid and labels, does not carry any data
-//takes in a grid object (so it knows the dimensions)
+/**
+ * @description Draws grids and labels for the grids
+ * @param {*} context 
+ * @param {*} grid - variable for the grids
+ */
 function drawGrid(context, grid) {
     context.beginPath();
     context.moveTo(grid.rightmost, grid.heightmost);
@@ -263,8 +298,13 @@ function drawGrid(context, grid) {
 
 
 
-//takes a grid object and an array and renders those ships in that grid
-//red = hit, grey = ship there, blue = miss
+/**
+ * @description Tracks and updates based on ships that are hit or missed. Red = hit, blue = miss, grey = ships at grid spot
+ * @param {*} context 
+ * @param {*} arr - variable for the array for tracking ships, hits and misses
+ * @param {*} grid - grid variable
+ * @param {*} ownShips - variable for tracking your own ships
+ */
 function renderShips(context, arr, grid, ownShips)
 {
     drawGrid(context, grid);
