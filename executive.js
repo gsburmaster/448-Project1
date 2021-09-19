@@ -1,6 +1,4 @@
 /**
- * @name gameplayLoop
- * @function
  * @desc This function runs the main gameplay loop, we allow it to access and modify global game data
  */
 function gameplayLoop() {
@@ -39,8 +37,6 @@ function gameplayLoop() {
 }
 
 /**
- * @name switchPlayers
- * @function
  * @desc This function runs the switching screen, we allow it to access and modify global game data
  * @param {string} mode tells the function what the next mode is
  */
@@ -76,8 +72,6 @@ function switchPlayers(mode) {
 }
 
 /**
- * @name fire
- * @function
  * @desc This function checks if a shot is valid
  * @param {number[]} arr the grid being fired at
  * @param {number} pos the position being fired at
@@ -98,8 +92,6 @@ function fire(arr, pos) {
 
 
 /**
- * @name placeShip
- * @function
  * @desc This function places ships
  * @param {number[]} arr the grid the ship is being placed on
  * @param {number} pos the position that a ship is being placed
@@ -133,8 +125,6 @@ function placeShip(arr, pos, shipLength, shipRotation) {
 }
 
 /**
- * @name winCheck
- * @function
  * @desc This function checks to see if the game has a winner
  * @param {number[]} arr grid to check win
  * @return {boolean} whether the game is won or not

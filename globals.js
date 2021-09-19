@@ -16,6 +16,7 @@ let g_potMove = '';
 //taken from https://github.com/gsburmaster/Connect4
 //adapted from https://jayhawk-nation.web.app/examples/TicTacToe
 /**
+ * @name Unnamed_window_load_event
  * @desc Wait for all files to be loaded before running scripts
  * @listens load
  */
@@ -72,8 +73,6 @@ let centerGrid = {
 
 //https://stackoverflow.com/questions/4618541/can-i-reference-other-properties-during-object-declaration-in-javascript
 /**
- * @name setLeftGrid
- * @function
  * @desc Sets left grid data
  */
 function setLeftGrid()
@@ -96,8 +95,6 @@ function setLeftGrid()
 }
 
 /**
- * @name setRightGrid
- * @function
  * @desc Sets right grid data
  */
 function setRightGrid()
@@ -120,8 +117,6 @@ function setRightGrid()
 }
 
 /**
- * @name setCenterGrid
- * @function
  * @desc Sets center grid data
  */
 function setCenterGrid()
@@ -147,8 +142,6 @@ function setCenterGrid()
 //takes a 9x10 2d and returns 1d index
 
 /**
- * @name flatten
- * @function
  * @desc This function converts 2D coordinates into a 1D coordinate
  * @param {number} i the X coordinate to be converted
  * @param {number} j the Y coordinate to be converted
@@ -315,8 +308,6 @@ function centerClickEventRegister() {
 }
 
 /**
- * @name centerMouseMoveEventRegister
- * @function
  * @desc This function adds an event listener for mouse position when placing ships
  * @listens mousemove
  */
@@ -337,8 +328,6 @@ function centerMouseMoveEventRegister() {
 }
 
 /**
- * @name startButtonRegister
- * @function
  * @desc This function adds an event listener for the start button
  * @listens click
  */
@@ -352,8 +341,6 @@ function startButtonRegister() {
 }
 
 /**
- * @name rotateButtonRegister
- * @function
  * @desc This function adds an event listener for the rotate button
  * @listens click
  */

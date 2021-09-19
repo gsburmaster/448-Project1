@@ -65,10 +65,10 @@ let rotateheight = 19;
 
 
 /**
- * @description Main render function that calls the smaller gameplay render functions
+ * @description Main render function that calls the smaller gameplay render functions, unused
+ * @see {@link gameplayLoop}
  * @return None
  */
-
 function render() {
     clearScreen();
     if (mode == "start")
@@ -86,11 +86,11 @@ function render() {
 }
 
 /**
- * @description Gameplay render function, creates 2 grids, one for your ships, one for tracking hits and misses on enemy ships. Handles global variable potMove, which shows what move is queued up
- * @param {*} context - context variable
- * @param {*} canvas - canvas variable
- * @param {*} leftShips - variable for ships on left grid
- * @param {*} rightShips - varibale for ships on right grid
+ * @description Gameplay render function, creates 2 grids, one for your ships, one for tracking hits and misses on enemy ships. Handles global variable potMove, which shows what move is queued up (currently unused functionality)
+ * @param {Object} context - global context variable for drawing
+ * @param {Object} canvas - canvas variable
+ * @param {number[]} leftShips - variable for ships on left grid
+ * @param {number[]} rightShips - varibale for ships on right grid
  */
 
 //this is the gameplay render function. it is the both grids showing,"fire" screen. 
@@ -140,7 +140,7 @@ function clearPotMove()
 
 /**
  * @description clears screen
- * @param {*} context 
+ * @param {Object} context - global context variable for drawing
  */
 function clearScreen(context) {
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -161,9 +161,9 @@ function startScreen(context, canvas, arr) {
 
 /**
  * @description Changes current player variable and puts up a splash screen to hide ships and allow players to change turns
- * @param {*} context - global context variable for drawing
- * @param {*} canvas - canvas variable
- * @param {*} nextPlayer - variable to hold which player has the next turn
+ * @param {Object} context - global context variable for drawing
+ * @param {Object} canvas - canvas variable
+ * @param {number} nextPlayer - variable to hold which player has the next turn
  */
 
 //portions adapted from //https://github.com/gsburmaster/Connect4/blob/main/connect-four.js
@@ -220,9 +220,9 @@ function switchTurn(context, canvas, nextPlayer) {
 
 /**
  * @description
- * @param {*} context - 
- * @param {*} canvas - canvas variable
- * @param {*} winner - Value for the winner, either 1 or 2 depending on which player wins
+ * @param {Object} context - global context variable for drawing
+ * @param {Object} canvas - canvas variable
+ * @param {number} winner - Value for the winner, either 1 or 2 depending on which player wins
  * @pa
  */
 function gameOver(context, canvas, winner) {
@@ -231,7 +231,7 @@ function gameOver(context, canvas, winner) {
     context.fillRect(0, 0, canvas.width, canvas.height);
     context.drawImage(img_gameLogo, (canvas.width / 2) - (1.5 * logowidth), 0, logowidth * 3, logoheight * 3);
     if (winner == 1) {
-        
+
         context.drawImage(img_p1Win, (canvas.width / 2) - (3 * p1width), canvas.height / 4, p1width * 6, p1height * 6);
     } else if (winner == 2) {
         
@@ -245,8 +245,8 @@ function gameOver(context, canvas, winner) {
 
 /**
  * @description Draws grids and labels for the grids
- * @param {*} context 
- * @param {*} grid - variable for the grids
+ * @param {Object} context - global context variable for drawing
+ * @param {Object} grid - variable for the grids
  */
 function drawGrid(context, grid) {
     context.beginPath();
@@ -300,10 +300,10 @@ function drawGrid(context, grid) {
 
 /**
  * @description Tracks and updates based on ships that are hit or missed. Red = hit, blue = miss, grey = ships at grid spot
- * @param {*} context 
- * @param {*} arr - variable for the array for tracking ships, hits and misses
- * @param {*} grid - grid variable
- * @param {*} ownShips - variable for tracking your own ships
+ * @param {Object} context - global context variable for drawing
+ * @param {number[]} arr - variable for the array for tracking ships, hits and misses
+ * @param {Object} grid - grid variable
+ * @param {boolean} ownShips - variable for tracking your own ships
  */
 function renderShips(context, arr, grid, ownShips)
 {
