@@ -143,22 +143,16 @@ function placeShip()
 function winCheck() {
 
     //If player 1's turn, checks if any ships remaining on player 2's board
-    if (currentPlayer == 1)
+    if (currentPlayer == 1 && !player2arr.includes(1))
     {
-        if (!player2arr.includes(1))
-        {
-            winner = 1;
-            mode = "win";
-        } else { winner = 0; mode = "game";}
+        winner = 1;
+        mode = "win";
     }
 
     //If player 2's turn, checks if any ships remaining on p1,
-    else if(currentPlayer == 2)
+    else if(currentPlayer == 2 && !player1arr.includes(1))
     {
-        if (!player1arr.includes(1))
-        {
-            winner = 2;
-            mode = "win";
-        }
+        winner = 2;
+        mode = "win";
     }
 }
