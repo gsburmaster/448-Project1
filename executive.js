@@ -12,7 +12,6 @@ function gameplayLoop() {
             mode = "game";
         }
     }
-    
     window.requestAnimationFrame(gameplayLoop);
 	
     /*let pos = 0;
@@ -66,6 +65,7 @@ function fire(pos) {
 		
 		if (result == 1) { //only executes if un-hit ship is detected
             player2arr[pos] = 2;
+            winCheck();
 		} else if (result == 0) { //executes if uninteracted cell is detected
             player2arr[pos] = 3;
 		}
@@ -74,6 +74,7 @@ function fire(pos) {
 		
 		if (result == 1) { //only executes if un-hit ship is detected
             player1arr[pos] = 2;
+            winCheck();
 		} else if (result == 0) { //executes if uninteracted cell is detected
             player1arr[pos] = 3;
 		}
@@ -144,34 +145,20 @@ function winCheck() {
     //If player 1's turn, checks if any ships remaining on player 2's board
     if (currentPlayer == 1)
     {
-        for(let i = 0; i<= 89; i++)
+        if (!player2arr.includes(1))
         {
-            if(player2arr[i] == 1) 
-            {
-				break;
-            }
-            else
-            {
-                winner = 1;
-                mode = "win";
-            }
-        }
+            winner = 1;
+            mode = "win";
+        } else { winner = 0; mode = "game";}
     }
 
     //If player 2's turn, checks if any ships remaining on p1,
     else if(currentPlayer == 2)
     {
-        for(let i = 0; i<=89; i++)
+        if (!player1arr.includes(1))
         {
-            if(player1arr[i] == 1)
-            {
-                break;
-            }
-            else
-            {
-                winner = 2;
-                mode = "win";
-            }
+            winner = 2;
+            mode = "win";
         }
     }
 }
