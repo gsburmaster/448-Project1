@@ -86,7 +86,8 @@ function winCheck(gameData) {
             if(gameData.player2arr[i] == 1) 
             {
                 //breaks if a 1 is found, means no chance of winner
-                break;
+                gameData.isWon = false;
+				break;
             }
             else
             {
@@ -104,6 +105,7 @@ function winCheck(gameData) {
         {
             if(gameData.player1arr[i] == 1)
             {
+				gameData.isWon = false;
                 break;
             }
             else
